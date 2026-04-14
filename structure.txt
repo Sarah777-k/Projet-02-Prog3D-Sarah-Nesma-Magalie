@@ -1,0 +1,82 @@
+PROJET03/
+│
+├── index.html
+├── style.css
+├── README.md
+│
+├── assets/
+│   ├── textures/
+│   ├── sounds/
+│   └── models/
+│
+├── js/
+│   ├── main.js
+│   ├── config.js
+│   │
+│   ├── core/
+│   │   ├── Game.js
+│   │   ├── Renderer.js
+│   │   ├── SceneManager.js
+│   │   ├── InputManager.js
+│   │   ├── AudioManager.js
+│   │   └── UIManager.js
+│   │
+│   ├── world/
+│   │   ├── Maze.js
+│   │   ├── Cell.js
+│   │   ├── LevelManager.js
+│   │   └── CollisionManager.js
+│   │
+│   ├── entities/
+│   │   ├── Player.js
+│   │   ├── Wall.js
+│   │   ├── Arrow.js
+│   │   ├── Teleporter.js
+│   │   ├── Receiver.js
+│   │   ├── Treasure.js
+│   │   └── BaseEntity.js
+│   │
+│   ├── graphics/
+│   │   ├── MeshFactory.js
+│   │   ├── TextureLoader.js
+│   │   ├── MaterialFactory.js
+│   │   └── CameraController.js
+│   │
+│   └── utils/
+│       ├── MathUtils.js
+│       ├── RandomUtils.js
+│       └── Constants.js
+│
+└── data/
+    ├── mazeLayout.js
+    └── levels.js
+
+
+👤 Personne 1 — Moteur 3D / Environnement
+
+👉 Tout ce qui est visuel et structure du monde
+
+Responsabilités :
+
+Dédale 31x31 (matrice + affichage)
+Plancher + plafond
+Murs (ouvrables / non ouvrables)
+Placement des objets dans la scène
+Collisions (empêcher de traverser les murs)
+
+👉 C’est la base du jeu → sans ça rien ne marche
+
+👤 Personne 2 — Gameplay / Logique du jeu
+
+👉 Le cerveau du jeu
+
+Responsabilités :
+
+Mouvement du joueur (clavier / souris)
+Ouverture des murs (logique des ouvreurs)
+Téléporteurs / télé-récepteurs
+Flèches qui pointent vers le trésor (important 🔥)
+Détection du trésor
+Gestion des niveaux (1 à 10 + règles)
+
+👉 C’est la partie la plus “logique/code”

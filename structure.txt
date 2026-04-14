@@ -3,7 +3,6 @@ PROJET03/
 │__ src/
 │   ├── index.html
 │   ├── style.css
-│   ├── README.md
 │
 ├── assets/
 │   ├── textures/
@@ -12,11 +11,10 @@ PROJET03/
 │
 ├── js/
 │   ├── main.js
-│   ├── config.js
 │   │
 │   ├── core/
 │   │   ├── Game.js
-│   │   ├── Renderer.js
+│   │   ├── Renderer.js ?
 │   │   ├── SceneManager.js
 │   │   ├── InputManager.js
 │   │   ├── AudioManager.js
@@ -24,33 +22,29 @@ PROJET03/
 │   │
 │   ├── world/
 │   │   ├── Maze.js
-│   │   ├── Cell.js
+│   │   ├── Cell.js : Il sert à stocker les infos d’une case
 │   │   ├── LevelManager.js
-│   │   └── CollisionManager.js
+│   │   
 │   │
 │   ├── entities/
-│   │   ├── Player.js
+│   │   ├── Player.js peut contenir cameraController
 │   │   ├── Wall.js
 │   │   ├── Arrow.js
 │   │   ├── Teleporter.js
 │   │   ├── Receiver.js
 │   │   ├── Treasure.js
-│   │   └── BaseEntity.js
+│   │   └── BaseEntity.js : centre du jeu
 │   │
 │   ├── graphics/
 │   │   ├── MeshFactory.js
 │   │   ├── TextureLoader.js
 │   │   ├── MaterialFactory.js
-│   │   └── CameraController.js
+│   │   └── 
 │   │
 │   └── utils/
 │       ├── MathUtils.js
 │       ├── RandomUtils.js
 │       └── Constants.js
-│
-└── data/
-    ├── mazeLayout.js
-    └── levels.js
 
 
 👤 Personne 1 — Moteur 3D / Environnement

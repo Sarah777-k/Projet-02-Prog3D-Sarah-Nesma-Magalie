@@ -1,8 +1,9 @@
 PROJET03/
 │
-├── index.html
-├── style.css
-├── README.md
+│__ src/
+│   ├── index.html
+│   ├── style.css
+│   ├── README.md
 │
 ├── assets/
 │   ├── textures/

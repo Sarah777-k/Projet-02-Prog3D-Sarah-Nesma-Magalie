@@ -1,50 +1,47 @@
 PROJET03/
 │
-│__ src/
-│   ├── index.html
-│   ├── style.css
+Projet02-SNG/
 │
 ├── assets/
-│   ├── textures/
-│   ├── sounds/
-│   └── models/
+├── includes/
 │
 ├── js/
-│   ├── main.js
-│   │
 │   ├── core/
-│   │   ├── Game.js
-│   │   ├── Renderer.js ?
-│   │   ├── SceneManager.js
-│   │   ├── InputManager.js
-│   │   ├── AudioManager.js
+│   │   ├── audioManager.js
+│   │   ├── game.js
+│   │   ├── inputManager.js
+│   │   ├── renderer.js
+│   │   ├── sceneManager.js
 │   │   └── UIManager.js
 │   │
-│   ├── world/
-│   │   ├── Maze.js
-│   │   ├── Cell.js : Il sert à stocker les infos d’une case
-│   │   ├── LevelManager.js
-│   │   
+│   ├── entites/
+│   │   ├── EntiteDeBase.js
+│   │   ├── fleche.js
+│   │   ├── joueur.js
+│   │   ├── mur.js
+│   │   ├── Recepteur.js
+│   │   ├── Teleporteur.js
+│   │   └── Tresor.js
 │   │
-│   ├── entities/
-│   │   ├── Player.js peut contenir cameraController
-│   │   ├── Wall.js
-│   │   ├── Arrow.js
-│   │   ├── Teleporter.js
-│   │   ├── Receiver.js
-│   │   ├── Treasure.js
-│   │   └── BaseEntity.js : centre du jeu
-│   │
-│   ├── graphics/
-│   │   ├── MeshFactory.js
-│   │   ├── TextureLoader.js
+│   ├── graphique/
 │   │   ├── MaterialFactory.js
-│   │   └── 
+│   │   ├── MeshFactory.js
+│   │   └── TextureLoader.js
 │   │
-│   └── utils/
-│       ├── MathUtils.js
-│       ├── RandomUtils.js
-│       └── Constants.js
+│   ├── monde/
+│   │   ├── cell.js
+│   │   ├── levelManager.js
+│   │   └── maze.js
+│   │
+│   ├── utils/
+│   │   ├── Constantes.js
+│   │   ├── UtilsAleatoire.js
+│   │   └── UtilsMath.js
+│   │
+│   └── main.js
+│
+└── src/
+    └── index.html
 
 
 👤 Personne 1 — Moteur 3D / Environnement

@@ -43,7 +43,7 @@ Projet02-SNG/
 └── src/
     └── index.html
 
-
+------------------------------------------------------------------
 👤 Personne 1 — Moteur 3D / Environnement
 
 👉 Tout ce qui est visuel et structure du monde
@@ -57,7 +57,7 @@ Placement des objets dans la scène
 Collisions (empêcher de traverser les murs)
 
 👉 C’est la base du jeu → sans ça rien ne marche
-
+------------------------------------------------------------------
 👤 Personne 2 — Gameplay / Logique du jeu
 
 👉 Le cerveau du jeu
@@ -72,3 +72,19 @@ Détection du trésor
 Gestion des niveaux (1 à 10 + règles)
 
 👉 C’est la partie la plus “logique/code”
+------------------------------------------------------------------
+👤 Personne 3 — UI / Audio / Game flow
+score
+timer
+niveau
+ouvreurs restants
+vue aérienne + triche
+game over / victoire / restart
+sons / musique
+polish interface
+
+------------------------------------------------------------------
+
+Personne 1 : monde/, graphique/, une partie de entites/mur.js
+Personne 2 : core/inputManager.js, entites/joueur.js, Teleporteur.js, Recepteur.js, fleche.js, Tresor.js, levelManager.js
+Personne 3 : core/audioManager.js, core/UIManager.js, core/sceneManager.js, une partie de game.js, constantes de score/temps dans Constantes.js

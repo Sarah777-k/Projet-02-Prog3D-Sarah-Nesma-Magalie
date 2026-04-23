@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <script src="../js/monde/maze.js"></script>
     <title> Labyrinthe Thesaurus</title>
 </head>
 
@@ -11,6 +12,12 @@
       <canvas id="monCanvas" width="640" height="640">
         Votre navigateur ne supporte pas la balise canvas
       </canvas>
+ <script>
+        window.onload = function () {
+            initDédale();
+            dessinerDédale();
+        };
+    </script>
 </body>
 
 </html>

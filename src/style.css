@@ -1,7 +1,7 @@
 
   #monCanvas {
     display: block;
-    width: 100vw;  /* 100% de la largeur de la fenêtre */
-    height: 100vh; /* 100% de la hauteur de la fenêtre */
-    background-color: #000;
+    width: 1000px;  /* 100% de la largeur de la fenêtre */
+    height: 1000px; /* 100% de la hauteur de la fenêtre */
+    
   }

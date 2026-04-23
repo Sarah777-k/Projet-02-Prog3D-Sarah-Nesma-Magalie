@@ -34,7 +34,6 @@ Projet02-SNG/
 │   │   └── maze.js
 │   │
 │   ├── utils/
-│   │   ├── Constantes.js
 │   │   ├── UtilsAleatoire.js
 │   │   └── UtilsMath.js
 │   │

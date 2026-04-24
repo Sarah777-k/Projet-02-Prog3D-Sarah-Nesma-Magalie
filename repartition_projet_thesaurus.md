@@ -122,10 +122,6 @@ Le projet se divise en 3 blocs principaux :
 
 ### utils/
 
-#### Constantes.js
-
-👉 Personne 2 & 3
-
 #### UtilsAleatoire.js
 
 👉 Personne 2

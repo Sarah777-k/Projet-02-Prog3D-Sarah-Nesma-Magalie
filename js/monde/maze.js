@@ -1,5 +1,10 @@
+/*
+    Fichier: maze.js
+    Nom: Sarah Khodjaoui
+    But: Gestion du plateau / labyrinthe
+*/
+
 // ============================================================
-//  maze.js  —  Personne 1 : Moteur 3D / Environnement
 //  Dédale 31x31 conforme au plan de l'énoncé (TP2 Thesaurus)
 //
 //  Types de cellules :
@@ -10,11 +15,12 @@
 // ============================================================
 
 // ----- Constantes locales -----------------------------------
-let TAILLE_DEDALE   = 31;
-let TYPE_COULOIR    = 0;
-let TYPE_MUR_OUV    = 1;   // mur ouvrable (rouge)
-let TYPE_MUR_SOLIDE = 2;   // mur non ouvrable (vert foncé)
-let TYPE_ENCLOS     = 3;   // enclos (jaune)
+const TAILLE_DEDALE   = 31;
+const TAILLE_CASE     = 20;
+const TYPE_COULOIR    = 0;
+const TYPE_MUR_OUV    = 1;   // mur ouvrable (rouge)
+const TYPE_MUR_SOLIDE = 2;   // mur non ouvrable (vert foncé)
+const TYPE_ENCLOS     = 3;   // enclos (jaune)
 
 // ----- La matrice du dédale ---------------------------------
 // Respecte le plan de l'énoncé à la lettre.
@@ -27,7 +33,7 @@ let TYPE_ENCLOS     = 3;   // enclos (jaune)
 //   Sortie nord   : [13][15] = couloir (le joueur démarre ici
 //                              et regarde vers le nord = ligne 12)
 
-let grilleDédale = [
+const grilleDédale = [
 
 /* 00 */ [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
 /* 01 */ [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
@@ -107,8 +113,7 @@ function dessinerDédale() {
                         ctx.fillStyle = 'yellow';
                     break;
             }
-             ctx.fillRect(j * 20, i * 20,19,19);
-
+            ctx.fillRect(j * TAILLE_CASE, i * TAILLE_CASE, TAILLE_CASE - 1, TAILLE_CASE - 1);
             
         }
     }

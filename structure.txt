@@ -82,6 +82,7 @@ game over / victoire / restart
 sons / musique
 polish interface
 
+👉 C’est la partie organisation du jeu 
 ------------------------------------------------------------------
 
 Personne 1 : monde/, graphique/, une partie de entites/mur.js

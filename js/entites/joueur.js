@@ -30,7 +30,7 @@ function obtenirCelluleDepuisPosition(x, z) {
 }
 
 function estCelluleBloquante(ligne, colonne) {
-    let type = obtenirTypeCellule(ligne, colonne);
+    let cellule = obtenirCellule(ligne, colonne);
     return cellule.estBloquante();
 }
 
@@ -142,5 +142,17 @@ function reculer() {
         joueur.z = newZ;
     } else {
         console.log("Mur !");
+    }
+}
+// Direction du joueur en vecteur (pour la caméra) 
+function obtenirDirectionVecteur() {
+    if (joueur.direction === "NORD") {
+        return { x: 0, z: -1 };
+    } else if (joueur.direction === "SUD") {
+        return { x: 0, z: 1 };
+    } else if (joueur.direction === "EST") {
+        return { x: 1, z: 0 };
+    }       else if (joueur.direction === "OUEST") {   
+        return { x: -1, z: 0 };
     }
 }

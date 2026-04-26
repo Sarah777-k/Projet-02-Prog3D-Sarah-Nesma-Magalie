@@ -15,5 +15,9 @@ document.addEventListener("keydown", function (e) {
     } else if (e.key === "ArrowLeft") {
         tournerGauche();
     }
+    //pour changer la caméra
+    mettreAJourCamera();
+    // Redessiner la scène après chaque mouvement (a revoir))
+    dessinerScene(objgl, objProgShaders, objScene3D);
     console.log("Joueur :", joueur);
 });

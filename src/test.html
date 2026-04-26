@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Debug WebGL</title>
+    <style>
+        body { background: #111; color: white; font-family: monospace; padding: 20px; }
+        canvas { border: 2px solid #f0c040; display: block; margin: 10px 0; }
+        .ok   { color: #4caf50; }
+        .err  { color: #f44336; }
+        .info { color: #aaa; }
+        #log  { background: #1a1a1a; padding: 10px; border-radius: 6px; margin-top: 10px; }
+        p     { margin: 4px 0; }
+    </style>
+</head>
+<body>
+
+<h2>🔍 Test de débogage WebGL</h2>
+<canvas id="monCanvas" width="800" height="600"></canvas>
+<div id="log"></div>
+
+<!-- ⚠️ ADAPTE CES CHEMINS À TON PROJET -->
+<script src="../includes/glMatrix-0.9.5.min.js"></script>
+<script src="../includes/WebGL.js"></script>
+<script src="../includes/Camera.js"></script>
+<script src="../includes/Shaders.js"></script>
+<script src="../js/monde/cell.js"></script>
+<script src="../js/monde/maze.js"></script>
+<script src="../js/graphique/MaterialFactory.js"></script>
+<script src="../js/graphique/MeshFactory.js"></script>
+<script src="../js/core/sceneManager.js"></script>
+
+<script>
+var log = document.getElementById("log");
+
+function ok(msg)   { log.innerHTML += '<p class="ok">✅ ' + msg + '</p>'; }
+function err(msg)  { log.innerHTML += '<p class="err">❌ ' + msg + '</p>'; }
+function info(msg) { log.innerHTML += '<p class="info">ℹ️ ' + msg + '</p>'; }
+
+window.addEventListener("load", function() {
+
+    // TEST 1 — glMatrix chargé ?
+    if (typeof mat4 !== "undefined") ok("glMatrix chargé — mat4 disponible");
+    else { err("glMatrix NON chargé — mat4 est undefined"); return; }
+
+    // TEST 2 — WebGL chargé ?
+    if (typeof initWebGL === "function") ok("WebGL.js chargé — initWebGL() disponible");
+    else { err("WebGL.js NON chargé — initWebGL() est undefined"); return; }
+
+    // TEST 3 — Camera chargé ?
+    if (typeof creerCamera === "function") ok("Camera.js chargé — creerCamera() disponible");
+    else { err("Camera.js NON chargé — creerCamera() est undefined"); return; }
+
+    // TEST 4 — Shaders chargé ?
+    if (typeof initShaders === "function") ok("Shaders.js chargé — initShaders() disponible");
+    else { err("Shaders.js NON chargé — initShaders() est undefined"); return; }
+
+    // TEST 5 — maze chargé ?
+    if (typeof grilleDédale !== "undefined") ok("maze.js chargé — grilleDédale disponible");
+    else { err("maze.js NON chargé — grilleDédale est undefined"); return; }
+
+    // TEST 6 — MeshFactory chargé ?
+    if (typeof creerMeshMur === "function") ok("MeshFactory.js chargé — creerMeshMur() disponible");
+    else { err("MeshFactory.js NON chargé — creerMeshMur() est undefined"); return; }
+
+    // TEST 7 — MaterialFactory chargé ?
+    if (typeof creerMatMurOuvrable === "function") ok("MaterialFactory.js chargé — creerMatMurOuvrable() disponible");
+    else { err("MaterialFactory.js NON chargé"); return; }
+
+    // TEST 8 — sceneManager chargé ?
+    if (typeof construireScene === "function") ok("sceneManager.js chargé — construireScene() disponible");
+    else { err("sceneManager.js NON chargé"); return; }
+
+    // TEST 9 — Initialiser WebGL
+    var canvas = document.getElementById("monCanvas");
+    var gl = initWebGL(canvas);
+    if (gl) ok("WebGL initialisé avec succès");
+    else { err("WebGL IMPOSSIBLE à initialiser — navigateur non compatible?"); return; }
+
+    // TEST 10 — Compiler les shaders
+    var prog;
+    try {
+        prog = initShaders(gl);
+        if (prog) ok("Shaders compilés avec succès");
+        else { err("initShaders() a retourné null — erreur de compilation shader"); return; }
+    } catch(e) {
+        err("Exception dans initShaders(): " + e.message);
+        return;
+    }
+
+    // TEST 11 — initDédale
+    try {
+        initDédale();
+        ok("initDédale() OK");
+    } catch(e) {
+        err("Exception dans initDédale(): " + e.message);
+        return;
+    }
+
+    // TEST 12 — Construire la scène
+    var objets;
+    try {
+        objets = construireScene(gl);
+        ok("construireScene() OK — " + objets.length + " objets créés");
+    } catch(e) {
+        err("Exception dans construireScene(): " + e.message);
+        return;
+    }
+
+    // TEST 13 — Dessiner une frame
+    var scene = {};
+    scene.objets = objets;
+    scene.camera = creerCamera();
+    setPositionsCameraXYZ([15.5, 1.0, 15.5], scene.camera);
+    setCiblesCameraXYZ([15.5, 1.0, 14.5], scene.camera);
+    setOrientationsXYZ([0, 1, 0], scene.camera);
+
+    try {
+        dessinerScene(gl, prog, scene);
+        ok("dessinerScene() exécuté sans erreur");
+    } catch(e) {
+        err("Exception dans dessinerScene(): " + e.message);
+        return;
+    }
+
+    // TEST 14 — Vérifier les uniforms du shader
+    var locPos = gl.getAttribLocation(prog, "aPosition");
+    var locProj = gl.getUniformLocation(prog, "uMatriceProjection");
+    var locVue  = gl.getUniformLocation(prog, "uMatriceVue");
+    var locMod  = gl.getUniformLocation(prog, "uMatriceModele");
+    var locCoul = gl.getUniformLocation(prog, "uCouleur");
+
+    if (locPos >= 0)   ok("Shader attrib 'aPosition' trouvé (location=" + locPos + ")");
+    else               err("Shader attrib 'aPosition' NON TROUVÉ — vérifie le nom dans le vertex shader");
+
+    if (locProj) ok("Uniform 'uMatriceProjection' trouvé");
+    else         err("Uniform 'uMatriceProjection' NON TROUVÉ");
+
+    if (locVue)  ok("Uniform 'uMatriceVue' trouvé");
+    else         err("Uniform 'uMatriceVue' NON TROUVÉ");
+
+    if (locMod)  ok("Uniform 'uMatriceModele' trouvé");
+    else         err("Uniform 'uMatriceModele' NON TROUVÉ");
+
+    if (locCoul) ok("Uniform 'uCouleur' trouvé");
+    else         err("Uniform 'uCouleur' NON TROUVÉ");
+
+    info("--- Si tout est vert mais canvas noir → problème dans dessinerMesh() ---");
+    info("--- Envoie les résultats à Claude pour continuer le debug ---");
+});
+</script>
+</body>
+</html>

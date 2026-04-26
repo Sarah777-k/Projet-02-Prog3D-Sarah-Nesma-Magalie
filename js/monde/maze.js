@@ -67,26 +67,37 @@ const grilleDédale = [
 /* 29 */ [2, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 2],
 /* 30 */ [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
 ];
+let grille = [];
+
 
 // ============================================================
 //  Fonctions utilitaires du dédale
 // ============================================================
 function initDédale() {
     objTab = new Object();
-    objTab.grille = grilleDédale;
+    //mettre grille en type cellule pour pouvoir faire les fonctions de type estMurOuvrable etc
+  
+    for (let i = 0; i < TAILLE_DEDALE; i++) {
+        grille.push([]);
+        for (let j = 0; j < TAILLE_DEDALE; j++) {
+            grille[i].push(new Cell(grilleDédale[i][j], i, j));
+        }
+    }
+    objTab.grille = grille;
     objTab.obtenirTypeCellule = obtenirTypeCellule;
     objTab.intNbrLignes = TAILLE_DEDALE;
     objTab.intNbrColonnes = TAILLE_DEDALE;
     objTab.largeurCellule = 1;
 }
 
-function obtenirTypeCellule(intLigne, intColonne) {
-    return grilleDédale[intLigne][intColonne];
+function obtenirCellule(ligne, colonne) {
+    return grille[ligne][colonne];
 }
 
-function estMurOuvrable(intLigne, intColonne) {
-    return obtenirTypeCellule(intLigne, intColonne) === TYPE_MUR_OUV;
+function obtenirTypeCellule(ligne, colonne) {
+    return obtenirCellule(ligne, colonne).type;
 }
+
 //pour voir si c'est un mur ouvrable ou pas comme image prof
 function dessinerDédale() {
     let objCanvas = document.getElementById('monCanvas');

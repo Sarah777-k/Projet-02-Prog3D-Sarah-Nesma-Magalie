@@ -1,22 +1,34 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <title> Labyrinthe Thesaurus</title>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Labyrinthe Thesaurus</title>
+  </head>
 
-<body>
-  <canvas id="monCanvas" width="640" height="640">
-    Votre navigateur ne supporte pas la balise canvas
-  </canvas>
-  
-  <!-- Code JavaScript - Pages -->
-  <script src="../js/monde/maze.js"></script>
-  <script src="../js/entites/joueur.js"></script>
-  <script src="../js/core/inputManager.js"></script>
-  <script src="../js/main.js"></script>
-</body>
+  <body>
+    <canvas id="monCanvas" width="1920" height="1200">
+      Votre navigateur ne supporte pas la balise canvas
+    </canvas>
 
+    <script src="../includes/glMatrix-0.9.5.min.js"></script>
+    <script src="../includes/WebGL.js"></script>
+    <script src="../includes/Camera.js"></script>
+    <script src="../includes/Shaders.js"></script>
+
+    <script src="../js/monde/cell.js"></script>
+    <script src="../js/monde/maze.js"></script>
+
+    <!-- graphique (utilise WebGL = doit venir après étape 1) -->
+    <script src="../js/graphique/MaterialFactory.js"></script>
+    <script src="../js/graphique/MeshFactory.js"></script>
+
+    <!--  : scène (utilise maze + MeshFactory + MaterialFactory) -->
+    <script src="../js/core/sceneManager.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/core/inputManager.js"></script>
+    <script src="../js/entites/joueur.js"></script>
+    <
+  </body>
 </html>

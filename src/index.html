@@ -8,10 +8,11 @@
   </head>
 
   <body>
-    <canvas id="monCanvas" width="1920" height="1200">
+    <canvas id="monCanvas" width="1000" height="620">
       Votre navigateur ne supporte pas la balise canvas
     </canvas>
 
+    <!-- Code JavaScript -->
     <script src="../includes/glMatrix-0.9.5.min.js"></script>
     <script src="../includes/WebGL.js"></script>
     <script src="../includes/Camera.js"></script>
@@ -20,15 +21,16 @@
     <script src="../js/monde/cell.js"></script>
     <script src="../js/monde/maze.js"></script>
 
-    <!-- graphique (utilise WebGL = doit venir après étape 1) -->
+    <!-- Graphique -->
     <script src="../js/graphique/MaterialFactory.js"></script>
     <script src="../js/graphique/MeshFactory.js"></script>
 
-    <!--  : scène (utilise maze + MeshFactory + MaterialFactory) -->
-    <script src="../js/core/sceneManager.js"></script>
-    <script src="../js/main.js"></script>
-    <script src="../js/core/inputManager.js"></script>
+    <!-- Scène -->
     <script src="../js/entites/joueur.js"></script>
-    <
+    <script src="../js/core/inputManager.js"></script>
+    <script src="../js/core/sceneManager.js"></script>
+    <script src="../js/core/game.js"></script>
+    <script src="../js/main.js"></script>
+    
   </body>
 </html>

@@ -26,13 +26,13 @@ function construireScene(objgl) {
   });
 
 
-//   tabObjets.push({
-//     mesh: creerMeshPlafond(objgl),
-//     x: 0,
-//     y: 0,
-//     z: 0,
-//     type: "plafond",
-//   });
+  //   tabObjets.push({
+  //     mesh: creerMeshPlafond(objgl),
+  //     x: 0,
+  //     y: 0,
+  //     z: 0,
+  //     type: "plafond",
+  //   });
 
   // Lire la grille : créer un mur 3D pour chaque cellule mur
   for (var i = 0; i < TAILLE_DEDALE; i++) {
@@ -120,13 +120,12 @@ function dessinerScene(gl, shaderProgram, scene) {
 
     // Matrice modèle : placer l'objet à sa position dans la scène
     var matModele = mat4.create();
-    var matModele = mat4.create();
     mat4.identity(matModele);
     mat4.translate(matModele, [obj.x, obj.y, obj.z]);
 
     var matModeleVue = mat4.create();
     mat4.multiply(matVue, matModele, matModeleVue);
-    
+
 
     dessinerMesh(gl, shaderProgram, obj.mesh, matModeleVue);
   }

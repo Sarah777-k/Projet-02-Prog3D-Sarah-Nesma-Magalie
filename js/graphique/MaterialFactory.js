@@ -12,6 +12,7 @@
     * - MeshFactory.js
     * - Les entités (mur, flèche, trésor, etc.)
 */
+
 // ============================================================
 //  MaterialFactory.js  —  Personne 1 : Moteur 3D / Environnement
 //  Gestion des couleurs et textures de chaque type d'objet.

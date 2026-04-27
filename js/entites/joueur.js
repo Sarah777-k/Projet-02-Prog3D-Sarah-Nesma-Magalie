@@ -4,13 +4,17 @@
     But: Gestion du joueur
 */
 
+/* ----- Constantes ----- */
+const VITESSE_DEPLACEMENT = 0.05;
+const VITESSE_ROTATION = 1;
+const RAYON_JOUEUR = 0.2;
 
 /* ----- Variables -----*/
 let joueur = {
     x: 15.5,
     y: 0.3,
     z: 16.5,
-    direction: "NORD"
+    angle: -90
 };
 
 
@@ -31,6 +35,11 @@ function obtenirCelluleDepuisPosition(x, z) {
 
 function estCelluleBloquante(ligne, colonne) {
     let cellule = obtenirCellule(ligne, colonne);
+
+    if (cellule === null) {
+        return true;
+    }
+
     return cellule.estBloquante();
 }
 
@@ -41,9 +50,26 @@ function estCelluleBloquante(ligne, colonne) {
 |-----------------------------------------------------------------------------|
 */
 function peutSeDeplacer(x, z) {
-    let cellule = obtenirCelluleDepuisPosition(x, z);
+    let pointsATester = [
+        { x: x, z: z },                     // centre
+        { x: x + RAYON_JOUEUR, z: z },      // haut-gauche
+        { x: x - RAYON_JOUEUR, z: z },      // haut-droite
+        { x: x, z: z + RAYON_JOUEUR },      // bas-gauche
+        { x: x, z: z - RAYON_JOUEUR }       // bas-droite
+    ];
 
-    return !estCelluleBloquante(cellule.ligne, cellule.colonne);
+    for (let i = 0; i < pointsATester.length; i++) {
+        let cellule = obtenirCelluleDepuisPosition(
+            pointsATester[i].x,
+            pointsATester[i].z
+        );
+
+        if (estCelluleBloquante(cellule.ligne, cellule.colonne)) {
+            return false;
+        }
+    }
+    
+    return true;
 }
 
 /*
@@ -53,15 +79,7 @@ function peutSeDeplacer(x, z) {
 |-----------------------------------------------------------------------------|
 */
 function tournerGauche() {
-    if (joueur.direction === "NORD") {
-        joueur.direction = "OUEST";
-    } else if (joueur.direction === "OUEST") {
-        joueur.direction = "SUD";
-    } else if (joueur.direction === "SUD") {
-        joueur.direction = "EST";
-    } else if (joueur.direction === "EST") {
-        joueur.direction = "NORD";
-    }
+    joueur.angle -= VITESSE_ROTATION;
 }
 
 /*
@@ -71,88 +89,136 @@ function tournerGauche() {
 |-----------------------------------------------------------------------------|
 */
 function tournerDroite() {
-    if (joueur.direction === "NORD") {
-        joueur.direction = "EST";
-    } else if (joueur.direction === "EST") {
-        joueur.direction = "SUD";
-    } else if (joueur.direction === "SUD") {
-        joueur.direction = "OUEST";
-    } else if (joueur.direction === "OUEST") {
-        joueur.direction = "NORD";
-    }
+    joueur.angle += VITESSE_ROTATION;
 }
 
 /*
 |-----------------------------------------------------------------------------|
 | avancer:
-|   Fait avancer le joueur en fonction de sa direction
+|   Fait avancer le joueur
 |-----------------------------------------------------------------------------|
 */
 function avancer() {
-    let newX = joueur.x;
-    let newZ = joueur.z;
-
-    if (joueur.direction === "NORD") {
-        newZ -= 1;
-    }
-    if (joueur.direction === "SUD") {
-        newZ += 1;
-    }
-    if (joueur.direction === "EST") {
-        newX += 1;
-    }
-    if (joueur.direction === "OUEST") {
-        newX -= 1;
-    }
-
-    if (peutSeDeplacer(newX, newZ)) {
-        joueur.x = newX;
-        joueur.z = newZ;
-    } else {
-        console.log("Mur !");
-    }
+    deplacerJoueur(1);
 }
 
 /*
 |-----------------------------------------------------------------------------|
 | reculer:
-|   Fait reculer le joueur en fonction de sa direction
+|   Fait reculer le joueur
 |-----------------------------------------------------------------------------|
 */
 function reculer() {
-    let newX = joueur.x;
-    let newZ = joueur.z;
+    deplacerJoueur(-1);
+}
 
+/*
+|-----------------------------------------------------------------------------|
+| deplacerJoueur:
+|   Déplace le joueur dans la direction actuelle en fonction du facteur
+|-----------------------------------------------------------------------------|
+*/
+function deplacerJoueur(facteur) {
+    let direction = obtenirDirectionVecteur();
 
-    if (joueur.direction === "NORD") {
-        newZ += 1;
-    }
-    if (joueur.direction === "SUD") {
-        newZ -= 1;
-    }
-    if (joueur.direction === "EST") {
-        newX -= 1;
-    }
-    if (joueur.direction === "OUEST") {
-        newX += 1;
-    }
+    let newX = joueur.x + direction.x * VITESSE_DEPLACEMENT * facteur;
+    let newZ = joueur.z + direction.z * VITESSE_DEPLACEMENT * facteur;
 
     if (peutSeDeplacer(newX, newZ)) {
         joueur.x = newX;
         joueur.z = newZ;
     } else {
-        console.log("Mur !");
+        if (peutSeDeplacer(newX, joueur.z)) {
+            joueur.x = newX;
+        }
+
+        if (peutSeDeplacer(joueur.x, newZ)) {
+            joueur.z = newZ;
+        }
     }
 }
-// Direction du joueur en vecteur (pour la caméra) 
+
+/*
+|-----------------------------------------------------------------------------|
+| obtenirDirectionVecteur:
+|   Retourne la direction du joueu sous forme de vecteur pour la caméra
+|-----------------------------------------------------------------------------|
+*/
 function obtenirDirectionVecteur() {
-    if (joueur.direction === "NORD") {
-        return { x: 0, z: -1 };
-    } else if (joueur.direction === "SUD") {
-        return { x: 0, z: 1 };
-    } else if (joueur.direction === "EST") {
-        return { x: 1, z: 0 };
-    }       else if (joueur.direction === "OUEST") {   
-        return { x: -1, z: 0 };
-    }
+    let angleRad = joueur.angle * Math.PI / 180;
+
+    return {
+        x: Math.cos(angleRad),
+        z: Math.sin(angleRad)
+    };
 }
+
+/*
+|-----------------------------------------------------------------------------|
+| obtenirCelluleDevantJoueur:
+|   Retourne la cellule située directement devant le joueur
+|-----------------------------------------------------------------------------|
+*/
+function obtenirCelluleDevantJoueur() {
+    let direction = obtenirDirectionVecteur();
+
+    let xDevant = joueur.x + direction.x;
+    let zDevant = joueur.z + direction.z;
+
+    return obtenirCelluleDepuisPosition(xDevant, zDevant);
+}
+
+/*
+|-----------------------------------------------------------------------------|
+| trouverMur3D:
+|   Trouve le mur 3D correspondant à une cellule
+|-----------------------------------------------------------------------------|
+*/
+function trouverMur3D(ligne, colonne) {
+    for (let i = 0; i < tabMurs.length; i++) {
+        if (tabMurs[i].ligne === ligne && tabMurs[i].col === colonne) {
+            return tabMurs[i];
+        }
+    }
+
+    return null;
+}
+
+/*
+|-----------------------------------------------------------------------------|
+| ouvrirMurDevantJoueur:
+|   Ouvre le mur ouvrable situé directement devant le joueur
+|-----------------------------------------------------------------------------|
+*/
+function ouvrirMurDevantJoueur() {
+    let celluleDevant = obtenirCelluleDevantJoueur();
+
+    let cellule = obtenirCellule(celluleDevant.ligne, celluleDevant.colonne);
+
+    if (cellule === null) {
+        console.log("Aucune cellule valide devant le joueur.");
+        return false;
+    }
+
+    if (!cellule.estMurOuvrable()) {
+        console.log("Le mur devant le joueur n'est pas ouvrable.");
+        return false;
+    }
+
+    if (cellule.estOuverte) {
+        console.log("Ce mur est déjà ouvert.");
+        return false;
+    }
+
+    cellule.ouvrir();
+
+    let mur3D = trouverMur3D(celluleDevant.ligne, celluleDevant.colonne);
+
+    if (mur3D !== null) {
+        //ouvrirMurGraphiquement(mur3D);
+    }
+
+    console.log("Mur ouvert !");
+    return true;
+}
+

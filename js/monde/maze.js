@@ -74,6 +74,7 @@ let grille = [];
 //  Fonctions utilitaires du dédale
 // ============================================================
 function initDédale() {
+    grille = [];
     objTab = new Object();
     //mettre grille en type cellule pour pouvoir faire les fonctions de type estMurOuvrable etc
   
@@ -91,6 +92,14 @@ function initDédale() {
 }
 
 function obtenirCellule(ligne, colonne) {
+    if (
+        ligne < 0 ||
+        ligne >= TAILLE_DEDALE ||
+        colonne < 0 ||
+        colonne >= TAILLE_DEDALE
+    ) {
+        return null;
+    }
     return grille[ligne][colonne];
 }
 

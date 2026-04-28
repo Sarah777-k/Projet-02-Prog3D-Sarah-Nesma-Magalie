@@ -24,14 +24,14 @@
 //    - objets 3D  = max 1x1 en emprise au sol
 //
 //  Usage :
-//    var mesh = creerMeshMur(TYPE_MUR_OUV);
+//    let mesh = creerMeshMur(TYPE_MUR_OUV);
 //    dessinerMesh(gl, shaderProgram, mesh, matrice);
 // ============================================================
 
 // ----- Constantes de géométrie ------------------------------
-var HAUTEUR_MUR    = 2.5;   // hauteur des murs (atteint le plafond)
-var HAUTEUR_Y_CAM  = 1.0;   // hauteur des yeux du joueur (Y de la caméra)
-var HAUTEUR_PLAFOND = HAUTEUR_MUR; // le plafond est à la même hauteur que le sommet des murs
+let HAUTEUR_MUR    = 2.5;   // hauteur des murs (atteint le plafond)
+let HAUTEUR_Y_CAM  = 1.0;   // hauteur des yeux du joueur (Y de la caméra)
+let HAUTEUR_PLAFOND = HAUTEUR_MUR; // le plafond est à la même hauteur que le sommet des murs
    // redéfini ici pour MeshFactory (même valeur que maze.js)
 
 // ============================================================
@@ -40,7 +40,7 @@ var HAUTEUR_PLAFOND = HAUTEUR_MUR; // le plafond est à la même hauteur que le 
 
 // Crée un buffer WebGL et y charge des données
 function creerBuffer(gl, type, donnees) {
-    var buffer = gl.createBuffer();
+    let buffer = gl.createBuffer();
     gl.bindBuffer(type, buffer);
     gl.bufferData(type, donnees, gl.STATIC_DRAW);
     return buffer;
@@ -55,13 +55,13 @@ function creerBuffer(gl, type, donnees) {
 //  On crée donc 5 faces seulement (pas le dessous)
 // ============================================================
 function creerMeshMur(gl) {
-    var h = HAUTEUR_MUR;
+    let h = HAUTEUR_MUR;
 
     // 8 sommets du cube (x, y, z)
     //   bas : 0-3   haut : 4-7
     //   0=(0,0,0)  1=(1,0,0)  2=(1,0,1)  3=(0,0,1)
     //   4=(0,h,0)  5=(1,h,0)  6=(1,h,1)  7=(0,h,1)
-    var sommets = new Float32Array([
+    let sommets = new Float32Array([
         // Face avant  (z=0)
         0, 0, 0,   1, 0, 0,   1, h, 0,   0, h, 0,
         // Face arrière (z=1)
@@ -76,7 +76,7 @@ function creerMeshMur(gl) {
     ]);
 
     // Coordonnées de texture UV pour chaque face (répétées par face)
-    var texCoords = new Float32Array([
+    let texCoords = new Float32Array([
         0,0, 1,0, 1,1, 0,1,  // avant
         0,0, 1,0, 1,1, 0,1,  // arrière
         0,0, 1,0, 1,1, 0,1,  // gauche
@@ -85,7 +85,7 @@ function creerMeshMur(gl) {
     ]);
 
     // Indices (2 triangles par face × 5 faces)
-    var indices = new Uint16Array([
+    let indices = new Uint16Array([
          0, 1, 2,   0, 2, 3,   // avant
          4, 5, 6,   4, 6, 7,   // arrière
          8, 9,10,   8,10,11,   // gauche
@@ -106,22 +106,22 @@ function creerMeshMur(gl) {
 //  Subdivisé en tuiles pour que la texture se répète bien
 // ============================================================
 function creerMeshPlancher(gl) {
-    var taille = TAILLE_DEDALE;   // 31
-    var repetes = taille;         // répétition de la texture (1 tuile = 1 cellule)
+    let taille = TAILLE_DEDALE;   // 31
+    let repetes = taille;         // répétition de la texture (1 tuile = 1 cellule)
 
-    var sommets   = new Float32Array([
+    let sommets   = new Float32Array([
         0,     0, 0,
         taille, 0, 0,
         taille, 0, taille,
         0,     0, taille
     ]);
-    var texCoords = new Float32Array([
+    let texCoords = new Float32Array([
         0,      0,
         repetes, 0,
         repetes, repetes,
         0,      repetes
     ]);
-    var indices = new Uint16Array([0, 1, 2,   0, 2, 3]);
+    let indices = new Uint16Array([0, 1, 2,   0, 2, 3]);
 
     return {
         bufferSommets:   creerBuffer(gl, gl.ARRAY_BUFFER,         sommets),
@@ -136,24 +136,24 @@ function creerMeshPlancher(gl) {
 //  Faces vers le bas (normales inversées par rapport au plancher)
 // ============================================================
 function creerMeshPlafond(gl) {
-    var taille  = TAILLE_DEDALE;
-    var y       = HAUTEUR_PLAFOND;
-    var repetes = taille;
+    let taille  = TAILLE_DEDALE;
+    let y       = HAUTEUR_PLAFOND;
+    let repetes = taille;
 
-    var sommets = new Float32Array([
+    let sommets = new Float32Array([
         0,     y, 0,
         taille, y, 0,
         taille, y, taille,
         0,     y, taille
     ]);
-    var texCoords = new Float32Array([
+    let texCoords = new Float32Array([
         0,      0,
         repetes, 0,
         repetes, repetes,
         0,      repetes
     ]);
     // Ordre inversé pour que la face regarde vers le bas
-    var indices = new Uint16Array([0, 2, 1,   0, 3, 2]);
+    let indices = new Uint16Array([0, 2, 1,   0, 3, 2]);
 
     return {
         bufferSommets:   creerBuffer(gl, gl.ARRAY_BUFFER,         sommets),
@@ -172,13 +172,13 @@ function creerMeshPlafond(gl) {
 //  Personne 2 fait tourner le mesh selon la direction du trésor
 // ============================================================
 function creerMeshFleche(gl) {
-    var yBase = HAUTEUR_PLAFOND - 0.9;  // hauteur de la base de la pyramide
-    var yPointe = yBase + 0.7;           // hauteur de la pointe
-    var d = 0.35;                        // demi-largeur (max 0.5 pour rester dans 1x1)
+    let yBase = HAUTEUR_PLAFOND - 0.9;  // hauteur de la base de la pyramide
+    let yPointe = yBase + 0.7;           // hauteur de la pointe
+    let d = 0.35;                        // demi-largeur (max 0.5 pour rester dans 1x1)
 
     // Base carrée centrée en (0.5, yBase, 0.5) — centrée dans la cellule
     // Pointe vers +X (colonne+1)
-    var sommets = new Float32Array([
+    let sommets = new Float32Array([
         // 4 sommets de la base
         0.5-d, yBase, 0.5-d,   // 0
         0.5-d, yBase, 0.5+d,   // 1
@@ -188,12 +188,12 @@ function creerMeshFleche(gl) {
         0.5+0.5, yPointe, 0.5  // 4  pointe
     ]);
 
-    var texCoords = new Float32Array([
+    let texCoords = new Float32Array([
         0,0,  0,1,  1,0,  1,1,
         0.5, 1.0
     ]);
 
-    var indices = new Uint16Array([
+    let indices = new Uint16Array([
         // Base (2 triangles)
         0, 2, 3,   0, 3, 1,
         // 4 faces latérales
@@ -218,35 +218,35 @@ function creerMeshFleche(gl) {
 //  Visuellement différent du récepteur (couleur gérée dans MaterialFactory)
 // ============================================================
 function creerMeshTeleporteur(gl) {
-    var h  = 0.6;   // hauteur
-    var r  = 0.38;  // rayon (reste dans 1x1)
-    var cx = 0.5;   // centre X dans la cellule
-    var cz = 0.5;   // centre Z dans la cellule
-    var n  = 8;     // nombre de côtés
+    let h  = 0.6;   // hauteur
+    let r  = 0.38;  // rayon (reste dans 1x1)
+    let cx = 0.5;   // centre X dans la cellule
+    let cz = 0.5;   // centre Z dans la cellule
+    let n  = 8;     // nombre de côtés
 
-    var sommets   = [];
-    var texCoords = [];
-    var indices   = [];
+    let sommets   = [];
+    let texCoords = [];
+    let indices   = [];
 
     // Centre bas (index 0) et centre haut (index 1)
     sommets.push(cx, 0, cz);   texCoords.push(0.5, 0.5);  // centre bas
     sommets.push(cx, h, cz);   texCoords.push(0.5, 0.5);  // centre haut
 
     // Sommets du périmètre bas (indices 2..n+1) et haut (indices n+2..2n+1)
-    for (var i = 0; i < n; i++) {
-        var angle = (i / n) * 2 * Math.PI;
-        var x = cx + r * Math.cos(angle);
-        var z = cz + r * Math.sin(angle);
+    for (let i = 0; i < n; i++) {
+        let angle = (i / n) * 2 * Math.PI;
+        let x = cx + r * Math.cos(angle);
+        let z = cz + r * Math.sin(angle);
         sommets.push(x, 0, z);  texCoords.push(0.5 + 0.5*Math.cos(angle), 0.5 + 0.5*Math.sin(angle));
         sommets.push(x, h, z);  texCoords.push(0.5 + 0.5*Math.cos(angle), 0.5 + 0.5*Math.sin(angle));
     }
 
     // Faces : base + côtés + dessus
-    for (var i = 0; i < n; i++) {
-        var bas1  = 2 + i * 2;
-        var haut1 = 3 + i * 2;
-        var bas2  = 2 + ((i + 1) % n) * 2;
-        var haut2 = 3 + ((i + 1) % n) * 2;
+    for (let i = 0; i < n; i++) {
+        let bas1  = 2 + i * 2;
+        let haut1 = 3 + i * 2;
+        let bas2  = 2 + ((i + 1) % n) * 2;
+        let haut2 = 3 + ((i + 1) % n) * 2;
 
         // Face base (vers le bas)
         indices.push(0, bas2, bas1);
@@ -271,31 +271,31 @@ function creerMeshTeleporteur(gl) {
 //  Repose sur le plancher — max 1x1 — non plat
 // ============================================================
 function creerMeshRecepteur(gl) {
-    var hExt  = 0.5;  // hauteur totale
-    var rExt  = 0.42; // rayon extérieur
-    var rInt  = 0.22; // rayon intérieur (creux au centre)
-    var cx    = 0.5;
-    var cz    = 0.5;
-    var n     = 8;
+    let hExt  = 0.5;  // hauteur totale
+    let rExt  = 0.42; // rayon extérieur
+    let rInt  = 0.22; // rayon intérieur (creux au centre)
+    let cx    = 0.5;
+    let cz    = 0.5;
+    let n     = 8;
 
-    var sommets   = [];
-    var texCoords = [];
-    var indices   = [];
-    var idx       = 0;
+    let sommets   = [];
+    let texCoords = [];
+    let indices   = [];
+    let idx       = 0;
 
-    for (var i = 0; i < n; i++) {
-        var a1 = (i / n)       * 2 * Math.PI;
-        var a2 = ((i+1) % n) / n * 2 * Math.PI;
+    for (let i = 0; i < n; i++) {
+        let a1 = (i / n)       * 2 * Math.PI;
+        let a2 = ((i+1) % n) / n * 2 * Math.PI;
 
         // 4 sommets du segment de l'anneau
-        var xExt1 = cx + rExt * Math.cos(a1);
-        var zExt1 = cz + rExt * Math.sin(a1);
-        var xInt1 = cx + rInt * Math.cos(a1);
-        var zInt1 = cz + rInt * Math.sin(a1);
-        var xExt2 = cx + rExt * Math.cos(a2);
-        var zExt2 = cz + rExt * Math.sin(a2);
-        var xInt2 = cx + rInt * Math.cos(a2);
-        var zInt2 = cz + rInt * Math.sin(a2);
+        let xExt1 = cx + rExt * Math.cos(a1);
+        let zExt1 = cz + rExt * Math.sin(a1);
+        let xInt1 = cx + rInt * Math.cos(a1);
+        let zInt1 = cz + rInt * Math.sin(a1);
+        let xExt2 = cx + rExt * Math.cos(a2);
+        let zExt2 = cz + rExt * Math.sin(a2);
+        let xInt2 = cx + rInt * Math.cos(a2);
+        let zInt2 = cz + rInt * Math.sin(a2);
 
         // Face haute de l'anneau
         sommets.push(xExt1,hExt,zExt1, xInt1,hExt,zInt1, xInt2,hExt,zInt2, xExt2,hExt,zExt2);
@@ -335,23 +335,23 @@ function creerMeshRecepteur(gl) {
 //  Repose sur le plancher — max 1x1 — non plat — énoncé 3.9
 // ============================================================
 function creerMeshTresor(gl) {
-    var larg = 0.7;  // largeur (X)
-    var haut = 0.5;  // hauteur totale
-    var prof = 0.45; // profondeur (Z)
+    let larg = 0.7;  // largeur (X)
+    let haut = 0.5;  // hauteur totale
+    let prof = 0.45; // profondeur (Z)
     // Centré dans la cellule
-    var ox = (1 - larg) / 2;  // offset X
-    var oz = (1 - prof) / 2;  // offset Z
-    var hCorps = haut * 0.65; // hauteur du corps
-    var hCouvercle = haut - hCorps;
+    let ox = (1 - larg) / 2;  // offset X
+    let oz = (1 - prof) / 2;  // offset Z
+    let hCorps = haut * 0.65; // hauteur du corps
+    let hCouvercle = haut - hCorps;
 
     // Corps (boîte basse)
-    var x0=ox, x1=ox+larg, z0=oz, z1=oz+prof;
-    var y0=0,  y1=hCorps,  y2=haut;
+    let x0=ox, x1=ox+larg, z0=oz, z1=oz+prof;
+    let y0=0,  y1=hCorps,  y2=haut;
 
-    var d = 0.03; // débordement du couvercle
+    let d = 0.03; // débordement du couvercle
 
     // Construire les sommets en tableau JS d'abord
-    var tabSommets = [
+    let tabSommets = [
         // Corps — 6 faces × 4 sommets
         // Avant
         x0,y0,z0, x1,y0,z0, x1,y1,z0, x0,y1,z0,
@@ -377,17 +377,17 @@ function creerMeshTresor(gl) {
         // Dessus couvercle
         x0-d, y2, z0-d,  x1+d, y2, z0-d,  x1+d, y2, z1+d,  x0-d, y2, z1+d
     ];
-    var sommets = new Float32Array(tabSommets);
+    let sommets = new Float32Array(tabSommets);
 
     // UV simples (0,0 partout — la couleur dorée suffit)
-    var tabTex = [];
-    for (var t = 0; t < tabSommets.length / 3; t++) { tabTex.push(0, 0); }
-    var texCoords = new Float32Array(tabTex);
+    let tabTex = [];
+    for (let t = 0; t < tabSommets.length / 3; t++) { tabTex.push(0, 0); }
+    let texCoords = new Float32Array(tabTex);
 
     // Générer indices pour 11 faces × 2 triangles = 22 triangles
-    var indices = [];
-    for (var f = 0; f < 11; f++) {
-        var b = f * 4;
+    let indices = [];
+    for (let f = 0; f < 11; f++) {
+        let b = f * 4;
         indices.push(b, b+1, b+2,  b, b+2, b+3);
     }
 
@@ -405,18 +405,18 @@ function creerMeshTresor(gl) {
 //  visible seulement en vue aérienne — énoncé section 5
 // ============================================================
 function creerMeshIndicateurJoueur(gl) {
-    var y  = HAUTEUR_PLAFOND - 0.05;  // juste sous le plafond, bien visible du dessus
-    var r  = 0.3;
+    let y  = HAUTEUR_PLAFOND - 0.05;  // juste sous le plafond, bien visible du dessus
+    let r  = 0.3;
 
     // Triangle isocèle pointant vers +X (direction naturelle)
     // Personne 2 (ou Personne 3) fait tourner selon la vraie direction du joueur
-    var sommets = new Float32Array([
+    let sommets = new Float32Array([
         0.5 + r,    y, 0.5,         // pointe (avant)
         0.5 - r*0.6, y, 0.5 - r*0.6, // coin gauche
         0.5 - r*0.6, y, 0.5 + r*0.6  // coin droit
     ]);
-    var texCoords = new Float32Array([0.5,1, 0,0, 1,0]);
-    var indices   = new Uint16Array([0, 1, 2]);
+    let texCoords = new Float32Array([0.5,1, 0,0, 1,0]);
+    let indices   = new Uint16Array([0, 1, 2]);
 
     return {
         bufferSommets:   creerBuffer(gl, gl.ARRAY_BUFFER,         sommets),

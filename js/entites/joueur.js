@@ -4,10 +4,11 @@
     But: Gestion du joueur
 */
 
+
 /* ----- Constantes ----- */
 const VITESSE_DEPLACEMENT = 0.05;
 const VITESSE_ROTATION = 1;
-const RAYON_JOUEUR = 0.2;
+const RAYON_JOUEUR = 0.2; // pour les collisions, légèrement plus petit que 0.5 pour éviter de rester coincé
 
 /* ----- Variables -----*/
 let joueur = {
@@ -50,12 +51,11 @@ function estCelluleBloquante(ligne, colonne) {
 |-----------------------------------------------------------------------------|
 */
 function peutSeDeplacer(x, z) {
-    let pointsATester = [
-        { x: x, z: z },                     // centre
-        { x: x + RAYON_JOUEUR, z: z },      // haut-gauche
-        { x: x - RAYON_JOUEUR, z: z },      // haut-droite
-        { x: x, z: z + RAYON_JOUEUR },      // bas-gauche
-        { x: x, z: z - RAYON_JOUEUR }       // bas-droite
+    let pointsATester = [ //verifier les 4 coins du joueur pour éviter de rester coincé dans les murs ou voir a travers les murs
+        { x: x - RAYON_JOUEUR, z: z - RAYON_JOUEUR },     // haut-gauche
+        { x: x + RAYON_JOUEUR, z: z - RAYON_JOUEUR },      // haut-droite
+        { x: x - RAYON_JOUEUR, z: z + RAYON_JOUEUR },      // bas-gauche
+        { x: x + RAYON_JOUEUR, z: z + RAYON_JOUEUR },      // bas-droite
     ];
 
     for (let i = 0; i < pointsATester.length; i++) {
@@ -220,7 +220,7 @@ function ouvrirMurDevantJoueur() {
     let mur3D = trouverMur3D(celluleDevant.ligne, celluleDevant.colonne);
 
     if (mur3D !== null) {
-        //ouvrirMurGraphiquement(mur3D);
+        ouvrirMurGraphiquement(mur3D);
     }
 
     console.log("Mur ouvert !");

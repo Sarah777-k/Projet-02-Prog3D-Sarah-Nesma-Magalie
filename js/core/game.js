@@ -37,7 +37,8 @@ let gameState = {
     score: SCORE_DEFAUT,
     tempsRestant: 0,
     ouvreurs: 0,
-    etat: ETAT_EN_COURS
+    etat: ETAT_EN_COURS,
+    porteEnclosFermee: false
 };
 
 function demarrer() {
@@ -71,6 +72,7 @@ function initialiserJeu() {
     gameState.tempsRestant = TEMPS_NIVEAU;
     gameState.ouvreurs = 4;   ///////////////////////////////// A modifier, viendra de levelManager
     gameState.etat = ETAT_EN_COURS;
+    gameState.porteEnclosFermee = false;
 }
 
 // Boucle de rendu (appelée ~60x par seconde)
@@ -133,4 +135,26 @@ function demanderOuvertureMur() {
         console.log("Ouvreurs restants :", gameState.ouvreurs);
         console.log("Score :", gameState.score);
     }
+}
+
+/*
+|-----------------------------------------------------------------------------|
+| demanderFermetureEnclos:
+|   Ferme la sortie de l'enclos après que le joueur en soit sorti
+|-----------------------------------------------------------------------------|
+*/
+function demanderFermetureEnclos() {
+    let cellulePorte = obtenirCellule(14, 15);
+
+    if (cellulePorte == null) {
+        return;
+    }
+
+    cellulePorte.type = TYPE_ENCLOS; /////////////////////// Voir si on crée un type spécial pour la porte
+    cellulePorte.estOuverte = false;
+
+    gameState.porteEnclosFermee = false;
+
+    console.log("Enclos fermé");
+    // fermerMurGraphiquement(14, 15);
 }

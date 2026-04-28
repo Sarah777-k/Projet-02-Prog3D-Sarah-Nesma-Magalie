@@ -168,7 +168,7 @@ function initTextures(gl) {
     textureMurSolide   = chargerTexture(gl, "../assets/textures/mur_solide.png");
     texturePlancher    = chargerTexture(gl, "../assets/textures/plancher.png");
     texturePlafond     = chargerTexture(gl, "../assets/textures/plafond.png");
-    textureEnclos      = chargerTexture(gl, "../assets/textures/enclos.png");
+    textureEnclos      = chargerTexture(gl, "../assets/textures/fleche.jpg");
     textureFleche      = chargerTexture(gl, "../assets/textures/fleche.jpg");
     textureTeleporteur = chargerTexture(gl, "../assets/textures/teleporteur.png");
     textureRecepteur   = chargerTexture(gl, "../assets/textures/teleporteur.png");

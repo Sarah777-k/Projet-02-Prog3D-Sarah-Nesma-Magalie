@@ -83,5 +83,12 @@ class Cell {
         }
         return false;
     }
+    fermer() {
+        if (this.estMurOuvrable()) {
+            this.estOuverte = false;
+            return true;
+        }       
+        return false;
+    }
 
 }

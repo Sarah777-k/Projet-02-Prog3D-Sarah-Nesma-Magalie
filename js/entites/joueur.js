@@ -121,6 +121,8 @@ function reculer() {
 function deplacerJoueur(facteur) {
     let direction = obtenirDirectionVecteur();
 
+    let ancienneCellule = obtenirCelluleDepuisPosition(joueur.x, joueur.z);
+
     let newX = joueur.x + direction.x * VITESSE_DEPLACEMENT * facteur;
     let newZ = joueur.z + direction.z * VITESSE_DEPLACEMENT * facteur;
 
@@ -136,6 +138,9 @@ function deplacerJoueur(facteur) {
             joueur.z = newZ;
         }
     }
+
+    let nouvelleCellule = obtenirCelluleDepuisPosition(joueur.x, joueur.z);
+    verifierSortieEnclos(ancienneCellule, nouvelleCellule);
 }
 
 /*
@@ -222,3 +227,23 @@ function ouvrirMurDevantJoueur() {
     return true;
 }
 
+/*
+|-----------------------------------------------------------------------------|
+| verifierSortieEnclos:
+|   Ferme l'enclos quand le joueur sort par la sortie nord
+|-----------------------------------------------------------------------------|
+*/
+function verifierSortieEnclos(ancienneCellule, nouvelleCellule) {
+    if (gameState.porteEnclosFermee) {
+        return;
+    }
+
+    if (
+        ancienneCellule.ligne === 14 &&
+        ancienneCellule.colonne === 15 &&
+        nouvelleCellule.ligne === 13 &&
+        nouvelleCellule.colonne === 15
+    ) {
+        demanderFermetureEnclos();
+    }
+}

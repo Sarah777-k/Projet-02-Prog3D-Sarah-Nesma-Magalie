@@ -1,5 +1,76 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
+body {
+  background: #0a0a0a;
+  font-family: 'Courier New', monospace;
+  color: #d4b942;
+}
+
+/* Canvas */
 #monCanvas {
   display: block;
-  border: 1px solid white;
+  width: 100%;
+}
+
+#hud {
+  position: absolute;     
+  bottom: 0;              
+  left: 0;
+  right: 0;               
+  background: rgba(10, 10, 10, 0.85);  
+  padding: 14px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #d4b942;
+  backdrop-filter: blur(4px);  
+}
+
+.hud-rec {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.rec-dot {
+  width: 8px;
+  height: 8px;
+  background: #ff3030;
+  border-radius: 50%;
+  animation: pulse-rec 1.5s infinite;
+}
+
+.rec-text {
+  font-size: 11px;
+  color: #d4b942;
+  letter-spacing: 2px;
+  font-weight: bold;
+}
+
+/* Animation du bouton rouge REC */
+@keyframes pulse-rec {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.3; }
+}
+
+.info-hud {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.label {
+  font-size: 11px;
+  color: #888;
+  letter-spacing: 2px;
+}
+
+.valeur {
+  font-size: 18px;
+  color: #d4b942;
+  font-weight: bold;
 }

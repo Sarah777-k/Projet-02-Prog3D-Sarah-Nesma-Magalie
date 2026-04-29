@@ -12,6 +12,30 @@
       Votre navigateur ne supporte pas la balise canvas
     </canvas>
 
+    <!-- HUD -->
+    <div id="hud">
+      <div class="hud-rec">
+        <div class="rec-dot"></div>
+        <span class="rec-text">REC</span>
+      </div>
+      <div class="info-hud">
+        <span class="label">NIVEAU</span>
+        <span id="niveau" class="valeur">1</span>
+      </div>
+      <div class="info-hud">
+        <span class="label">SCORE</span>
+        <span id="score" class="valeur">300</span>
+      </div>
+      <div class="info-hud">
+        <span class="label">TEMPS</span>
+        <span id="temps" class="valeur">60</span>
+      </div>
+      <div class="info-hud">
+        <span class="label">OUVREURS</span>
+        <span id="ouvreurs" class="valeur">4</span>
+      </div>
+    </div>
+    
     <!-- Code JavaScript -->
     <script src="../includes/glMatrix-0.9.5.min.js"></script>
     <script src="../includes/WebGL.js"></script>
@@ -24,7 +48,7 @@
     <!-- Graphique -->
     <script src="../js/graphique/MaterialFactory.js"></script>
     <script src="../js/graphique/MeshFactory.js"></script>
-    <script src="../js/entites/mur.js"></script>
+
     <!-- Scène -->
     <script src="../js/entites/joueur.js"></script>
     <script src="../js/core/inputManager.js"></script>

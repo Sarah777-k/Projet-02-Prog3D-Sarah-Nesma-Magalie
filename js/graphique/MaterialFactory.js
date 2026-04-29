@@ -22,21 +22,21 @@
 //  texture  : objet WebGL texture (null si aucune texture)
 //
 //  Usage :
-//    var mat = creerMatMurOuvrable();
+//    let mat = creerMatMurOuvrable();
 //    appliquerMateriau(gl, shaderProgram, mat);
 // ============================================================
 
-// ----- Variables globales des textures ----------------------
-// Remplir ces variables dans initTextures() au chargement du jeu
-var textureMurOuvrable    = null;
-var textureMurSolide      = null;
-var texturePlancher       = null;
-var texturePlafond        = null;
-var textureEnclos         = null;
-var textureFleche         = null;
-var textureTeleporteur    = null;
-var textureRecepteur      = null;
-var textureTresor         = null;
+// ----- letiables globales des textures ----------------------
+// Remplir ces letiables dans initTextures() au chargement du jeu
+let textureMurOuvrable    = null;
+let textureMurSolide      = null;
+let texturePlancher       = null;
+let texturePlafond        = null;
+let textureEnclos         = null;
+let textureFleche         = null;
+let textureTeleporteur    = null;
+let textureRecepteur      = null;
+let textureTresor         = null;
 
 // ============================================================
 //  Création des matériaux
@@ -141,6 +141,7 @@ function appliquerMateriau(gl, shaderProgram, materiau) {
         materiau.couleur[1],
         materiau.couleur[2],
         materiau.couleur[3]
+
     );
 
     if (materiau.texture != null) {
@@ -168,7 +169,7 @@ function initTextures(gl) {
     textureMurSolide   = chargerTexture(gl, "../assets/textures/mur_solide.png");
     texturePlancher    = chargerTexture(gl, "../assets/textures/plancher.png");
     texturePlafond     = chargerTexture(gl, "../assets/textures/plafond.png");
-    textureEnclos      = chargerTexture(gl, "../assets/textures/fleche.jpg");
+    textureEnclos      = chargerTexture(gl, "../assets/textures/mur_ouvert.png");
     textureFleche      = chargerTexture(gl, "../assets/textures/fleche.jpg");
     textureTeleporteur = chargerTexture(gl, "../assets/textures/teleporteur.png");
     textureRecepteur   = chargerTexture(gl, "../assets/textures/teleporteur.png");
@@ -178,7 +179,7 @@ function initTextures(gl) {
 // Charge une image et crée une texture WebGL
 // Retourne l'objet texture (utilisable immédiatement grâce au pixel temporaire)
 function chargerTexture(gl, cheminImage) {
-    var texture = gl.createTexture();
+    let texture = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, texture);
 
     // Pixel temporaire magenta (visible si l'image est lente à charger)
@@ -186,7 +187,7 @@ function chargerTexture(gl, cheminImage) {
                   gl.UNSIGNED_BYTE, new Uint8Array([255, 0, 255, 255]));
 
     // Charger la vraie image en arrière-plan
-    var image = new Image();
+    let image = new Image();
     image.onload = function() {
         gl.bindTexture(gl.TEXTURE_2D, texture);
         gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);

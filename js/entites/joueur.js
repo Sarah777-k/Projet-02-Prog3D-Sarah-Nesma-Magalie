@@ -49,6 +49,12 @@ function estCelluleBloquante(ligne, colonne) {
 | peutSeDeplacer:
 |   Vérifie si le déplacement est possible
 |-----------------------------------------------------------------------------|
+(x - R)        (x + R)
+    •────────•   ↑
+    │        │   |
+    │   C    │   | Z
+    │        │   ↓
+    •────────•
 */
 function peutSeDeplacer(x, z) {
     let pointsATester = [ //verifier les 4 coins du joueur pour éviter de rester coincé dans les murs ou voir a travers les murs

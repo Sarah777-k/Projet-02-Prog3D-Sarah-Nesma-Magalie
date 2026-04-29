@@ -5,7 +5,7 @@
 */
 
 // Liste globale des murs (utilisée pour ouverture de murs par Personne 2)
-var tabMurs = [];
+let tabMurs = [];
 
 // ============================================================
 //  construireScene()
@@ -13,9 +13,7 @@ var tabMurs = [];
 //  Retourne un tableau d'objets à dessiner.
 // ============================================================
 function construireScene(objgl) {
-  var tabObjets = [];
-  tabMurs = [];
-
+  let tabObjets = [];
   // Un seul grand plancher 31x31 (plus efficace que cellule par cellule)
   tabObjets.push({
     mesh: creerMeshPlancher(objgl),
@@ -24,38 +22,17 @@ function construireScene(objgl) {
     z: 0,
     type: "plancher",
   });
+  //pour type enclos
+  tabObjets.push({
+    mesh: creerMeshEnclos(objgl),
+    x: 14,
+    y: 0.01,
+    z: 14,
+    type: "enclos",
+  });
 
-
-  //   tabObjets.push({
-  //     mesh: creerMeshPlafond(objgl),
-  //     x: 0,
-  //     y: 0,
-  //     z: 0,
-  //     type: "plafond",
-  //   });
-
-  // Lire la grille : créer un mur 3D pour chaque cellule mur
-  for (var i = 0; i < TAILLE_DEDALE; i++) {
-    for (var j = 0; j < TAILLE_DEDALE; j++) {
-      var typeCellule = obtenirTypeCellule(i, j);
-
-      if (typeCellule == TYPE_MUR_OUV || typeCellule == TYPE_MUR_SOLIDE) {
-        var objMur = {
-          mesh: creerMeshMur(objgl),
-          x: j,
-          y: 0,
-          z: i,
-          ligne: i,
-          col: j,
-          type: typeCellule,
-          visible: true, // utilisé pour ouvrirMur() par Personne 2
-        };
-
-        tabObjets.push(objMur);
-        tabMurs.push(objMur); // référence séparée pour collisions/ouverture
-      }
-    }
-  }
+  tabMurs = initMur(objgl);
+  tabObjets = tabObjets.concat(tabMurs); // ajouter les murs à la scène
 
   return tabObjets;
 }
@@ -71,7 +48,7 @@ function dessinerScene(gl, shaderProgram, scene) {
   gl.enable(gl.DEPTH_TEST);
 
   // --- Matrice de projection (perspective) ---
-  var matProjection = mat4.create();
+  let matProjection = mat4.create();
   mat4.perspective(
     60, // angle de vue (degrés)
     gl.drawingBufferWidth / gl.drawingBufferHeight, // ratio largeur/hauteur
@@ -82,7 +59,7 @@ function dessinerScene(gl, shaderProgram, scene) {
   gl.uniformMatrix4fv(shaderProgram.matProjection, false, matProjection);
 
   // --- Matrice de vue (caméra = joueur) ---
-  var matVue = mat4.create();
+  let matVue = mat4.create();
   mat4.lookAt(
     getPositionsCameraXYZ(scene.camera),
     getCiblesCameraXYZ(scene.camera),
@@ -91,23 +68,23 @@ function dessinerScene(gl, shaderProgram, scene) {
   );
 
   // --- Dessiner chaque objet ---
-  for (var i = 0; i < scene.objets.length; i++) {
-    var obj = scene.objets[i];
+  for (let i = 0; i < scene.objets.length; i++) {
+    let obj = scene.objets[i];
 
     // Ne pas dessiner les murs ouverts
     if (obj.visible === false) continue;
 
     // Choisir le bon matériau selon le type
-    var mat;
+    let mat;
     switch (obj.type) {
       case TYPE_MUR_OUV:
         mat = creerMatMurOuvrable();
         break;
+      case "enclos":
+        mat = creerMatEnclos();
+        break;
       case TYPE_MUR_SOLIDE:
         mat = creerMatMurSolide();
-        break;
-      case TYPE_ENCLOS:
-        mat = creerMatEnclos();
         break;
       case "plafond":
         mat = creerMatPlafond();
@@ -118,14 +95,31 @@ function dessinerScene(gl, shaderProgram, scene) {
     }
     appliquerMateriau(gl, shaderProgram, mat);
 
+   //gestion de l'animation ouverture mur
+   //----///////////////////////////////ajouter au debut de jeu le mur enclos est ferme ensuite s'ouvre pour que le joueur sorte et enfin de ferme a nouveau   ////////////////
+    if (obj.enOuverture === true) {
+      obj.progression += 0.01;
+
+      if (obj.progression >= 1) {
+        obj.progression = 1;
+        obj.enOuverture = false;
+        obj.visible = false;
+      }
+    }
+
+    let yAnimation = obj.y;
+
+    if (obj.type === TYPE_MUR_OUV && obj.progression > 0) {
+      yAnimation = obj.y - obj.progression * HAUTEUR_MUR;
+    }
+    
     // Matrice modèle : placer l'objet à sa position dans la scène
-    var matModele = mat4.create();
+    let matModele = mat4.create();
     mat4.identity(matModele);
-    mat4.translate(matModele, [obj.x, obj.y, obj.z]);
+    mat4.translate(matModele, [obj.x, yAnimation, obj.z]);
 
-    var matModeleVue = mat4.create();
+    let matModeleVue = mat4.create();
     mat4.multiply(matVue, matModele, matModeleVue);
-
 
     dessinerMesh(gl, shaderProgram, obj.mesh, matModeleVue);
   }

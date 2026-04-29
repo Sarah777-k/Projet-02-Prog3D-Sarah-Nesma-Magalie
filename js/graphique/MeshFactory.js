@@ -131,6 +131,33 @@ function creerMeshPlancher(gl) {
     };
 }
 
+function creerMeshEnclos(gl) {
+    let largeur = 3;
+    let profondeur = 3;
+
+    let sommets = new Float32Array([
+        0, 0, 0,
+        largeur, 0, 0,
+        largeur, 0, profondeur,
+        0, 0, profondeur
+    ]);
+
+    let texCoords = new Float32Array([
+        0, 0,
+        3, 0,
+        3, 3,
+        0, 3
+    ]);
+
+    let indices = new Uint16Array([0, 1, 2, 0, 2, 3]);
+
+    return {
+        bufferSommets: creerBuffer(gl, gl.ARRAY_BUFFER, sommets),
+        bufferTexCoords: creerBuffer(gl, gl.ARRAY_BUFFER, texCoords),
+        bufferIndices: creerBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, indices),
+        nbIndices: indices.length
+    };
+}
 // ============================================================
 //  PLAFOND  (rectangle 31x31, Y=HAUTEUR_PLAFOND)
 //  Faces vers le bas (normales inversées par rapport au plancher)
@@ -445,10 +472,6 @@ function dessinerMesh(gl, shaderProgram, mesh, matModeleVue) {
     gl.bindBuffer(gl.ARRAY_BUFFER, mesh.bufferTexCoords);
     gl.vertexAttribPointer(shaderProgram.posTexel, 2, gl.FLOAT, false, 0, 0);
 
-  
-
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, mesh.bufferIndices);
     gl.drawElements(gl.TRIANGLES, mesh.nbIndices, gl.UNSIGNED_SHORT, 0);
-
-    gl.enableVertexAttribArray(shaderProgram.couleurVertex);
 }

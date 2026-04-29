@@ -153,8 +153,9 @@ function demanderFermetureEnclos() {
     cellulePorte.type = TYPE_ENCLOS; /////////////////////// Voir si on crée un type spécial pour la porte
     cellulePorte.estOuverte = false;
 
-    gameState.porteEnclosFermee = false;
+    gameState.porteEnclosFermee = true;
 
     console.log("Enclos fermé");
-    // fermerMurGraphiquement(14, 15);
+    fermerMurGraphiquement(13, 15);
 }
+

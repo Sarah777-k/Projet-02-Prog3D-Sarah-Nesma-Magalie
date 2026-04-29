@@ -211,17 +211,11 @@ function ouvrirMurDevantJoueur() {
         return false;
     }
 
-    if (!cellule.estMurOuvrable()) {
-        console.log("Le mur devant le joueur n'est pas ouvrable.");
+    let murOuvert = cellule.ouvrir();
+
+    if (!murOuvert) {
         return false;
     }
-
-    if (cellule.estOuverte) {
-        console.log("Ce mur est déjà ouvert.");
-        return false;
-    }
-
-    cellule.ouvrir();
 
     let mur3D = trouverMur3D(celluleDevant.ligne, celluleDevant.colonne);
 
@@ -229,7 +223,6 @@ function ouvrirMurDevantJoueur() {
         ouvrirMurGraphiquement(mur3D);
     }
 
-    console.log("Mur ouvert !");
     return true;
 }
 

@@ -87,15 +87,12 @@ class Cell {
     /*
     |-----------------------------------------------------------------------------|
     | fermerPorte:
-    |   Ouvre le mur seulemet si c'est un mur ouvrable
+    |   Ferme la porte de l'enclos après que le joueur en soit sorti
     |-----------------------------------------------------------------------------|
     */
     fermerPorte() {
-        if (this.estMurOuvrable()) {
-            this.estOuverte = false;
-            return true;
-        }       
-        return false;
+        this.type = TYPE_MUR_SOLIDE;
+        this.estOuverte = false;
     }
 
 }

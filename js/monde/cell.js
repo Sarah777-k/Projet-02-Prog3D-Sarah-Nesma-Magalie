@@ -83,7 +83,14 @@ class Cell {
         }
         return false;
     }
-    fermer() {
+    
+    /*
+    |-----------------------------------------------------------------------------|
+    | fermerPorte:
+    |   Ouvre le mur seulemet si c'est un mur ouvrable
+    |-----------------------------------------------------------------------------|
+    */
+    fermerPorte() {
         if (this.estMurOuvrable()) {
             this.estOuverte = false;
             return true;

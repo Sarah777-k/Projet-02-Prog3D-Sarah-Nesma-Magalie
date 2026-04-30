@@ -31,7 +31,7 @@
 // ----- Constantes de géométrie ------------------------------
 let HAUTEUR_MUR    = 2.5;   // hauteur des murs (atteint le plafond)
 let HAUTEUR_Y_CAM  = 1.0;   // hauteur des yeux du joueur (Y de la caméra)
-let HAUTEUR_PLAFOND = HAUTEUR_MUR-1; // le plafond est à la même hauteur que le sommet des murs
+let HAUTEUR_PLAFOND = HAUTEUR_MUR-1.5; // le plafond est à la même hauteur que le sommet des murs
    // redéfini ici pour MeshFactory (même valeur que maze.js)
 
 // ============================================================

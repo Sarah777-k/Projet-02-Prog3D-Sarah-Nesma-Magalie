@@ -16,9 +16,9 @@ const ETAT_GAME_OVER = "GAME_OVER";
 const TEMPS_NIVEAU = 60;
 
 let niveauCourant = 1;
-let debutNiveauMs = 0;
-let tempsEcouleMs = 0;
-let scoreNiveau = 0;
+// let debutNiveauMs = 0;
+// let tempsEcouleMs = 0;
+// let scoreNiveau = 0;
 
 const IDX_OUVREURS = 0;
 const IDX_FLECHES = 1;
@@ -51,7 +51,6 @@ const CONFIG_NIVEAUX = [
 function initNiveau(niveau, nouveauPlacementObjets = true) {
     gameState.etat = ETAT_EN_COURS;
     gameState.porteEnclosFermee = false;
-    gameState.tempsRestant = TEMPS_NIVEAU;
     gameState.ouvreurs = obtenirNbOuvreurs(niveau);
 
     if (nouveauPlacementObjets) {
@@ -61,9 +60,9 @@ function initNiveau(niveau, nouveauPlacementObjets = true) {
     
     //chargerObjetsNiveau();
 
-    debutNiveauMs = 0;
-    tempsEcouleMs = 0;
-    scoreNiveau = 0;
+    // debutNiveauMs = 0;
+    // tempsEcouleMs = 0;
+    // scoreNiveau = 0;
 
     replacerJoueurDepart();
     
@@ -82,7 +81,8 @@ function initNiveau(niveau, nouveauPlacementObjets = true) {
 function gagnerNiveau() {
     if (etatJeu !== ETAT_EN_COURS) return;
 
-    scoreTotal += scoreNiveau;
+    // scoreTotal += scoreNiveau;
+    
 
     // Niveau suivant
     if (niveauCourant >= MAX_NIVEAUX) {

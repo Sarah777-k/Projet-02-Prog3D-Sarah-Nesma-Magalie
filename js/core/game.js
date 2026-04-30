@@ -25,7 +25,6 @@ let objProgShaders;
 
 let gameState = {
     niveau: 1,
-    tempsRestant: 0,
     ouvreurs: 0,
     fleches: 0,
     teleporteurs: 0,

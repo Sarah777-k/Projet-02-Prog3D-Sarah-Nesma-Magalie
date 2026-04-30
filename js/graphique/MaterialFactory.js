@@ -174,14 +174,15 @@ function appliquerMateriau(gl, shaderProgram, materiau) {
 function initTextures(gl) {
     //textureMurOuvrable = chargerTexture(gl, "../assets/textures/mur_ouvert.png");
     textureMurOuvrable = chargerTexture(gl, "../assets/backrooms/backrooms-wall-diffuse.png");
-    textureMurSolide   = chargerTexture(gl, "../assets/textures/mur_solide.png");
+    textureMurSolide   = chargerTexture(gl, "../assets/backrooms/solide.jpg");
     textureSoubassement = chargerTexture(gl, "../assets/backrooms/soubassements.png");
     //texturePlancher    = chargerTexture(gl, "../assets/textures/plancher.png");
     texturePlancher    = chargerTexture(gl, "../assets/backrooms/backrooms-carpet-diffuse.png");
     //texturePlafond     = chargerTexture(gl, "../assets/textures/plafond.png");
     texturePlafond     = chargerTexture(gl, "../assets/backrooms/backrooms-ceiling-tile-diffuse.png");
-    textureEnclos      = chargerTexture(gl, "../assets/textures/mur_ouvert.png");
-    textureFleche      = chargerTexture(gl, "../assets/textures/fleche.jpg");
+    textureEnclos      = chargerTexture(gl, "../assets/backrooms/soubassements.png");
+    //textureFleche      = chargerTexture(gl, "../assets/textures/fleche.jpg");
+    textureFleche      = chargerTexture(gl, "../assets/backrooms/rouge.jpg");
     textureTeleporteur = chargerTexture(gl, "../assets/textures/teleporteur.png");
     textureRecepteur   = chargerTexture(gl, "../assets/textures/teleporteur.png");
     textureTresor      = chargerTexture(gl, "../assets/textures/fleche.jpg");

@@ -165,10 +165,13 @@ function appliquerMateriau(gl, shaderProgram, materiau) {
 //  Les fichiers image doivent être dans assets/textures/
 // ============================================================
 function initTextures(gl) {
-    textureMurOuvrable = chargerTexture(gl, "../assets/textures/mur_ouvert.png");
+    //textureMurOuvrable = chargerTexture(gl, "../assets/textures/mur_ouvert.png");
+    textureMurOuvrable = chargerTexture(gl, "../assets/backrooms/backrooms-wall-diffuse.png");
     textureMurSolide   = chargerTexture(gl, "../assets/textures/mur_solide.png");
-    texturePlancher    = chargerTexture(gl, "../assets/textures/plancher.png");
-    texturePlafond     = chargerTexture(gl, "../assets/textures/plafond.png");
+    //texturePlancher    = chargerTexture(gl, "../assets/textures/plancher.png");
+    texturePlancher    = chargerTexture(gl, "../assets/backrooms/backrooms-carpet-diffuse.png");
+    //texturePlafond     = chargerTexture(gl, "../assets/textures/plafond.png");
+    texturePlafond     = chargerTexture(gl, "../assets/backrooms/backrooms-ceiling-tile-diffuse.png");
     textureEnclos      = chargerTexture(gl, "../assets/textures/mur_ouvert.png");
     textureFleche      = chargerTexture(gl, "../assets/textures/fleche.jpg");
     textureTeleporteur = chargerTexture(gl, "../assets/textures/teleporteur.png");
@@ -197,6 +200,15 @@ function chargerTexture(gl, cheminImage) {
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+
+        //pour les textures avec des dimensions non puissances de 2, on doit utiliser CLAMP_TO_EDGE et pas REPEAT
+            if ((image.width & (image.width - 1)) === 0 && (image.height & (image.height - 1)) === 0) {
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT);
+            } else {
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+            }   
     };
     image.src = cheminImage;
 

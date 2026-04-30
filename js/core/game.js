@@ -19,15 +19,6 @@
     Ce fichier agit comme contrôleur central du jeu.
 */
 
-const TEMPS_NIVEAU = 60;
-const SCORE_DEFAUT = 300;
-
-const ETAT_ATTENTE = "ATTENTE";
-const ETAT_EN_COURS = "EN_COURS";
-const ETAT_VICTOIRE = "VICTOIRE";
-const ETAT_GAME_OVER = "GAME_OVER";
-
-
 let objScene3D = {};
 let objgl;
 let objProgShaders;
@@ -37,6 +28,9 @@ let gameState = {
     score: SCORE_DEFAUT,
     tempsRestant: 0,
     ouvreurs: 0,
+    fleches: 0,
+    teleporteurs: 0,
+    recepteurs: 0,
     etat: ETAT_EN_COURS,
     porteEnclosFermee: false
 };
@@ -63,16 +57,14 @@ function demarrer() {
 /*
 |-----------------------------------------------------------------------------|
 | initialiserJeu:
-|   Initialise les valeurs globales du jeu
+|   Initialise les valeurs globales du jeu lors du lancement du premier niveau
 |-----------------------------------------------------------------------------|
 */
 function initialiserJeu() {
     gameState.niveau = 1;
     gameState.score = SCORE_DEFAUT;
-    gameState.tempsRestant = TEMPS_NIVEAU;
-    gameState.ouvreurs = 4;   ///////////////////////////////// A modifier, viendra de levelManager
-    gameState.etat = ETAT_EN_COURS;
-    gameState.porteEnclosFermee = false;
+
+    initNiveau(gameState.niveau);
 }
 
 // Boucle de rendu (appelée ~60x par seconde)
@@ -150,7 +142,6 @@ function demanderFermetureEnclos() {
         return;
     }
 
-    cellulePorte.type = TYPE_MUR_SOLIDE;
     gameState.porteEnclosFermee = true;
 
     fermerMurGraphiquement(13, 15);
@@ -158,3 +149,16 @@ function demanderFermetureEnclos() {
     cellulePorte.fermerPorte();
 }
 
+
+/*
+|-----------------------------------------------------------------------------|
+| replacerJoueurDepart:
+|   Replace le joueur au point de départ
+|-----------------------------------------------------------------------------|
+*/
+function replacerJoueurDepart() {
+    joueur.x = 15.5;
+    joueur.y = 0.3;
+    joueur.z = 16.5;
+    joueur.angle = -90;
+}

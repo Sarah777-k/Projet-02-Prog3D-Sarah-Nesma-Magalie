@@ -6,6 +6,7 @@
 
 // Liste globale des murs (utilisée pour ouverture de murs par Personne 2)
 let tabMurs = [];
+let tabPlancher = [];
 
 // ============================================================
 //  construireScene()
@@ -30,7 +31,16 @@ function construireScene(objgl) {
     z: 14,
     type: "enclos",
   });
+  tabObjets.push({
+    mesh: creerMeshPlafond(objgl),
+    x: 0,
+    y: 1.5,
+    z: 0,
+    type: "plafond",
+  });
 
+  //tabPlancher = initplancher(objgl);
+  tabObjects = tabObjets.concat(tabPlancher); // ajouter le plafond à la scène
   tabMurs = initMur(objgl);
   tabObjets = tabObjets.concat(tabMurs); // ajouter les murs à la scène
 
@@ -42,6 +52,7 @@ function construireScene(objgl) {
 //  Appelée à chaque frame par requestAnimationFrame dans main.js
 // ============================================================
 function dessinerScene(gl, shaderProgram, scene) {
+  
   gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
   gl.clearColor(0.05, 0.05, 0.1, 1); // fond bleu très sombre (effet nuit)
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -66,6 +77,8 @@ function dessinerScene(gl, shaderProgram, scene) {
     getOrientationsXYZ(scene.camera),
     matVue,
   );
+
+  gl.uniform3fv(shaderProgram.lightPosition, [15.5, 2.4, 15.5]);
 
   // --- Dessiner chaque objet ---
   for (let i = 0; i < scene.objets.length; i++) {

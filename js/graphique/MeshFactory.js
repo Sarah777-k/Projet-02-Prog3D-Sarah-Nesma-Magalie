@@ -31,7 +31,7 @@
 // ----- Constantes de géométrie ------------------------------
 let HAUTEUR_MUR    = 2.5;   // hauteur des murs (atteint le plafond)
 let HAUTEUR_Y_CAM  = 1.0;   // hauteur des yeux du joueur (Y de la caméra)
-let HAUTEUR_PLAFOND = HAUTEUR_MUR; // le plafond est à la même hauteur que le sommet des murs
+let HAUTEUR_PLAFOND = HAUTEUR_MUR-1; // le plafond est à la même hauteur que le sommet des murs
    // redéfini ici pour MeshFactory (même valeur que maze.js)
 
 // ============================================================
@@ -56,7 +56,7 @@ function creerBuffer(gl, type, donnees) {
 // ============================================================
 function creerMeshMur(gl) {
     let h = HAUTEUR_MUR;
-
+ 
     // 8 sommets du cube (x, y, z)
     //   bas : 0-3   haut : 4-7
     //   0=(0,0,0)  1=(1,0,0)  2=(1,0,1)  3=(0,0,1)
@@ -74,16 +74,16 @@ function creerMeshMur(gl) {
         0, h, 0,   1, h, 0,   1, h, 1,   0, h, 1
         // Face dessous (y=0) : omise — collée sur le plancher, non visible
     ]);
-
+ 
     // Coordonnées de texture UV pour chaque face (répétées par face)
     let texCoords = new Float32Array([
-        0,0, 1,0, 1,1, 0,1,  // avant
-        0,0, 1,0, 1,1, 0,1,  // arrière
-        0,0, 1,0, 1,1, 0,1,  // gauche
-        0,0, 1,0, 1,1, 0,1,  // droite
-        0,0, 1,0, 1,1, 0,1   // dessus
+        0,0, 1,0, 1,2.5, 0,2.5,  // avant  (se répète 2.5x en hauteur)
+        0,0, 1,0, 1,2.5, 0,2.5,  // arrière
+        0,0, 1,0, 1,2.5, 0,2.5,  // gauche
+        0,0, 1,0, 1,2.5, 0,2.5,  // droite
+        0,0, 1,0, 1,1, 0,1        // dessus
     ]);
-
+ 
     // Indices (2 triangles par face × 5 faces)
     let indices = new Uint16Array([
          0, 1, 2,   0, 2, 3,   // avant
@@ -92,10 +92,26 @@ function creerMeshMur(gl) {
         12,13,14,  12,14,15,   // droite
         16,17,18,  16,18,19    // dessus
     ]);
+    let normales = new Float32Array([
+    // face avant z=0
+    0, 0, -1,  0, 0, -1,  0, 0, -1,  0, 0, -1,
 
+    // face arrière z=1
+    0, 0, 1,   0, 0, 1,   0, 0, 1,   0, 0, 1,
+
+    // face gauche x=0
+    -1, 0, 0,  -1, 0, 0,  -1, 0, 0,  -1, 0, 0,
+
+    // face droite x=1
+    1, 0, 0,   1, 0, 0,   1, 0, 0,   1, 0, 0,
+
+    // dessus y=h
+    0, 1, 0,   0, 1, 0,   0, 1, 0,   0, 1, 0
+]);
     return {
         bufferSommets:  creerBuffer(gl, gl.ARRAY_BUFFER,         sommets),
         bufferTexCoords:creerBuffer(gl, gl.ARRAY_BUFFER,         texCoords),
+        bufferNormales: creerBuffer(gl, gl.ARRAY_BUFFER, normales),
         bufferIndices:  creerBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, indices),
         nbIndices:      indices.length
     };
@@ -123,9 +139,18 @@ function creerMeshPlancher(gl) {
     ]);
     let indices = new Uint16Array([0, 1, 2,   0, 2, 3]);
 
+    let normales = new Float32Array([
+    0, 1, 0,
+    0, 1, 0,
+    0, 1, 0,
+    0, 1, 0
+]);
+
+
     return {
         bufferSommets:   creerBuffer(gl, gl.ARRAY_BUFFER,         sommets),
         bufferTexCoords: creerBuffer(gl, gl.ARRAY_BUFFER,         texCoords),
+        bufferNormales: creerBuffer(gl, gl.ARRAY_BUFFER, normales),
         bufferIndices:   creerBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, indices),
         nbIndices:       indices.length
     };
@@ -151,9 +176,18 @@ function creerMeshEnclos(gl) {
 
     let indices = new Uint16Array([0, 1, 2, 0, 2, 3]);
 
+    let normales = new Float32Array([
+            0, 1, 0,
+            0, 1, 0,
+            0, 1, 0,
+            0, 1, 0
+        ]);
+    
+
     return {
         bufferSommets: creerBuffer(gl, gl.ARRAY_BUFFER, sommets),
         bufferTexCoords: creerBuffer(gl, gl.ARRAY_BUFFER, texCoords),
+        bufferNormales: creerBuffer(gl, gl.ARRAY_BUFFER, normales),
         bufferIndices: creerBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, indices),
         nbIndices: indices.length
     };
@@ -163,15 +197,15 @@ function creerMeshEnclos(gl) {
 //  Faces vers le bas (normales inversées par rapport au plancher)
 // ============================================================
 function creerMeshPlafond(gl) {
-    let taille  = TAILLE_DEDALE;
+    let taille  = 1000;
     let y       = HAUTEUR_PLAFOND;
     let repetes = taille;
 
     let sommets = new Float32Array([
-        0,     y, 0,
-        taille, y, 0,
+        -taille,     y, -taille,
+        taille, y, -taille,
         taille, y, taille,
-        0,     y, taille
+        -taille,     y, taille
     ]);
     let texCoords = new Float32Array([
         0,      0,
@@ -181,10 +215,17 @@ function creerMeshPlafond(gl) {
     ]);
     // Ordre inversé pour que la face regarde vers le bas
     let indices = new Uint16Array([0, 2, 1,   0, 3, 2]);
+     let normales = new Float32Array([
+        0, -1, 0,
+        0, -1, 0,
+        0, -1, 0,
+        0, -1, 0
+    ]);
 
     return {
         bufferSommets:   creerBuffer(gl, gl.ARRAY_BUFFER,         sommets),
         bufferTexCoords: creerBuffer(gl, gl.ARRAY_BUFFER,         texCoords),
+        bufferNormales: creerBuffer(gl, gl.ARRAY_BUFFER, normales),
         bufferIndices:   creerBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, indices),
         nbIndices:       indices.length
     };
@@ -197,6 +238,8 @@ function creerMeshPlafond(gl) {
 //
 //  Axe naturel de la flèche : pointe vers +X (angle 0)
 //  Personne 2 fait tourner le mesh selon la direction du trésor
+///////////// ajouter variabke normal 
+
 // ============================================================
 function creerMeshFleche(gl) {
     let yBase = HAUTEUR_PLAFOND - 0.9;  // hauteur de la base de la pyramide
@@ -233,6 +276,7 @@ function creerMeshFleche(gl) {
     return {
         bufferSommets:   creerBuffer(gl, gl.ARRAY_BUFFER,         sommets),
         bufferTexCoords: creerBuffer(gl, gl.ARRAY_BUFFER,         texCoords),
+        bufferNormales: creerBuffer(gl, gl.ARRAY_BUFFER, normales),
         bufferIndices:   creerBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, indices),
         nbIndices:       indices.length
     };
@@ -243,6 +287,8 @@ function creerMeshFleche(gl) {
 //  Repose sur le plancher (Y=0) — énoncé section 3.7
 //  Max 1x1 — non plat
 //  Visuellement différent du récepteur (couleur gérée dans MaterialFactory)
+///////////// ajouter variabke normal 
+
 // ============================================================
 function creerMeshTeleporteur(gl) {
     let h  = 0.6;   // hauteur
@@ -287,6 +333,7 @@ function creerMeshTeleporteur(gl) {
     return {
         bufferSommets:   creerBuffer(gl, gl.ARRAY_BUFFER,         new Float32Array(sommets)),
         bufferTexCoords: creerBuffer(gl, gl.ARRAY_BUFFER,         new Float32Array(texCoords)),
+        bufferNormales: creerBuffer(gl, gl.ARRAY_BUFFER, normales),
         bufferIndices:   creerBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices)),
         nbIndices:       indices.length
     };
@@ -296,6 +343,8 @@ function creerMeshTeleporteur(gl) {
 //  TÉLÉ-RÉCEPTEUR  (anneau / tore simplifié = cylindre creux)
 //  Visuellement différent du transporteur — énoncé section 3.8
 //  Repose sur le plancher — max 1x1 — non plat
+///////////// ajouter variabke normal 
+
 // ============================================================
 function creerMeshRecepteur(gl) {
     let hExt  = 0.5;  // hauteur totale
@@ -352,6 +401,7 @@ function creerMeshRecepteur(gl) {
     return {
         bufferSommets:   creerBuffer(gl, gl.ARRAY_BUFFER,         new Float32Array(sommets)),
         bufferTexCoords: creerBuffer(gl, gl.ARRAY_BUFFER,         new Float32Array(texCoords)),
+        bufferNormales: creerBuffer(gl, gl.ARRAY_BUFFER, normales),
         bufferIndices:   creerBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices)),
         nbIndices:       indices.length
     };
@@ -360,6 +410,8 @@ function creerMeshRecepteur(gl) {
 // ============================================================
 //  TRÉSOR  (boîte légèrement trapézoïdale — coffre)
 //  Repose sur le plancher — max 1x1 — non plat — énoncé 3.9
+///////////// ajouter variabke normal 
+
 // ============================================================
 function creerMeshTresor(gl) {
     let larg = 0.7;  // largeur (X)
@@ -421,6 +473,7 @@ function creerMeshTresor(gl) {
     return {
         bufferSommets:   creerBuffer(gl, gl.ARRAY_BUFFER,         sommets),
         bufferTexCoords: creerBuffer(gl, gl.ARRAY_BUFFER,         texCoords),
+        bufferNormales: creerBuffer(gl, gl.ARRAY_BUFFER, normales),
         bufferIndices:   creerBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices)),
         nbIndices:       indices.length
     };
@@ -430,6 +483,7 @@ function creerMeshTresor(gl) {
 //  INDICATEUR JOUEUR (vue aérienne)
 //  Petit triangle plat dessiné à Y=HAUTEUR_PLAFOND
 //  visible seulement en vue aérienne — énoncé section 5
+///////////// ajouter variabke normal 
 // ============================================================
 function creerMeshIndicateurJoueur(gl) {
     let y  = HAUTEUR_PLAFOND - 0.05;  // juste sous le plafond, bien visible du dessus
@@ -448,6 +502,7 @@ function creerMeshIndicateurJoueur(gl) {
     return {
         bufferSommets:   creerBuffer(gl, gl.ARRAY_BUFFER,         sommets),
         bufferTexCoords: creerBuffer(gl, gl.ARRAY_BUFFER,         texCoords),
+        bufferNormales: creerBuffer(gl, gl.ARRAY_BUFFER, normales),
         bufferIndices:   creerBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, indices),
         nbIndices:       indices.length
     };
@@ -473,5 +528,7 @@ function dessinerMesh(gl, shaderProgram, mesh, matModeleVue) {
     gl.vertexAttribPointer(shaderProgram.posTexel, 2, gl.FLOAT, false, 0, 0);
 
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, mesh.bufferIndices);
+    gl.bindBuffer(gl.ARRAY_BUFFER, mesh.bufferNormales);
+    gl.vertexAttribPointer(shaderProgram.normalVertex, 3, gl.FLOAT, false, 0, 0);
     gl.drawElements(gl.TRIANGLES, mesh.nbIndices, gl.UNSIGNED_SHORT, 0);
 }

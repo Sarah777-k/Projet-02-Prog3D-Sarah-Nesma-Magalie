@@ -29,6 +29,7 @@
 // ============================================================
 
 // ----- Constantes de géométrie ------------------------------
+const HAUTEUR_SOUBASSEMENT =0.1
 let HAUTEUR_MUR    = 2.5;   // hauteur des murs (atteint le plafond)
 let HAUTEUR_Y_CAM  = 1.0;   // hauteur des yeux du joueur (Y de la caméra)
 let HAUTEUR_PLAFOND = HAUTEUR_MUR-1.5; // le plafond est à la même hauteur que le sommet des murs
@@ -117,6 +118,78 @@ function creerMeshMur(gl) {
     };
 }
 
+function creerMeshSoubassement(gl) {
+    let h = HAUTEUR_SOUBASSEMENT;
+    let e = 0.015; // petit décalage pour éviter le z-fighting
+
+    let sommets = new Float32Array([
+        // face avant z = -e
+        0, 0, -e,   1, 0, -e,   1, h, -e,   0, h, -e,
+
+        // face arrière z = 1 + e
+        1, 0, 1 + e,   0, 0, 1 + e,   0, h, 1 + e,   1, h, 1 + e,
+
+        // face gauche x = -e
+        -e, 0, 1,   -e, 0, 0,   -e, h, 0,   -e, h, 1,
+
+        // face droite x = 1 + e
+        1 + e, 0, 0,   1 + e, 0, 1,   1 + e, h, 1,   1 + e, h, 0,
+        // dessus avant
+        0, h, -e,   1, h, -e,   1, h, 0,   0, h, 0,
+
+        // dessus arrière
+        0, h, 1,   1, h, 1,   1, h, 1 + e,   0, h, 1 + e,
+
+        // dessus gauche
+        -e, h, 0,   0, h, 0,   0, h, 1,   -e, h, 1,
+
+        // dessus droite
+        1, h, 0,   1 + e, h, 0,   1 + e, h, 1,   1, h, 1
+    ]);
+
+    let texCoords = new Float32Array([
+        0,0, 1,0, 1,1, 0,1,
+        0,0, 1,0, 1,1, 0,1,
+        0,0, 1,0, 1,1, 0,1,
+        0,0, 1,0, 1,1, 0,1
+    ]);
+
+    let indices = new Uint16Array([
+        0,1,2, 0,2,3,
+        4,5,6, 4,6,7,
+        8,9,10, 8,10,11,
+        12,13,14, 12,14,15,
+        16,17,18, 16,18,19,
+        20,21,22, 20,22,23,
+        24,25,26, 24,26,27,
+        28,29,30, 28,30,31
+    ]);
+    let normales = new Float32Array([
+        // face avant z=0
+        0, 0, -1,  0, 0, -1,  0, 0, -1,  0, 0, -1,
+
+        // face arrière z=1
+        0, 0, 1,   0, 0, 1,   0, 0, 1,   0, 0, 1,
+
+        // face gauche x=0
+        -1, 0, 0,  -1, 0, 0,  -1, 0, 0,  -1, 0, 0,
+
+        // face droite x=1
+        1, 0, 0,   1, 0, 0,   1, 0, 0,   1, 0, 0,
+
+        // dessus y=h
+        0, 1, 0,   0, 1, 0,   0, 1, 0,   0, 1, 0
+]);
+
+    return {
+        bufferSommets: creerBuffer(gl, gl.ARRAY_BUFFER, sommets),
+        bufferTexCoords: creerBuffer(gl, gl.ARRAY_BUFFER, texCoords),
+        bufferNormales: creerBuffer(gl, gl.ARRAY_BUFFER, normales),
+        bufferIndices: creerBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, indices),
+        nbIndices: indices.length
+    };
+}
+
 // ============================================================
 //  PLANCHER  (rectangle 31x31, Y=0, dans le plan XZ)
 //  Subdivisé en tuiles pour que la texture se répète bien
@@ -144,9 +217,7 @@ function creerMeshPlancher(gl) {
     0, 1, 0,
     0, 1, 0,
     0, 1, 0
-]);
-
-
+    ]);
     return {
         bufferSommets:   creerBuffer(gl, gl.ARRAY_BUFFER,         sommets),
         bufferTexCoords: creerBuffer(gl, gl.ARRAY_BUFFER,         texCoords),
@@ -271,6 +342,13 @@ function creerMeshFleche(gl) {
         1, 3, 4,   // face droite
         3, 2, 4,   // face avant
         2, 0, 4    // face gauche
+    ]);
+     let normales = new Float32Array([
+        0, -1, 0,
+        0, -1, 0,
+        0, -1, 0,
+        0, -1, 0,
+        1,  1, 0
     ]);
 
     return {
@@ -469,6 +547,7 @@ function creerMeshTresor(gl) {
         let b = f * 4;
         indices.push(b, b+1, b+2,  b, b+2, b+3);
     }
+    let normales = new Float32Array([]) 
 
     return {
         bufferSommets:   creerBuffer(gl, gl.ARRAY_BUFFER,         sommets),

@@ -21,6 +21,7 @@ const TYPE_COULOIR    = 0;
 const TYPE_MUR_OUV    = 1;   // mur ouvrable (rouge)
 const TYPE_MUR_SOLIDE = 2;   // mur non ouvrable (vert foncé)
 const TYPE_ENCLOS     = 3;   // enclos (jaune)
+const TYPE_PORTE_ENCLOS =4
 
 // ----- La matrice du dédale ---------------------------------
 // Respecte le plan de l'énoncé à la lettre.

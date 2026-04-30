@@ -8,61 +8,96 @@
 
 // // ============================================================
 function initMur(objgl) {
-    tabMurs = []; // réinitialiser au cas où on recharge le niveau
- 
-    for (let i = 0; i < TAILLE_DEDALE; i++) {
-        for (let j = 0; j < TAILLE_DEDALE; j++) {
- 
-            let typeCellule = obtenirTypeCellule(i, j);
- 
-            if (typeCellule == TYPE_MUR_OUV || typeCellule == TYPE_MUR_SOLIDE) {
-                let objMur = {
-                    mesh:    creerMeshMur(objgl),
-                    x:       j,
-                    y:       0,
-                    z:       i,
-                    ligne:   i,
-                    col:     j,
-                    type:    typeCellule,
-                    visible: true,  // false quand ouvert par Personne 2
-                    progression: 0, // pour animation d'ouverture, de 0 (fermée) à 1 (ouverte)
-                    enOuverture: false // true si en train de s'ouvrir, pour gérer l'animation
-                    //enFermeture: false // true si en train de se fermer, pour gérer l'animation
-                };
-                tabMurs.push(objMur);
-            }
-        }
+  tabMurs = []; // réinitialiser au cas où on recharge le niveau
+  for (let i = 0; i < TAILLE_DEDALE; i++) {
+    for (let j = 0; j < TAILLE_DEDALE; j++) {
+      let typeCellule = obtenirTypeCellule(i, j);
+
+      if (typeCellule == TYPE_MUR_OUV || typeCellule == TYPE_MUR_SOLIDE) {
+        let objMur = {
+          mesh: creerMeshMur(objgl),
+          x: j,
+          y: 0,
+          z: i,
+          ligne: i,
+          col: j,
+          type: typeCellule,
+          visible: true, // false quand ouvert par Personne 2
+          progression: 0, // pour animation d'ouverture, de 0 (fermée) à 1 (ouverte)
+          enOuverture: false, // true si en train de s'ouvrir, pour gérer l'animation
+          //enFermeture: false // true si en train de se fermer, pour gérer l'animation
+        };
+        tabMurs.push(objMur);
+      }
     }
- 
-    return tabMurs;
+  }
+
+  return tabMurs;
 }
-function ouvrirMurGraphiquement(mur3D){
-      mur3D.enOuverture = true;
-      mur3D.progression = 0;
-        // Le mur sera rendu invisible à la fin de l'animation dans dessinerScene()
+//les soubassements des mur effet realistique 
+function initSoubassements(objgl){
+    tabS=[];
+    for (let i = 0; i < TAILLE_DEDALE; i++) {
+    for (let j = 0; j < TAILLE_DEDALE; j++) {
+      let typeCellule = obtenirTypeCellule(i, j);
+
+      if (typeCellule == TYPE_MUR_OUV) {
+        tabS.push({
+          mesh: creerMeshSoubassement(objgl),
+          x: j,
+          y: 0,
+          z: i,
+          ligne: i,
+          col: j,
+          type: "soubassement",
+          visible: true,
+          progression : 0,
+          enOuverture: false
+        });
+      }
+    }
+  }
+  return tabS;
+
+}
+function ouvrirMurGraphiquement(mur3D) {
+  mur3D.enOuverture = true;
+  mur3D.progression = 0;
+  // Le mur sera rendu invisible à la fin de l'animation dans dessinerScene()
+  //ajouter la meme logique pour soubassement
+  let soubassement = objScene3D.objets.find(obj =>
+    obj.type === "soubassement" &&
+    obj.ligne === mur3D.ligne &&
+    obj.col === mur3D.col
+  );
+
+  if (soubassement) {
+    soubassement.enOuverture = true;
+    soubassement.progression = 0;
+  }
+
 }
 
 function fermerMurGraphiquement(ligne, col) {
-    // Vérifier si le mur existe déjà (peut être déjà fermé)
-    let murExistant = tabMurs.find(m => m.ligne === ligne && m.col === col);
-    if (murExistant) {
-        murExistant.visible = true; // rendre le mur visible
-    } else {
-        // Ajouter un nouveau mur au tableau
-        let objMur = {
-            mesh:    creerMeshMur(objgl),
-            x:       col,
-            y:       0,
-            z:       ligne,
-            ligne:   ligne,
-            col:     col,
-            type:    TYPE_MUR_SOLIDE, // ou TYPE_MUR_OUV selon le type de mur à fermer
-            visible: true,
-            progression: 0, // pour animation d'ouverture, de 0 (fermée) à 1 (ouverte)
-            enOuverture: false 
-        };
-        tabMurs.push(objMur);
-        objScene3D.objets.push(objMur);
-    }
+  // Vérifier si le mur existe déjà (peut être déjà fermé)
+  let murExistant = tabMurs.find((m) => m.ligne === ligne && m.col === col);
+  if (murExistant) {
+    murExistant.visible = true; // rendre le mur visible
+  } else {
+    // Ajouter un nouveau mur au tableau
+    let objMur = {
+      mesh: creerMeshMur(objgl),
+      x: col,
+      y: 0,
+      z: ligne,
+      ligne: ligne,
+      col: col,
+      type: TYPE_MUR_SOLIDE, // ou TYPE_MUR_OUV selon le type de mur à fermer
+      visible: true,
+      progression: 0, // pour animation d'ouverture, de 0 (fermée) à 1 (ouverte)
+      enOuverture: false,
+    };
+    tabMurs.push(objMur);
+    objScene3D.objets.push(objMur);
+  }
 }
-

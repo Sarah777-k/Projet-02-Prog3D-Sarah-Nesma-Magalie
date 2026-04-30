@@ -43,6 +43,7 @@ let textureTresor         = null;
 //  Chaque fonction retourne { couleur: [R,G,B,A], texture: obj|null }
 // ============================================================
 
+
 // Mur ouvrable (rouge selon l'énoncé)
 function creerMatMurOuvrable() {
     return {
@@ -56,6 +57,12 @@ function creerMatMurSolide() {
     return {
         couleur:  [0.1, 0.5, 0.1, 1.0],   // vert foncé
         texture:  textureMurSolide
+    };
+}
+function creerMatSoubassement(){
+    return {
+        couleur:  [0.1, 0.5, 0.1, 1.0],   // vert foncé
+        texture:  textureSoubassement
     };
 }
 
@@ -168,6 +175,7 @@ function initTextures(gl) {
     //textureMurOuvrable = chargerTexture(gl, "../assets/textures/mur_ouvert.png");
     textureMurOuvrable = chargerTexture(gl, "../assets/backrooms/backrooms-wall-diffuse.png");
     textureMurSolide   = chargerTexture(gl, "../assets/textures/mur_solide.png");
+    textureSoubassement = chargerTexture(gl, "../assets/backrooms/soubassements.png");
     //texturePlancher    = chargerTexture(gl, "../assets/textures/plancher.png");
     texturePlancher    = chargerTexture(gl, "../assets/backrooms/backrooms-carpet-diffuse.png");
     //texturePlafond     = chargerTexture(gl, "../assets/textures/plafond.png");

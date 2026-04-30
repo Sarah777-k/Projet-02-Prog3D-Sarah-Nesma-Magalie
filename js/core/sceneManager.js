@@ -7,7 +7,7 @@
 // Liste globale des murs (utilisée pour ouverture de murs par Personne 2)
 let tabMurs = [];
 let tabPlancher = [];
-
+let tabS = []
 // ============================================================
 //  construireScene()
 //  Lit grilleDédale une seule fois et crée tous les objets 3D.
@@ -31,19 +31,42 @@ function construireScene(objgl) {
     z: 14,
     type: "enclos",
   });
-  tabObjets.push({
-    mesh: creerMeshPlafond(objgl),
-    x: 0,
-    y: 1.5,
-    z: 0,
-    type: "plafond",
-  });
+  //  tabObjets.push({
+  //    mesh: creerMeshPlafond(objgl),
+  //    x: 0,
+  //    y: 1.5,
+  //    z: 0,
+  //    type: "plafond",
+  //  });
+  for (let i = 0; i < tabObjetsNiveau.length; i++) {
+    let objNiveau = tabObjetsNiveau[i];
+    if(objNiveau.type ==="FLECHE"){
+           tabObjets.push({
+              mesh : creerMeshFleche(objgl),
+              x : objNiveau.ligne,
+              y : 1.0,
+              z : objNiveau.colonne,
+              type : "FLECHE"
+          });
+    }
+    if(objNiveau.type==="TRESOR"){
+      tabObjets.push({
+              mesh : creerMeshTresor(objgl),
+              x : objNiveau.ligne,
+              y : 0.05,
+              z : objNiveau.colonne,
+              type : "TRESOR"
+          });
+    }
+  }
+
 
   //tabPlancher = initplancher(objgl);
   tabObjects = tabObjets.concat(tabPlancher); // ajouter le plafond à la scène
   tabMurs = initMur(objgl);
+  tabS = initSoubassements(objgl);
   tabObjets = tabObjets.concat(tabMurs); // ajouter les murs à la scène
-
+  tabObjets = tabObjets.concat(tabS); // ajouter les soubassement à la scène
   return tabObjets;
 }
 
@@ -99,9 +122,15 @@ function dessinerScene(gl, shaderProgram, scene) {
       case TYPE_MUR_SOLIDE:
         mat = creerMatMurSolide();
         break;
+      case "soubassement":
+        mat = creerMatSoubassement();
+        break;
       case "plafond":
         mat = creerMatPlafond();
         break;
+      case "FLECHE":
+         mat= creerMatFleche();
+         break;
       default:
         mat = creerMatPlancher();
         break;
@@ -122,8 +151,12 @@ function dessinerScene(gl, shaderProgram, scene) {
 
     let yAnimation = obj.y;
 
-    if (obj.type === TYPE_MUR_OUV && obj.progression > 0) {
+    if ((obj.type === TYPE_MUR_OUV ) && obj.progression > 0) {
       yAnimation = obj.y - obj.progression * HAUTEUR_MUR;
+    }
+    //le soubassement doit aussi disparaitre comme le mur
+    if(obj.type === "soubassement" && obj.progression > 0){
+       yAnimation = obj.y - obj.progression * HAUTEUR_MUR;
     }
     
     // Matrice modèle : placer l'objet à sa position dans la scène

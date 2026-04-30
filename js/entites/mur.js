@@ -41,7 +41,7 @@ function initSoubassements(objgl){
     for (let j = 0; j < TAILLE_DEDALE; j++) {
       let typeCellule = obtenirTypeCellule(i, j);
 
-      if (typeCellule == TYPE_MUR_OUV) {
+      if (typeCellule == TYPE_MUR_OUV ||  typeCellule == TYPE_MUR_SOLIDE ) {
         tabS.push({
           mesh: creerMeshSoubassement(objgl),
           x: j,

@@ -31,13 +31,14 @@ function construireScene(objgl) {
     z: 14,
     type: "enclos",
   });
-  //  tabObjets.push({
-  //    mesh: creerMeshPlafond(objgl),
-  //    x: 0,
-  //    y: 1.5,
-  //    z: 0,
-  //    type: "plafond",
-  //  });
+     tabObjets.push({
+       mesh: creerMeshPlafond(objgl),
+       x: 0,
+       y: 1.5,
+       z: 0,
+       type: "plafond",
+     });
+  //init les objets de niveau por type
   for (let i = 0; i < tabObjetsNiveau.length; i++) {
     let objNiveau = tabObjetsNiveau[i];
     if(objNiveau.type ==="FLECHE"){
@@ -46,6 +47,7 @@ function construireScene(objgl) {
               x : objNiveau.ligne,
               y : 1.0,
               z : objNiveau.colonne,
+              angle: 0,
               type : "FLECHE"
           });
     }
@@ -158,11 +160,17 @@ function dessinerScene(gl, shaderProgram, scene) {
     if(obj.type === "soubassement" && obj.progression > 0){
        yAnimation = obj.y - obj.progression * HAUTEUR_MUR;
     }
+   
     
     // Matrice modèle : placer l'objet à sa position dans la scène
     let matModele = mat4.create();
     mat4.identity(matModele);
     mat4.translate(matModele, [obj.x, yAnimation, obj.z]);
+
+    // rotate la fleche d
+    if (obj.type === "FLECHE") {
+        mat4.rotateY(matModele, obj.angle);
+    }
 
     let matModeleVue = mat4.create();
     mat4.multiply(matVue, matModele, matModeleVue);

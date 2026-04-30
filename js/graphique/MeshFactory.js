@@ -268,15 +268,15 @@ function creerMeshEnclos(gl) {
 //  Faces vers le bas (normales inversées par rapport au plancher)
 // ============================================================
 function creerMeshPlafond(gl) {
-    let taille  = 1000;
+    let taille  = 31;
     let y       = HAUTEUR_PLAFOND;
     let repetes = taille;
 
     let sommets = new Float32Array([
-        -taille,     y, -taille,
-        taille, y, -taille,
+        0,     y, 0,
+        taille, y, 0,
         taille, y, taille,
-        -taille,     y, taille
+        0,     y, taille
     ]);
     let texCoords = new Float32Array([
         0,      0,
@@ -315,18 +315,19 @@ function creerMeshPlafond(gl) {
 function creerMeshFleche(gl) {
     let yBase = HAUTEUR_PLAFOND - 0.9;  // hauteur de la base de la pyramide
     let yPointe = yBase + 0.7;           // hauteur de la pointe
-    let d = 0.35;                        // demi-largeur (max 0.5 pour rester dans 1x1)
+    let d = 0.25;                        // demi-largeur (max 0.5 pour rester dans 1x1)
 
     // Base carrée centrée en (0.5, yBase, 0.5) — centrée dans la cellule
-    // Pointe vers +X (colonne+1)
+
+  
     let sommets = new Float32Array([
         // 4 sommets de la base
-        0.5-d, yBase, 0.5-d,   // 0
-        0.5-d, yBase, 0.5+d,   // 1
-        0.5+d, yBase, 0.5-d,   // 2  (côté pointe)
-        0.5+d, yBase, 0.5+d,   // 3  (côté pointe)
-        // Pointe (vers +X)
-        0.5+0.5, yPointe, 0.5  // 4  pointe
+        0.3, yBase - d,  0.5 - d,   // 0
+        0.3, yBase - d , 0.5 + d,   // 1
+        0.3, yBase + d , 0.5 - d,   // 2 
+        0.3, yBase + d, 0.5 + d,  
+   
+        1.0, yBase, 0.5  // pointe horizontale vers +X
     ]);
 
     let texCoords = new Float32Array([

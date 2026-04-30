@@ -5,7 +5,7 @@
 */
 
 /* ----- Variables -----*/
-let tabObjets = [];
+let tabObjetsNiveau = [];
 
 /*
 |-----------------------------------------------------------------------------|
@@ -27,8 +27,8 @@ function placerObjets(niveau) {
 |-----------------------------------------------------------------------------|
 */
 function placerTresor() {
-    let cellule = obtenirCelluleLibreAleatoire(tabObjets);
-    tabObjets.push({
+    let cellule = obtenirCelluleLibreAleatoire(tabObjetsNiveau);
+    tabObjetsNiveau.push({
         type: "TRESOR",
         ligne: cellule.ligne,
         colonne: cellule.colonne
@@ -44,8 +44,8 @@ function placerTresor() {
 */
 function placerFleches(nbFleches) {
     for (let i = 0; i < nbFleches; i++) {
-        let cellule = obtenirCelluleLibreAleatoire(tabObjets);
-        tabObjets.push({
+        let cellule = obtenirCelluleLibreAleatoire(tabObjetsNiveau);
+        tabObjetsNiveau.push({
             type: "FLECHE",
             ligne: cellule.ligne,
             colonne: cellule.colonne
@@ -61,8 +61,8 @@ function placerFleches(nbFleches) {
 */
 function placerTeleporteurs(nbTeleporteurs) {
     for (let i = 0; i < nbTeleporteurs; i++) {
-        let cellule = obtenirCelluleLibreAleatoire(tabObjets);
-        tabObjets.push({
+        let cellule = obtenirCelluleLibreAleatoire(tabObjetsNiveau);
+        tabObjetsNiveau.push({
             type: "TELEPORTEUR",
             ligne: cellule.ligne,
             colonne: cellule.colonne
@@ -78,8 +78,8 @@ function placerTeleporteurs(nbTeleporteurs) {
 */
 function placerRecepteurs(nbRecepteurs) {
     for (let i = 0; i < nbRecepteurs; i++) {
-        let cellule = obtenirCelluleLibreAleatoire(tabObjets);
-        tabObjets.push({
+        let cellule = obtenirCelluleLibreAleatoire(tabObjetsNiveau);
+        tabObjetsNiveau.push({
             type: "RECEPTEUR",
             ligne: cellule.ligne,
             colonne: cellule.colonne
@@ -89,10 +89,10 @@ function placerRecepteurs(nbRecepteurs) {
 
 /*
 |-----------------------------------------------------------------------------|
-| viderTabObjets:
+| vidertabObjetsNiveau:
 |   Vide le contenur du tableau d'objets pour le prochain niveau
 |-----------------------------------------------------------------------------|
 */
 function viderTabObjets() {
-    tabObjets = [];
+    tabObjetsNiveau = [];
 }

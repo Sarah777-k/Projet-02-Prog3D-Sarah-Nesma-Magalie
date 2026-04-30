@@ -146,7 +146,7 @@ function deplacerJoueur(facteur) {
     }
 
     let nouvelleCellule = obtenirCelluleDepuisPosition(joueur.x, joueur.z);
-    verifierSortieEnclos(ancienneCellule, nouvelleCellule);
+    verifierSortieEnclos(nouvelleCellule);
 }
 
 /*
@@ -211,17 +211,11 @@ function ouvrirMurDevantJoueur() {
         return false;
     }
 
-    if (!cellule.estMurOuvrable()) {
-        console.log("Le mur devant le joueur n'est pas ouvrable.");
+    let murOuvert = cellule.ouvrir();
+
+    if (!murOuvert) {
         return false;
     }
-
-    if (cellule.estOuverte) {
-        console.log("Ce mur est déjà ouvert.");
-        return false;
-    }
-
-    cellule.ouvrir();
 
     let mur3D = trouverMur3D(celluleDevant.ligne, celluleDevant.colonne);
 
@@ -229,7 +223,6 @@ function ouvrirMurDevantJoueur() {
         ouvrirMurGraphiquement(mur3D);
     }
 
-    console.log("Mur ouvert !");
     return true;
 }
 
@@ -239,17 +232,17 @@ function ouvrirMurDevantJoueur() {
 |   Ferme l'enclos quand le joueur sort par la sortie nord
 |-----------------------------------------------------------------------------|
 */
-function verifierSortieEnclos(ancienneCellule, nouvelleCellule) {
+function verifierSortieEnclos(nouvelleCellule) {
     if (gameState.porteEnclosFermee) {
         return;
     }
 
     if (
-        ancienneCellule.ligne === 14 &&
-        ancienneCellule.colonne === 15 &&
-        nouvelleCellule.ligne === 13 &&
-        nouvelleCellule.colonne === 15
+        nouvelleCellule.ligne === 12 &&
+        nouvelleCellule.colonne === 15 &&
+        joueur.z < 12.7
     ) {
         demanderFermetureEnclos();
+        
     }
 }

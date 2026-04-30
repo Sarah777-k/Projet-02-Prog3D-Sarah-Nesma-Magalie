@@ -144,18 +144,17 @@ function demanderOuvertureMur() {
 |-----------------------------------------------------------------------------|
 */
 function demanderFermetureEnclos() {
-    let cellulePorte = obtenirCellule(14, 15);
+    let cellulePorte = obtenirCellule(13, 15);
 
     if (cellulePorte == null) {
         return;
     }
 
-    cellulePorte.type = TYPE_ENCLOS; /////////////////////// Voir si on crée un type spécial pour la porte
-    cellulePorte.estOuverte = false;
-
+    cellulePorte.type = TYPE_MUR_SOLIDE;
     gameState.porteEnclosFermee = true;
 
-    console.log("Enclos fermé");
     fermerMurGraphiquement(13, 15);
+    
+    cellulePorte.fermerPorte();
 }
 

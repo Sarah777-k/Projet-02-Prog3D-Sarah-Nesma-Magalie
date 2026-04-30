@@ -83,12 +83,16 @@ class Cell {
         }
         return false;
     }
-    fermer() {
-        if (this.estMurOuvrable()) {
-            this.estOuverte = false;
-            return true;
-        }       
-        return false;
+    
+    /*
+    |-----------------------------------------------------------------------------|
+    | fermerPorte:
+    |   Ferme la porte de l'enclos après que le joueur en soit sorti
+    |-----------------------------------------------------------------------------|
+    */
+    fermerPorte() {
+        this.type = TYPE_MUR_SOLIDE;
+        this.estOuverte = false;
     }
 
 }

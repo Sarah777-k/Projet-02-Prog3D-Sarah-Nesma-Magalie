@@ -213,7 +213,7 @@ function ouvrirMurDevantJoueur() {
     if (!murOuvert) {
         return false;
     }
-
+    
     let mur3D = trouverMur3D(celluleDevant.ligne, celluleDevant.colonne);
 
     if (mur3D !== null) {

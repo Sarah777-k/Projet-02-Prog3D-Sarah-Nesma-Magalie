@@ -25,7 +25,7 @@ let objProgShaders;
 
 let gameState = {
     niveau: 1,
-    score: SCORE_DEFAUT,
+    score: 0,
     tempsRestant: 0,
     ouvreurs: 0,
     fleches: 0,
@@ -62,7 +62,7 @@ function demarrer() {
 */
 function initialiserJeu() {
     gameState.niveau = 1;
-    gameState.score = SCORE_DEFAUT;
+    gameState.score = initialiserScore();
 
     initNiveau(gameState.niveau);
 }
@@ -71,7 +71,7 @@ function initialiserJeu() {
 function boucle() {
     gererInputJoueur();
     mettreAJourCamera();
-    //mettreAJourHUD();
+    mettreAJourHUD();
 
     dessinerScene(objgl, objProgShaders, objScene3D);
     requestAnimationFrame(boucle);
@@ -114,7 +114,7 @@ function demanderOuvertureMur() {
         return;
     }
 
-    if (gameState.score < 50) {
+    if (!peutOuvrirMur()) {
         console.log("Score insuffisant pour ouvrir un mur.");
         return;
     }
@@ -123,10 +123,10 @@ function demanderOuvertureMur() {
 
     if (murOuvert) {
         gameState.ouvreurs--;
-        gameState.score -= 50;
+        retirerPointsOuvertureMur();
 
         console.log("Ouvreurs restants :", gameState.ouvreurs);
-        console.log("Score :", gameState.score);
+        console.log("Score :", obtenirScore());
     }
 }
 

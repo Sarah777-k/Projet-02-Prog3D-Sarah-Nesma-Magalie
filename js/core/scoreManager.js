@@ -92,7 +92,7 @@ function retirerPointsRecommencer() {
 |====================================================================|
 */
 function peutOuvrirMur() {
-    return score >= SEUIL_OUVREURS
+    return score >= SEUIL_OUVREURS;
 }
 
 /*

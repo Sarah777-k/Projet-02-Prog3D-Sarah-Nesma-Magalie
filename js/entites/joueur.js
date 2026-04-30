@@ -127,8 +127,6 @@ function reculer() {
 function deplacerJoueur(facteur) {
     let direction = obtenirDirectionVecteur();
 
-    let ancienneCellule = obtenirCelluleDepuisPosition(joueur.x, joueur.z);
-
     let newX = joueur.x + direction.x * VITESSE_DEPLACEMENT * facteur;
     let newZ = joueur.z + direction.z * VITESSE_DEPLACEMENT * facteur;
 

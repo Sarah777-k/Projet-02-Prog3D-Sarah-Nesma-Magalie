@@ -4,8 +4,7 @@
     But: Sons et musique du jeu
 */ 
 
-// Instance globale utilisable partout dans le jeu
-const audioManager = new AudioManager();
+
 
 // Exemple d'appel:
 // audioManager.jouerDebutNiveau();
@@ -17,13 +16,13 @@ class AudioManager {
     // Constructeur : charge tous les sons du jeu
     // ========================================================
     constructor() {
-        this.sonDebutNiveau   = new Audio("levelup.mp3");
-        this.sonTresorTrouve  = new Audio("levelup.mp3");
-        this.sonTempsEcoule   = new Audio("levelup.mp3");
-        this.sonOuvertureMur  = new Audio("levelup.mp3");
-        this.sonTeleportation = new Audio("levelup.mp3");
-        this.sonGameOver      = new Audio("levelup.mp3");
-        this.sonFinJeu        = new Audio("levelup.mp3");
+        this.sonDebutNiveau   = new Audio("../assets/audio/levelup.mp3");
+        this.sonTresorTrouve  = new Audio("../assets/audio/levelup.mp3");
+        this.sonTempsEcoule   = new Audio("../assets/audio/levelup.mp3");
+        this.sonOuvertureMur  = new Audio("../assets/audio/levelup.mp3");
+        this.sonTeleportation = new Audio("../assets/audio/levelup.mp3");
+        this.sonGameOver      = new Audio("../assets/audio/levelup.mp3");
+        this.sonFinJeu        = new Audio("../assets/audio/levelup.mp3");
     }
 
     // ========================================================
@@ -83,3 +82,5 @@ class AudioManager {
     }
 }
 
+// Instance globale utilisable partout dans le jeu
+let audioManager = new AudioManager();

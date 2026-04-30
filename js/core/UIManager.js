@@ -11,26 +11,10 @@ Pour tester ajouter dans game.js:
 */
 
 /* Variables s*/
-let elementNiveau;
-let elementScore;
-let elementTemps;
-let elementOuvreurs;
-
-
-/*
-|=====================================================================|
-| initialiserUI:
-|   Récupère les références aux éléments HTML du HUD.
-|   À appeler UNE SEULE FOIS au démarrage du jeu.
-|=====================================================================|
-*/
-function initialiserUI() {
-    elementNiveau   = document.getElementById("niveau");
-    elementScore    = document.getElementById("score");
-    elementTemps    = document.getElementById("temps");
-    elementOuvreurs = document.getElementById("ouvreurs");
-}
-
+let elementNiveau = "niveau";
+let elementScore= "score";
+let elementTemps="temps" ;
+let elementOuvreurs="ouvreurs";
 
 /*
 |=====================================================================|
@@ -40,7 +24,7 @@ function initialiserUI() {
 */
 function afficherScore() {
     let score = obtenirScore();                    //
-    elementScore.textContent = formaterNombre(score, 5);  
+    setContenuElement(elementScore, formaterNombre(score,5));
 }
 
 
@@ -51,7 +35,7 @@ function afficherScore() {
 |=====================================================================|
 */
 function afficherNiveau() {
-    elementNiveau.textContent = formaterNombre(gameState.niveau, 2);
+    setContenuElement(elementNiveau, formaterNombre(gameState.niveau, 2));
 }
 
 
@@ -63,7 +47,7 @@ function afficherNiveau() {
 */
 function afficherTemps() {
     let secondes = Math.max(0, Math.ceil(gameState.tempsRestant));
-    elementTemps.textContent = formaterNombre(secondes, 2);
+    setContenuElement(elementTemps,formaterNombre(secondes, 2));
 }
 
 
@@ -74,7 +58,7 @@ function afficherTemps() {
 |=====================================================================|
 */
 function afficherOuvreurs() {
-    elementOuvreurs.textContent = gameState.ouvreurs;
+    setContenuElement(elementOuvreurs, gameState.ouvreurs);
 }
 
 

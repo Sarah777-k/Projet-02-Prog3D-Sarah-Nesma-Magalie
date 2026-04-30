@@ -26,8 +26,9 @@ let score = 0;
 |   Met le score à sa valeur de départ
 |============================================================|
 */
-function initialiserScore(){
+function initialiserScore() {
     score = POINTS_DEPART;
+    return score;
 }
 
 /*

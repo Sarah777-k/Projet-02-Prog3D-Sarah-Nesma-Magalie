@@ -111,6 +111,6 @@ function peutVueAerienne() {
 |   Retourne true si le score est < 200 ET que le joueur recommence un niveau
 |==============================================================================|
 */
-function estGameOver(recommencer) {
+function estGameOver() {
     return score < SEUIL_GAME_OVER && joueurDoitRecommencer;
 }

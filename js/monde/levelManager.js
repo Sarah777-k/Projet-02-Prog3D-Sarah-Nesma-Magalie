@@ -49,13 +49,18 @@ const CONFIG_NIVEAUX = [
 |   Initialise les éléments du niveau.
 |-----------------------------------------------------------------------------|
 */
-function initNiveau(niveau) {
+function initNiveau(niveau, nouveauPlacementObjets = true) {
     gameState.etat = ETAT_EN_COURS;
     gameState.porteEnclosFermee = false;
     gameState.tempsRestant = TEMPS_NIVEAU;
     gameState.ouvreurs = obtenirNbOuvreurs(niveau);
 
-    //placerObjets(niveau);
+    if (nouveauPlacementObjets) {
+        viderTabObjets();
+        placerObjets(niveau);
+    }
+    
+    //chargerObjetsNiveau();
 
     debutNiveauMs = 0;
     tempsEcouleMs = 0;
@@ -88,6 +93,16 @@ function gagnerNiveau() {
     niveauCourant++;
     
     initNiveau();
+}
+
+/*
+|-----------------------------------------------------------------------------|
+| recommencerNiveau:
+|   Recharge le même niveau sans modifier le score total ni la position des objets
+|-----------------------------------------------------------------------------|
+*/
+function recommencerNiveau() {
+    initNiveau(gameState.niveau, false);
 }
 
 

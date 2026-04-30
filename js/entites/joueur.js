@@ -207,7 +207,6 @@ function ouvrirMurDevantJoueur() {
     let cellule = obtenirCellule(celluleDevant.ligne, celluleDevant.colonne);
 
     if (cellule === null) {
-        console.log("Aucune cellule valide devant le joueur.");
         return false;
     }
 
@@ -243,6 +242,5 @@ function verifierSortieEnclos(nouvelleCellule) {
         joueur.z < 12.7
     ) {
         demanderFermetureEnclos();
-        
     }
 }

@@ -28,7 +28,6 @@ let score = 0;
 */
 function initialiserScore() {
     score = POINTS_DEPART;
-    return score;
 }
 
 /*

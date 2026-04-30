@@ -14,7 +14,6 @@ const ETAT_VICTOIRE = "VICTOIRE";
 const ETAT_GAME_OVER = "GAME_OVER";
 
 const TEMPS_NIVEAU = 60;
-const SCORE_DEFAUT = initialiserScore();
 
 let niveauCourant = 1;
 let debutNiveauMs = 0;

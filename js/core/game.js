@@ -25,7 +25,6 @@ let objProgShaders;
 
 let gameState = {
     niveau: 1,
-    score: 0,
     tempsRestant: 0,
     ouvreurs: 0,
     fleches: 0,
@@ -62,7 +61,7 @@ function demarrer() {
 */
 function initialiserJeu() {
     gameState.niveau = 1;
-    gameState.score = initialiserScore();
+    initialiserScore();
 
     initNiveau(gameState.niveau);
 }

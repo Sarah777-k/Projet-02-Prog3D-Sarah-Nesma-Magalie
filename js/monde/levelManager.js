@@ -69,7 +69,7 @@ function initNiveau(niveau, nouveauPlacementObjets = true) {
     replacerJoueurDepart();
     //fermerMursOuverts();
     //ouvrirPorteEnclos();
-    audioManager.jouerDebutNiveau();
+    //audioManager.jouerDebutNiveau();
 }
 
 /*

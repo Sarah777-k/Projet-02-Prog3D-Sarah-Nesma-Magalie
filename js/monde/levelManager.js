@@ -69,7 +69,7 @@ function initNiveau(niveau, nouveauPlacementObjets = true) {
     replacerJoueurDepart();
     //fermerMursOuverts();
     //ouvrirPorteEnclos();
-    //audioManager.jouerDebutNiveau();
+    audioManager.jouerDebutNiveau();
 }
 
 /*
@@ -86,7 +86,7 @@ function gagnerNiveau() {
     // Niveau suivant
     if (niveauCourant >= MAX_NIVEAUX) {
         etatJeu = ETAT_VICTOIRE;
-        jouerFinJeu();
+        //audioManager.jouerFinJeu();
         return;
     }
 

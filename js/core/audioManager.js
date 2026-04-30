@@ -17,13 +17,13 @@ class AudioManager {
     // Constructeur : charge tous les sons du jeu
     // ========================================================
     constructor() {
-        this.sonDebutNiveau   = new Audio("");
-        this.sonTresorTrouve  = new Audio("");
-        this.sonTempsEcoule   = new Audio("");
-        this.sonOuvertureMur  = new Audio("");
-        this.sonTeleportation = new Audio("");
-        this.sonGameOver      = new Audio("");
-        this.sonFinJeu        = new Audio("");
+        this.sonDebutNiveau   = new Audio("levelup.mp3");
+        this.sonTresorTrouve  = new Audio("levelup.mp3");
+        this.sonTempsEcoule   = new Audio("levelup.mp3");
+        this.sonOuvertureMur  = new Audio("levelup.mp3");
+        this.sonTeleportation = new Audio("levelup.mp3");
+        this.sonGameOver      = new Audio("levelup.mp3");
+        this.sonFinJeu        = new Audio("levelup.mp3");
     }
 
     // ========================================================

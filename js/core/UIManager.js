@@ -4,6 +4,12 @@
     But: Interface utilisateur (score, temps, etc.)
 */
 
+/*
+Pour tester ajouter dans game.js:
+        ==> initialiserUI(objgl); dans demarrer?
+        ==> mettreAJourHUD();  dans boucle?
+*/
+
 /* Variables s*/
 let elementNiveau;
 let elementScore;
@@ -19,10 +25,10 @@ let elementOuvreurs;
 |=====================================================================|
 */
 function initialiserUI() {
-    elementNiveau   = document.getElementById("hud-niveau");
-    elementScore    = document.getElementById("hud-score");
-    elementTemps    = document.getElementById("hud-temps");
-    elementOuvreurs = document.getElementById("hud-ouvreurs");
+    elementNiveau   = document.getElementById("niveau");
+    elementScore    = document.getElementById("score");
+    elementTemps    = document.getElementById("temps");
+    elementOuvreurs = document.getElementById("ouvreurs");
 }
 
 
@@ -45,7 +51,7 @@ function afficherScore() {
 |=====================================================================|
 */
 function afficherNiveau() {
-
+    elementNiveau.textContent = formaterNombre(gameState.niveau, 2);
 }
 
 
@@ -56,7 +62,8 @@ function afficherNiveau() {
 |=====================================================================|
 */
 function afficherTemps() {
-
+    let secondes = Math.max(0, Math.ceil(gameState.tempsRestant));
+    elementTemps.textContent = formaterNombre(secondes, 2);
 }
 
 
@@ -67,7 +74,7 @@ function afficherTemps() {
 |=====================================================================|
 */
 function afficherOuvreurs() {
-
+    elementOuvreurs.textContent = gameState.ouvreurs;
 }
 
 
@@ -79,6 +86,10 @@ function afficherOuvreurs() {
 |=====================================================================|
 */
 function mettreAJourHUD() {
+    afficherNiveau();
+    afficherScore();
+    afficherTemps();
+    afficherOuvreurs();
 }
 
 /*

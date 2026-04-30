@@ -19,7 +19,6 @@ let score = 0;
 //let enVueAerienne; <====== A VOIR SI JE GARDE CA
 
 /* Fonctions */
-
 /*
 |============================================================|
 | initialiserScore:

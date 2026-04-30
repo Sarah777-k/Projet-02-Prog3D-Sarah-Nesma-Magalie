@@ -66,8 +66,10 @@ function initNiveau(niveau, nouveauPlacementObjets = true) {
     scoreNiveau = 0;
 
     replacerJoueurDepart();
+    
     //fermerMursOuverts();
     //ouvrirPorteEnclos();
+
     audioManager.jouerDebutNiveau();
 }
 

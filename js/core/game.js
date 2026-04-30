@@ -73,6 +73,7 @@ function boucle() {
     mettreAJourHUD();
 
     dessinerScene(objgl, objProgShaders, objScene3D);
+    
     requestAnimationFrame(boucle);
 }
 

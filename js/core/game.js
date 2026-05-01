@@ -88,7 +88,7 @@ function mettreAJourCamera() {
 
 
     setPositionsCameraXYZ(
-        [joueur.x, 20 + hauteurYeux, joueur.z],
+        [joueur.x, joueur.y + hauteurYeux, joueur.z],
         objScene3D.camera
     );
 

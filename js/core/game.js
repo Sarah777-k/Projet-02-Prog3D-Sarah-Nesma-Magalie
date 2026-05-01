@@ -65,6 +65,7 @@ function initialiserJeu() {
     initialiserScore();
 
     initNiveau(gameState.niveau);
+    validerScoreNiveau();
 }
 
 // Boucle de rendu (appelée ~60x par seconde)
@@ -158,16 +159,26 @@ function demanderFermetureEnclos() {
     cellulePorte.fermerPorte();
 }
 
-
 /*
 |-----------------------------------------------------------------------------|
-| replacerJoueurDepart:
-|   Replace le joueur au point de départ
+| demanderOuvertureEnclos:
+|   Ouvre la porte de l'enclos lors du chargement du niveau
 |-----------------------------------------------------------------------------|
 */
-function replacerJoueurDepart() {
-    joueur.x = 15.5;
-    joueur.y = 0.3;
-    joueur.z = 16.5;
-    joueur.angle = -90;
+function demanderOuvertureEnclos() {
+    let cellulePorte = obtenirCellule(13, 15);
+
+    if (cellulePorte == null) {
+        return;
+    }
+
+    gameState.porteEnclosFermee = false;
+    cellulePorte.ouvrirPorte();
+
+    let mur3D = trouverMur3D(cellulePorte.ligne, cellulePorte.colonne);
+
+    if (mur3D !== null) {
+        ouvrirMurGraphiquement(mur3D);
+    }
+    
 }

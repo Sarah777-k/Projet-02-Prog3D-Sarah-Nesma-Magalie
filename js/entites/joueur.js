@@ -13,13 +13,26 @@ const RAYON_JOUEUR = 0.2; // pour les collisions, légèrement plus petit que 0.
 /* ----- Variables -----*/
 let joueur = {
     x: 15.5,
-    y: 0.3,
+    y: 0.1,
     z: 16.5,
     angle: -90
 };
 
 
 /* ----- Fonctions -----*/
+
+/*
+|-----------------------------------------------------------------------------|
+| initPositionJoueur:
+|   Reinitialise la position du joueur à sa position de départ
+|-----------------------------------------------------------------------------|
+*/
+function initPositionJoueur() {
+    joueur.x = 15.5;
+    joueur.y = 0.1;
+    joueur.z = 16.5;
+    joueur.angle = -90;
+}
 
 /*
 |-----------------------------------------------------------------------------|
@@ -34,6 +47,13 @@ function obtenirCelluleDepuisPosition(x, z) {
     };
 }
 
+
+/*
+|-----------------------------------------------------------------------------|
+| estCelluleBloquante:
+|   Retourne vrai si la cellule est bloquante
+|-----------------------------------------------------------------------------|
+*/
 function estCelluleBloquante(ligne, colonne) {
     let cellule = obtenirCellule(ligne, colonne);
 
@@ -145,6 +165,7 @@ function deplacerJoueur(facteur) {
 
     let nouvelleCellule = obtenirCelluleDepuisPosition(joueur.x, joueur.z);
     verifierSortieEnclos(nouvelleCellule);
+    verifierTresorAtteint(nouvelleCellule);
 }
 
 /*
@@ -240,5 +261,26 @@ function verifierSortieEnclos(nouvelleCellule) {
         joueur.z < 12.7
     ) {
         demanderFermetureEnclos();
+    }
+}
+
+/*
+|-----------------------------------------------------------------------------|
+| verifierTresorAtteint:
+|   Fait gagner le niveau si le joueur atteint la cellule du trésor
+|-----------------------------------------------------------------------------|
+*/
+function verifierTresorAtteint(celluleJoueur) {
+    let tresor = obtenirTresorNiveau();
+
+    if (tresor === null) {
+        return;
+    }
+
+    if (
+        celluleJoueur.ligne === tresor.ligne &&
+        celluleJoueur.colonne === tresor.colonne
+    ) {
+        gagnerNiveau();
     }
 }

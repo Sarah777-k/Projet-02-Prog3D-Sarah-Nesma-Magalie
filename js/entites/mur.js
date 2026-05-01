@@ -59,7 +59,6 @@ function initSoubassements(objgl){
     }
   }
   return tabS;
-
 }
 function ouvrirMurGraphiquement(mur3D) {
   mur3D.enOuverture = true;
@@ -71,6 +70,7 @@ function ouvrirMurGraphiquement(mur3D) {
     obj.ligne === mur3D.ligne &&
     obj.col === mur3D.col
   );
+
 
   if (soubassement) {
     soubassement.enOuverture = true;

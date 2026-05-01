@@ -31,13 +31,15 @@ function construireScene(objgl) {
     z: 14,
     type: "enclos",
   });
-  //  tabObjets.push({
-  //      mesh: creerMeshPlafond(objgl),
-  //      x: 0,
-  //      y: 1.5,
-  //      z: 0,
-  //      type: "plafond",
-  //    });
+    tabObjets.push({
+        mesh: creerMeshPlafond(objgl),
+        x: 0,
+        y: 1.5,
+        z: 0,
+        type: "plafond",
+        visible: true,
+      });
+      
   //init les objets de niveau por type
   for (let i = 0; i < tabObjetsNiveau.length; i++) {
     let objNiveau = tabObjetsNiveau[i];

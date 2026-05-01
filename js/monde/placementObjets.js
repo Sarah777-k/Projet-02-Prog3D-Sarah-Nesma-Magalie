@@ -8,61 +8,12 @@
 let tabObjetsNiveau = [];
 
 
-//////////////////// Fonction de test
-function placerObjets(niveau) {
-    let tresor = {
-        type: "TRESOR",
-        ligne: 5,
-        colonne: 10
-    };
-
-    tabObjetsNiveau.push(tresor);
-
-
-    let ligneFleche = 5;
-    let colonneFleche = 7;
-
-    let angle = calculerAngleVersTresor(
-        ligneFleche,
-        colonneFleche,
-        tresor.ligne,
-        tresor.colonne
-    );
-
-    tabObjetsNiveau.push({
-        type: "FLECHE",
-        ligne: ligneFleche,
-        colonne: colonneFleche,
-        angle: angle
-    });
-
-
-    ligneFleche = 5;
-    colonneFleche = 15;
-
-    angle = calculerAngleVersTresor(
-        ligneFleche,
-        colonneFleche,
-        tresor.ligne,
-        tresor.colonne
-    );
-
-    tabObjetsNiveau.push({
-        type: "FLECHE",
-        ligne: ligneFleche,
-        colonne: colonneFleche,
-        angle: angle
-    });
-
-    console.log(tabObjetsNiveau);
-}
-
 /*
 |-----------------------------------------------------------------------------|
 | placerObjets:
 |   Appelle les fonctions de placement pour les différents types d'objets
 |-----------------------------------------------------------------------------|
-
+*/
 function placerObjets(niveau) {
     let tresor = placerTresor();
 
@@ -70,7 +21,7 @@ function placerObjets(niveau) {
     placerTeleporteurs(obtenirNbTeleporteurs(niveau));
     placerRecepteurs(obtenirNbRecepteurs(niveau));
 }
-*/
+
 /*
 |-----------------------------------------------------------------------------|
 | placerRecepteurs:

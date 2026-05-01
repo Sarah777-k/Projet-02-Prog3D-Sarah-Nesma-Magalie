@@ -43,7 +43,7 @@ document.addEventListener("keydown", function (e) {
         demanderOuvertureMur();
     }
 
-    /*
+    
     //activer la vue aérienne
     if (e.key === "PageUp") {
         e.preventDefault();
@@ -62,7 +62,7 @@ document.addEventListener("keydown", function (e) {
         basculerCheatVueAerienne();
         return;
     }
-    */
+    
 });
 
 document.addEventListener("keyup", function (e) {
@@ -136,7 +136,7 @@ document.addEventListener("contextmenu", function (e) {
 */
 function gererInputJoueur() {
 
-    // if (estEnVueAerienne()) return; ///// vérifier si on est en vue aérienne pour bloquer les deplacements
+    if (estEnVueAerienne()) return; ///// vérifier si on est en vue aérienne pour bloquer les deplacements
     
     if (touches.avancer) {
         avancer();

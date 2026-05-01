@@ -17,6 +17,8 @@
     
     Remarque:
     Ce fichier agit comme contrôleur central du jeu.
+
+    
 */
 
 let objScene3D = {};
@@ -70,6 +72,7 @@ function boucle() {
     gererInputJoueur();
     mettreAJourCamera();
     mettreAJourTemps();
+    mettreAJourPenaliteVueAerienne();
     mettreAJourHUD();
     
 
@@ -77,11 +80,11 @@ function boucle() {
     
     requestAnimationFrame(boucle);
 }
-
+///////////////vu inclnie camera
 function mettreAJourCamera() {
 
     //Si on est en vue aérienne, ne met pas à jour la pos de la caméra
-    //if (estEnVueAerienne()) return;  
+    if (estEnVueAerienne()) return;  
 
     let dir = obtenirDirectionVecteur();
     let hauteurYeux = 1.2;

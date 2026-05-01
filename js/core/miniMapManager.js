@@ -22,7 +22,24 @@ let dernierTempsPenaliteMs = 0;
 |-----------------------------------------------------------------------------|
 */
 function activerVueAerienne() {
-    console.log("Vue aérienne ACTIVÉE");
+    if (bolVueAerienne) return;
+    if (gameState.etat !== ETAT_EN_COURS) return;
+    if (!peutVueAerienne()) {
+        console.log("Score insuffisant pour la vue aerienne");
+        return;
+    }
+
+    cameraNormaleSauvegardee = objScene3D.camera;
+    let cameraAerienne = creerCamera();
+
+    setPositionsCameraXYZ([CENTRE_DEDALE, HAUTEUR_VUE_AERIENNE, CENTRE_DEDALE],cameraAerienne);
+    setCiblesCameraXYZ([CENTRE_DEDALE, 0, CENTRE_DEDALE],cameraAerienne);
+    setOrientationsXYZ([0, 0, -1], cameraAerienne);
+    objScene3D.camera = cameraAerienne;
+    bolVueAerienne = true;
+
+    dernierTempsPenaliteMs = performance.now();
+    console.log("Vue aerienne activee");
 }
 
 /*
@@ -49,12 +66,11 @@ function desactiverVueAerienne() {
 |-----------------------------------------------------------------------------|
 */
 function basculerCheatVueAerienne() {
-    console.log(bolCheat ? "Cheat ON" : "Cheat OFF");
-    
     if (!bolVueAerienne) {
         return;
     }
     bolCheat = !bolCheat;
+    console.log(bolCheat ? "Cheat ON" : "Cheat OFF");
 }
 
 /*
@@ -65,6 +81,18 @@ function basculerCheatVueAerienne() {
 */
 function mettreAJourPenaliteVueAerienne() {
     if (!bolVueAerienne) return;
+    let maintenant = performance.now();
+    let deltaMs = maintenant - dernierTempsPenaliteMs;
+
+    if (deltaMs >= 1000) {
+        retirerPointsVueAerienne();
+        dernierTempsPenaliteMs = maintenant;
+
+        if (!peutVueAerienne()) {
+            console.log("Score trop bas, sortie forcée de la vue aérienne.");
+            desactiverVueAerienne();
+        }
+    }
 }
 
 /*

@@ -17,6 +17,8 @@
     
     Remarque:
     Ce fichier agit comme contrôleur central du jeu.
+
+    
 */
 
 let objScene3D = {};
@@ -77,7 +79,7 @@ function boucle() {
     
     requestAnimationFrame(boucle);
 }
-
+///////////////vu inclnie camera
 function mettreAJourCamera() {
 
     //Si on est en vue aérienne, ne met pas à jour la pos de la caméra

@@ -93,7 +93,7 @@ function fermerMurGraphiquement(ligne, col) {
       z: ligne,
       ligne: ligne,
       col: col,
-      type: TYPE_MUR_SOLIDE, // ou TYPE_MUR_OUV selon le type de mur à fermer
+      type: TYPE_PORTE_ENCLOS, 
       visible: true,
       progression: 0, // pour animation d'ouverture, de 0 (fermée) à 1 (ouverte)
       enOuverture: false,

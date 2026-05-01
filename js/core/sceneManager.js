@@ -126,6 +126,11 @@ function dessinerScene(gl, shaderProgram, scene) {
       case TYPE_MUR_SOLIDE:
         mat = creerMatMurSolide();
         break;
+      //////ATTENDRE MAGALIE 
+      case TYPE_PORTE_ENCLOS:
+        mat = creerMatMurSolide();
+        break;
+      
       case "soubassement":
         mat = creerMatSoubassement();
         break;

@@ -39,6 +39,7 @@ function placerTresor() {
     tabObjetsNiveau.push(tresor);
 
     return tresor;
+    
 }
 
 

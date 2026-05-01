@@ -13,6 +13,7 @@ let bolVueAerienne = false;
 let bolCheat = false;                
 let cameraNormaleSauvegardee = null;    
 let dernierTempsPenaliteMs = 0;
+let indicateurJoueur = null;
 
 /*
 |-----------------------------------------------------------------------------|

@@ -72,6 +72,6 @@ function tempsEcoule() {
         recommencerNiveau();
     }
     else {
-        console.log("temps ecoule, GAME OVER")
+        console.log("temps ecoule, GAME OVER");     
     }
 }

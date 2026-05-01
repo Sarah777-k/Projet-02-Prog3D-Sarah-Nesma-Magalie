@@ -116,6 +116,20 @@ function dessinerScene(gl, shaderProgram, scene) {
     // Ne pas dessiner les murs ouverts
     if (obj.visible === false) continue;
 
+    //Pour gerer la visivilite en vue aerienne
+    if (estEnVueAerienne()) {
+      if (obj.type === "plafond") continue;
+
+      let estObjetSpecial = (
+        obj.type === "FLECHE" ||
+        obj.type === "TELEPORTEUR" ||
+        obj.type === "RECEPTEUR" ||
+        obj.type === "TRESOR"
+      );
+      if (estObjetSpecial && !cheatEstActif()) continue;
+    }
+    //
+
     // Choisir le bon matériau selon le type
     let mat;
     switch (obj.type) {

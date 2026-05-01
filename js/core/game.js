@@ -64,7 +64,7 @@ function initialiserJeu() {
     gameState.niveau = 1;
     initialiserScore();
 
-    initNiveau(gameState.niveau);
+    initNiveau(gameState.niveau, true);
     validerScoreNiveau();
 }
 

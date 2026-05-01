@@ -77,7 +77,7 @@ class Cell {
     |-----------------------------------------------------------------------------|
     */
     ouvrir() {
-        if (this.estMurOuvrable()) {
+        if (this.estMurOuvrable() && !this.estOuverte) {
             this.estOuverte = true;
             return true;
         }

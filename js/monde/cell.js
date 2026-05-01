@@ -54,6 +54,16 @@ class Cell {
 
     /*
     |-----------------------------------------------------------------------------|
+    | estPorteEnclos:
+    |   Retourne vrai si la cellule est la porte de l'enclos
+    |-----------------------------------------------------------------------------|
+    */
+    estPorteEnclos() {
+        return this.type === TYPE_PORTE_ENCLOS;
+    }
+    
+    /*
+    |-----------------------------------------------------------------------------|
     | estBloquante:
     |   Retourne vrai si la cellule est bloquante
     |-----------------------------------------------------------------------------|
@@ -82,6 +92,18 @@ class Cell {
             return true;
         }
         return false;
+    }
+
+
+    /*
+    |-----------------------------------------------------------------------------|
+    | ouvrirPorte:
+    |   Ferme la porte de l'enclos lors du chargement du niveau
+    |-----------------------------------------------------------------------------|
+    */
+    ouvrirPorte() {
+        this.type = TYPE_PORTE_ENCLOS;
+        this.estOuverte = true;
     }
     
     /*

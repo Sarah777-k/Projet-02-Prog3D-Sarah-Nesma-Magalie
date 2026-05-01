@@ -57,19 +57,15 @@ function initNiveau(niveau, nouveauPlacementObjets = true) {
         viderTabObjets();
         placerObjets(niveau);
     }
-    
-    //chargerObjetsNiveau();
 
     // debutNiveauMs = 0;
     // tempsEcouleMs = 0;
     // scoreNiveau = 0;
     initialiserTemps(); ///// ajout nesma
 
-    replacerJoueurDepart();
+    demanderOuvertureEnclos();
+    initPositionJoueur();
     
-    //fermerMursOuverts();
-    //ouvrirPorteEnclos();
-
     audioManager.jouerDebutNiveau();
 }
 
@@ -80,21 +76,21 @@ function initNiveau(niveau, nouveauPlacementObjets = true) {
 |-----------------------------------------------------------------------------|
 */
 function gagnerNiveau() {
-    if (etatJeu !== ETAT_EN_COURS) return;
+    if (gameState.etat !== ETAT_EN_COURS) return;
 
     // scoreTotal += scoreNiveau;
     
 
     // Niveau suivant
     if (niveauCourant >= MAX_NIVEAUX) {
-        etatJeu = ETAT_VICTOIRE;
+        gameState.etat = ETAT_VICTOIRE;
         //audioManager.jouerFinJeu();
         return;
     }
 
     niveauCourant++;
     
-    initNiveau();
+    initNiveau(niveauCourant);
 }
 
 /*
@@ -105,6 +101,7 @@ function gagnerNiveau() {
 */
 function recommencerNiveau() {
     initNiveau(gameState.niveau, false);
+    recommencerScoreNiveau();
 }
 
 

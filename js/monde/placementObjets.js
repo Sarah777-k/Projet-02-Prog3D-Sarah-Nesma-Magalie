@@ -15,9 +15,8 @@ let tabObjetsNiveau = [];
 |-----------------------------------------------------------------------------|
 */
 function placerObjets(niveau) {
-    let tresor = placerTresor();
-
-    placerFleches(obtenirNbFleches(niveau), tresor);
+    placerTresor();
+    placerFleches(obtenirNbFleches(niveau), obtenirTresorNiveau());
     placerTeleporteurs(obtenirNbTeleporteurs(niveau));
     placerRecepteurs(obtenirNbRecepteurs(niveau));
 }
@@ -37,8 +36,6 @@ function placerTresor() {
     };
 
     tabObjetsNiveau.push(tresor);
-
-    return tresor;
 }
 
 
@@ -123,4 +120,20 @@ function calculerAngleVersTresor(ligneFleche, colonneFleche, ligneTresor, colonn
     let deltaZ = ligneTresor - ligneFleche;
 
     return Math.atan2(deltaZ, deltaX); // arctangente de deltaZ/deltaX pour obtenir l'angle en radians
+}
+
+
+/*
+|-----------------------------------------------------------------------------|
+| obtenirTresorNiveau:
+|   Retourne l'objet trésor du niveau actuel 
+|-----------------------------------------------------------------------------|
+*/
+function obtenirTresorNiveau() {
+    for (let i = 0; i < tabObjetsNiveau.length; i++) {
+        if (tabObjetsNiveau[i].type === "TRESOR") {
+            return tabObjetsNiveau[i];
+        }
+    }
+    return null;
 }

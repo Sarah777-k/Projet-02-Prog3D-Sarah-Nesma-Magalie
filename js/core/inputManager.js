@@ -42,6 +42,27 @@ document.addEventListener("keydown", function (e) {
     } else if (e.key === " ") {
         demanderOuvertureMur();
     }
+
+    /*
+    //activer la vue aérienne
+    if (e.key === "PageUp") {
+        e.preventDefault();
+        activerVueAerienne();
+        return;
+    }
+    //désactiver la vue aérienne
+    if (e.key === "PageDown") {
+        e.preventDefault();
+        desactiverVueAerienne();
+        return;
+    }
+    //activer cheat
+    if (e.ctrlKey && e.shiftKey && e.code === "Space") {
+        e.preventDefault();
+        basculerCheatVueAerienne();
+        return;
+    }
+    */
 });
 
 document.addEventListener("keyup", function (e) {
@@ -114,6 +135,9 @@ document.addEventListener("contextmenu", function (e) {
 |-----------------------------------------------------------------------------|
 */
 function gererInputJoueur() {
+
+    // if (estEnVueAerienne()) return; ///// vérifier si on est en vue aérienne pour bloquer les deplacements
+    
     if (touches.avancer) {
         avancer();
     }

@@ -79,6 +79,10 @@ function boucle() {
 }
 
 function mettreAJourCamera() {
+
+    //Si on est en vue aérienne, ne met pas à jour la pos de la caméra
+    //if (estEnVueAerienne()) return;  
+
     let dir = obtenirDirectionVecteur();
     let hauteurYeux = 1.2;
 

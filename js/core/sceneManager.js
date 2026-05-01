@@ -31,23 +31,23 @@ function construireScene(objgl) {
     z: 14,
     type: "enclos",
   });
-   tabObjets.push({
-       mesh: creerMeshPlafond(objgl),
-       x: 0,
-       y: 1.5,
-       z: 0,
-       type: "plafond",
-     });
+  //  tabObjets.push({
+  //      mesh: creerMeshPlafond(objgl),
+  //      x: 0,
+  //      y: 1.5,
+  //      z: 0,
+  //      type: "plafond",
+  //    });
   //init les objets de niveau por type
   for (let i = 0; i < tabObjetsNiveau.length; i++) {
     let objNiveau = tabObjetsNiveau[i];
     if(objNiveau.type ==="FLECHE"){
            tabObjets.push({
               mesh : creerMeshFleche(objgl),
-              x : objNiveau.ligne,
+              x : objNiveau.colonne,
               y : 1.0,
-              z : objNiveau.colonne,
-              angle: 0,
+              z : objNiveau.ligne,
+              angle: objNiveau.angle,
               type : "FLECHE",
               visible : true
           });
@@ -174,7 +174,7 @@ function dessinerScene(gl, shaderProgram, scene) {
 
     // rotate la fleche d
     if (obj.type === "FLECHE") {
-        mat4.rotateY(matModele, obj.angle);
+        mat4.rotateZ(matModele, obj.angle);
     }
 
     let matModeleVue = mat4.create();

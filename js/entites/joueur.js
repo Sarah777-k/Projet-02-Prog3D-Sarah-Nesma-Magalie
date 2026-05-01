@@ -170,6 +170,16 @@ function deplacerJoueur(facteur) {
 
 /*
 |-----------------------------------------------------------------------------|
+| obtenirAngleJoueur:
+|   Retourne l'angle du joueur en degrés
+|-----------------------------------------------------------------------------|
+*/
+function obtenirAngleJoueur() {
+    return joueur.angle;
+}
+
+/*
+|-----------------------------------------------------------------------------|
 | obtenirDirectionVecteur:
 |   Retourne la direction du joueu sous forme de vecteur pour la caméra
 |-----------------------------------------------------------------------------|

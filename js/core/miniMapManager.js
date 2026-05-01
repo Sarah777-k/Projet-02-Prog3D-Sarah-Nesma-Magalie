@@ -7,6 +7,7 @@
 /* ----- Constantes -----*/
 const HAUTEUR_VUE_AERIENNE = 35;
 const CENTRE_DEDALE = 15.5;
+//const DEMI_TAILLE_VUE_AERIENNE = 16;  // test
 
 /* ----- Variables -----*/
 let bolVueAerienne = false;

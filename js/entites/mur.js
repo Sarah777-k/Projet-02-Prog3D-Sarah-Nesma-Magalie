@@ -26,6 +26,7 @@ function initMur(objgl) {
           progression: 0, // pour animation d'ouverture, de 0 (fermée) à 1 (ouverte)
           enOuverture: false, // true si en train de s'ouvrir, pour gérer l'animation
           //enFermeture: false // true si en train de se fermer, pour gérer l'animation
+          rotation: Math.floor(Math.random() * 4) 
         };
         tabMurs.push(objMur);
       }
@@ -41,7 +42,7 @@ function initSoubassements(objgl){
     for (let j = 0; j < TAILLE_DEDALE; j++) {
       let typeCellule = obtenirTypeCellule(i, j);
 
-      if (typeCellule == TYPE_MUR_OUV ||  typeCellule == TYPE_MUR_SOLIDE ) {
+      if (typeCellule == TYPE_MUR_OUV  ) {
         tabS.push({
           mesh: creerMeshSoubassement(objgl),
           x: j,

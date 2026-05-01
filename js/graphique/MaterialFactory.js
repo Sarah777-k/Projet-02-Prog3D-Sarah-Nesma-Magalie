@@ -173,8 +173,8 @@ function appliquerMateriau(gl, shaderProgram, materiau) {
 // ============================================================
 function initTextures(gl) {
     //textureMurOuvrable = chargerTexture(gl, "../assets/textures/mur_ouvert.png");
-    textureMurOuvrable = chargerTexture(gl, "../assets/backrooms/backrooms-wall-diffuse.png");
-    textureMurSolide   = chargerTexture(gl, "../assets/backrooms/solide.jpg");
+    textureMurOuvrable = chargerTexture(gl, "../assets/backrooms/backWall.png");
+    textureMurSolide   = chargerTexture(gl, "../assets/backrooms/mur_solide.png");
     textureSoubassement = chargerTexture(gl, "../assets/backrooms/soubassements.png");
     //texturePlancher    = chargerTexture(gl, "../assets/textures/plancher.png");
     texturePlancher    = chargerTexture(gl, "../assets/backrooms/backrooms-carpet-diffuse.png");
@@ -185,7 +185,7 @@ function initTextures(gl) {
     textureFleche      = chargerTexture(gl, "../assets/backrooms/rouge.jpg");
     textureTeleporteur = chargerTexture(gl, "../assets/textures/teleporteur.png");
     textureRecepteur   = chargerTexture(gl, "../assets/textures/teleporteur.png");
-    textureTresor      = chargerTexture(gl, "../assets/textures/fleche.jpg");
+    textureTresor      = chargerTexture(gl, "../assets/textures/tresor.png");
 }
 
 // Charge une image et crée une texture WebGL

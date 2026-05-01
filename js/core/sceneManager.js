@@ -31,7 +31,7 @@ function construireScene(objgl) {
     z: 14,
     type: "enclos",
   });
-     tabObjets.push({
+   tabObjets.push({
        mesh: creerMeshPlafond(objgl),
        x: 0,
        y: 1.5,
@@ -48,16 +48,18 @@ function construireScene(objgl) {
               y : 1.0,
               z : objNiveau.colonne,
               angle: 0,
-              type : "FLECHE"
+              type : "FLECHE",
+              visible : true
           });
     }
     if(objNiveau.type==="TRESOR"){
       tabObjets.push({
               mesh : creerMeshTresor(objgl),
-              x : objNiveau.ligne,
+              x : objNiveau.colonne,
               y : 0.05,
-              z : objNiveau.colonne,
-              type : "TRESOR"
+              z : objNiveau.ligne,
+              type : "TRESOR",
+              visible : true
           });
     }
   }
@@ -133,6 +135,9 @@ function dessinerScene(gl, shaderProgram, scene) {
       case "FLECHE":
          mat= creerMatFleche();
          break;
+      case "TRESOR":
+        mat= creerMatTresor();
+        break;
       default:
         mat = creerMatPlancher();
         break;

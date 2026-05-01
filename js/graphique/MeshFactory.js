@@ -78,10 +78,10 @@ function creerMeshMur(gl) {
  
     // Coordonnées de texture UV pour chaque face (répétées par face)
     let texCoords = new Float32Array([
-        0,0, 1,0, 1,2.5, 0,2.5,  // avant  (se répète 2.5x en hauteur)
-        0,0, 1,0, 1,2.5, 0,2.5,  // arrière
-        0,0, 1,0, 1,2.5, 0,2.5,  // gauche
-        0,0, 1,0, 1,2.5, 0,2.5,  // droite
+        0,0, 1,0, 1,1, 0,1,  // avant  (se répète 2.5x en hauteur)
+        0,0, 1,0, 1,1, 0,1,  // arrière
+        0,0, 1,0, 1,1, 0,1,  // gauche
+        0,0, 1,0, 1,1, 0,1,  // droite
         0,0, 1,0, 1,1, 0,1        // dessus
     ]);
  
@@ -548,7 +548,34 @@ function creerMeshTresor(gl) {
         let b = f * 4;
         indices.push(b, b+1, b+2,  b, b+2, b+3);
     }
-    let normales = new Float32Array([]) 
+    let normales = new Float32Array([
+        // Corps — 6 faces
+        // Avant z-
+        0, 0,-1,   0, 0,-1,   0, 0,-1,   0, 0,-1,
+        // Arrière z+
+        0, 0, 1,   0, 0, 1,   0, 0, 1,   0, 0, 1,
+        // Gauche x-
+        -1, 0, 0,  -1, 0, 0,  -1, 0, 0,  -1, 0, 0,
+        // Droite x+
+        1, 0, 0,   1, 0, 0,   1, 0, 0,   1, 0, 0,
+        // Dessous y-
+        0,-1, 0,   0,-1, 0,   0,-1, 0,   0,-1, 0,
+        // Dessus corps y+
+        0, 1, 0,   0, 1, 0,   0, 1, 0,   0, 1, 0,
+
+        // Couvercle — 5 faces
+        // Avant couvercle z-
+        0, 0,-1,   0, 0,-1,   0, 0,-1,   0, 0,-1,
+        // Arrière couvercle z+
+        0, 0, 1,   0, 0, 1,   0, 0, 1,   0, 0, 1,
+        // Gauche couvercle x-
+        -1, 0, 0,  -1, 0, 0,  -1, 0, 0,  -1, 0, 0,
+        // Droite couvercle x+
+        1, 0, 0,   1, 0, 0,   1, 0, 0,   1, 0, 0,
+        // Dessus couvercle y+
+        0, 1, 0,   0, 1, 0,   0, 1, 0,   0, 1, 0
+
+    ]);
 
     return {
         bufferSommets:   creerBuffer(gl, gl.ARRAY_BUFFER,         sommets),

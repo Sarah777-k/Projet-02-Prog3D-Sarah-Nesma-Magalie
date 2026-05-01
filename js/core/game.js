@@ -25,8 +25,6 @@ let objProgShaders;
 
 let gameState = {
     niveau: 1,
-    score: 0,
-    tempsRestant: 0,
     ouvreurs: 0,
     fleches: 0,
     teleporteurs: 0,
@@ -62,7 +60,7 @@ function demarrer() {
 */
 function initialiserJeu() {
     gameState.niveau = 1;
-    gameState.score = initialiserScore();
+    initialiserScore();
 
     initNiveau(gameState.niveau);
 }
@@ -71,13 +69,20 @@ function initialiserJeu() {
 function boucle() {
     gererInputJoueur();
     mettreAJourCamera();
+    mettreAJourTemps();
     mettreAJourHUD();
+    
 
     dessinerScene(objgl, objProgShaders, objScene3D);
+    
     requestAnimationFrame(boucle);
 }
 
 function mettreAJourCamera() {
+
+    //Si on est en vue aérienne, ne met pas à jour la pos de la caméra
+    //if (estEnVueAerienne()) return;  
+
     let dir = obtenirDirectionVecteur();
     let hauteurYeux = 1.2;
 

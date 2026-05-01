@@ -16,10 +16,10 @@ const SEUIL_VUE_AERIENNE = 10;
 
 /* Variables */
 let score = 0;
+let scoreDebutNiveau = 0;
 //let enVueAerienne; <====== A VOIR SI JE GARDE CA
 
 /* Fonctions */
-
 /*
 |============================================================|
 | initialiserScore:
@@ -28,7 +28,6 @@ let score = 0;
 */
 function initialiserScore() {
     score = POINTS_DEPART;
-    return score;
 }
 
 /*
@@ -74,11 +73,25 @@ function retirerPointsVueAerienne() {
 
 /*
 |============================================================|
-| retirerPointsRecommencer:
-|   Retire 200 pts quand le joueur recommence un niveau
+| validerScoreNiveau:
+|   Sauvegarde le score actuel pour le niveau suivant.
+|   (appeler quand le joueur réussit un niveau)
 |============================================================|
 */
-function retirerPointsRecommencer() {
+function validerScoreNiveau() {
+    scoreDebutNiveau = score;
+}
+ 
+/*
+|============================================================|
+| recommencerScoreNiveau:
+|   Remet le score à la valeur qu'il avait au début du
+|   niveau courant et applique la penalite de recommencement.
+|   (appeler quand le joueur recommence un niveau)
+|============================================================|
+*/
+function recommencerScoreNiveau() {
+    score = scoreDebutNiveau;
     score -= PENALITE_RECOMMENCER;
 }
 

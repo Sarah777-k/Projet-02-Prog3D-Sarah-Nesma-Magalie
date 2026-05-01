@@ -85,3 +85,8 @@ function mettreAJourHUD() {
 function formaterNombre(nombre, longueur) {
     return String(nombre).padStart(longueur, "0");
 }
+
+function afficherTemps() {
+    let secondes = Math.max(0, Math.ceil(obtenirTempsRestant()));
+    setContenuElement(elementTemps, formaterNombre(secondes, 2));
+}

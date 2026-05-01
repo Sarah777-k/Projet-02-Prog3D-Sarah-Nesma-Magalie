@@ -69,7 +69,9 @@ function initialiserJeu() {
 function boucle() {
     gererInputJoueur();
     mettreAJourCamera();
+    mettreAJourTemps();
     mettreAJourHUD();
+    
 
     dessinerScene(objgl, objProgShaders, objScene3D);
     

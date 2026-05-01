@@ -45,7 +45,7 @@ function construireScene(objgl) {
            tabObjets.push({
               mesh : creerMeshFleche(objgl),
               x : objNiveau.colonne,
-              y : 1.0,
+              y : 1.5,
               z : objNiveau.ligne,
               angle: objNiveau.angle,
               type : "FLECHE",
@@ -170,11 +170,22 @@ function dessinerScene(gl, shaderProgram, scene) {
     // Matrice modèle : placer l'objet à sa position dans la scène
     let matModele = mat4.create();
     mat4.identity(matModele);
-    mat4.translate(matModele, [obj.x, yAnimation, obj.z]);
+   // mat4.translate(matModele, [obj.x, yAnimation, obj.z]);
 
     // rotate la fleche d
     if (obj.type === "FLECHE") {
-        mat4.rotateZ(matModele, obj.angle);
+
+        // Aller au centre de la cellule
+        mat4.translate(matModele, [obj.x + 0.5, obj.y, obj.z + 0.5]);
+
+        // Tourner autour de Y
+        mat4.rotateY(matModele, -obj.angle);
+
+        // Revenir au coin local du mesh
+        mat4.translate(matModele, [-0.5, 0, -0.5]);
+    } else {
+        // Tous les autres objets
+        mat4.translate(matModele, [obj.x, yAnimation, obj.z]);
     }
 
     let matModeleVue = mat4.create();

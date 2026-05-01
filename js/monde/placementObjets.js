@@ -116,9 +116,11 @@ function viderTabObjets() {
 |-----------------------------------------------------------------------------|
 */
 function calculerAngleVersTresor(ligneFleche, colonneFleche, ligneTresor, colonneTresor) {
+    // Calcul du vecteur entre la flèche et le trésor [AB = (xB - xA, zB - zA)]
     let deltaX = colonneTresor - colonneFleche;
     let deltaZ = ligneTresor - ligneFleche;
 
+    // Chercher l'angle de ce vecteur par rapport à l'axe X
     return Math.atan2(deltaZ, deltaX); // arctangente de deltaZ/deltaX pour obtenir l'angle en radians
 }
 
@@ -136,4 +138,43 @@ function obtenirTresorNiveau() {
         }
     }
     return null;
+}
+
+/*
+|-----------------------------------------------------------------------------|
+| obtenirTeleporteurSurCellule:
+|   Retourne le téléporteur situé sur une cellule donnée 
+|-----------------------------------------------------------------------------|
+*/
+function obtenirTeleporteurSurCellule(ligne, colonne) {
+    for (let i = 0; i < tabObjetsNiveau.length; i++) {
+        if (tabObjetsNiveau[i].type === "TELEPORTEUR" &&
+            tabObjetsNiveau[i].ligne === ligne &&
+            tabObjetsNiveau[i].colonne === colonne) {
+            return tabObjetsNiveau[i];
+        }
+    }
+    return null;
+}
+
+/*
+|-----------------------------------------------------------------------------|
+| obtenirRecepteurAleatoire:
+|   Retourne un récepteur au hasard parmi ceux existants
+|-----------------------------------------------------------------------------|
+*/
+function obtenirRecepteurAleatoire() {
+    let tabRecepteurs = [];
+
+    for (let i = 0; i < tabObjetsNiveau.length; i++) {
+        if (tabObjetsNiveau[i].type === "RECEPTEUR") {
+            tabRecepteurs.push(tabObjetsNiveau[i]);
+        }
+    }
+
+    let min = 0;
+    let max = tabRecepteurs.length - 1;
+    let indexAleatoire = obtenirNombreAleatoire(min, max);
+
+    return tabRecepteurs[indexAleatoire];
 }

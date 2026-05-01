@@ -66,13 +66,12 @@ function obtenirTempsRestant() {
 function tempsEcoule() {
     gameState.etat = ETAT_ATTENTE;
     audioManager.jouerTempsEcoule();
-    console.log("Game Over: temps ecoule")
-    //recommencerNiveau();
-}
 
-/*
-|=====================================================================|
-| afficherTemps:
-|   Met à jour l'affichage des secondes restantes dans le HUD.
-|=====================================================================|
-*/
+    if (peutRecommencerNiveau()){
+        console.log("temps ecoule, recommence niveau")
+        recommencerNiveau();
+    }
+    else {
+        console.log("temps ecoule, GAME OVER")
+    }
+}

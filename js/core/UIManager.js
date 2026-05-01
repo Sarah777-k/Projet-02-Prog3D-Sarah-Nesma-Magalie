@@ -86,6 +86,12 @@ function formaterNombre(nombre, longueur) {
     return String(nombre).padStart(longueur, "0");
 }
 
+/*
+|=====================================================================|
+| afficherTemps:
+|   Met à jour l'affichage des secondes restantes dans le HUD.
+|=====================================================================|
+*/
 function afficherTemps() {
     let secondes = Math.max(0, Math.ceil(obtenirTempsRestant()));
     setContenuElement(elementTemps, formaterNombre(secondes, 2));

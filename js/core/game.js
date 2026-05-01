@@ -65,6 +65,7 @@ function initialiserJeu() {
     initialiserScore();
 
     initNiveau(gameState.niveau);
+    validerScoreNiveau();
 }
 
 // Boucle de rendu (appelée ~60x par seconde)

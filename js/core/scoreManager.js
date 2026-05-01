@@ -81,7 +81,17 @@ function retirerPointsVueAerienne() {
 function validerScoreNiveau() {
     scoreDebutNiveau = score;
 }
- 
+
+/*
+|====================================================================|
+| peutRecommencerNiveau:
+|   Retourne true si le joueur peut recommencer le niveau.
+|====================================================================|
+*/
+function peutRecommencerNiveau(){
+    return score >= PENALITE_RECOMMENCER;
+}
+
 /*
 |============================================================|
 | recommencerScoreNiveau:

@@ -38,19 +38,6 @@ function afficherNiveau() {
     setContenuElement(elementNiveau, formaterNombre(gameState.niveau, 2));
 }
 
-
-/*
-|=====================================================================|
-| afficherTemps:
-|   Met à jour l'affichage des secondes restantes dans le HUD.
-|=====================================================================|
-*/
-function afficherTemps() {
-    let secondes = Math.max(0, Math.ceil(gameState.tempsRestant));
-    setContenuElement(elementTemps,formaterNombre(secondes, 2));
-}
-
-
 /*
 |=====================================================================|
 | afficherOuvreurs:

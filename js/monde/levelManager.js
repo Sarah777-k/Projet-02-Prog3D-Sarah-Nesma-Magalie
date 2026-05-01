@@ -15,7 +15,7 @@ const ETAT_GAME_OVER = "GAME_OVER";
 
 // const TEMPS_NIVEAU = 60;
 
-let niveauCourant = 1;
+//let niveauCourant = 1;
 // let debutNiveauMs = 0;
 // let tempsEcouleMs = 0;
 // let scoreNiveau = 0;
@@ -82,15 +82,15 @@ function gagnerNiveau() {
     
 
     // Niveau suivant
-    if (niveauCourant >= MAX_NIVEAUX) {
+    if (gameState.niveau >= MAX_NIVEAUX) {
         gameState.etat = ETAT_VICTOIRE;
         //audioManager.jouerFinJeu();
         return;
     }
 
-    niveauCourant++;
+    gameState.niveau++;
     
-    initNiveau(niveauCourant);
+    initNiveau(gameState.niveau);
 }
 
 /*

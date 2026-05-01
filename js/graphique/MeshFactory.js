@@ -46,6 +46,77 @@ function creerBuffer(gl, type, donnees) {
     gl.bufferData(type, donnees, gl.STATIC_DRAW);
     return buffer;
 }
+//=============================================================
+//mesh position joueur
+//=============================================================
+function creeMeshPosition2D(gl) {
+    let y = HAUTEUR_PLAFOND - 0.03;  // juste sous le plafond, bien visible du dessus
+    let r = 0.4;    // longueur de la pointe (vers +X)
+    let l = 0.25;   // demi-largeur de la base (vers ±Z)
+    let q = 0.15;   // recul de la queue (vers -X)
+
+    // Flèche centrée en (0.5, y, 0.5)
+    // Pointe → +X, queue → -X
+    //
+    //       [pointe]
+    //          /\
+    //         /  \
+    //  [gauche]    [droite]
+    //         \  /
+    //          \/
+    //       [queue]
+    //
+    // 4 sommets pour une flèche en chevron (plus lisible qu'un simple triangle)
+
+    let sommets = new Float32Array([
+        // pointe (avant, vers +X)
+        0.5 + r,   y,  0.5,          // 0 — pointe
+
+        // aile gauche
+        0.5,       y,  0.5 - l,      // 1 — gauche
+
+        // encoche queue gauche
+        0.5 - q,   y,  0.5 - l*0.4,  // 2 — renfoncement gauche
+
+        // encoche queue droite
+        0.5 - q,   y,  0.5 + l*0.4,  // 3 — renfoncement droit
+
+        // aile droite
+        0.5,       y,  0.5 + l,      // 4 — droite
+    ]);
+
+    let texCoords = new Float32Array([
+        0.5, 1.0,   // pointe
+        0.0, 0.0,   // gauche
+        0.3, 0.4,   // encoche gauche
+        0.3, 0.6,   // encoche droite
+        1.0, 0.0    // droite
+    ]);
+
+    // 3 triangles pour couvrir la forme en chevron
+    let indices = new Uint16Array([
+        0, 1, 2,   // triangle gauche
+        0, 2, 3,   // triangle centre
+        0, 3, 4    // triangle droit
+    ]);
+
+    // Normale vers le bas (face regardant vers le bas = visible du dessus)
+    let normales = new Float32Array([
+        0, -1, 0,
+        0, -1, 0,
+        0, -1, 0,
+        0, -1, 0,
+        0, -1, 0
+    ]);
+
+    return {
+        bufferSommets:   creerBuffer(gl, gl.ARRAY_BUFFER,         sommets),
+        bufferTexCoords: creerBuffer(gl, gl.ARRAY_BUFFER,         texCoords),
+        bufferNormales:  creerBuffer(gl, gl.ARRAY_BUFFER,         normales),
+        bufferIndices:   creerBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, indices),
+        nbIndices:       indices.length
+    };
+}
 
 // ============================================================
 //  MUR  (parallélépipède 1 x HAUTEUR_MUR x 1)

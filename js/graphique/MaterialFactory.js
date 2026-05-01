@@ -44,6 +44,13 @@ let textureTresor         = null;
 // ============================================================
 
 
+//position 2D
+function creeMatPosition2D(){
+    return{
+        couleur: [0,0,0,1], //noir
+        texture: texturePos2D
+    }
+}
 // Mur ouvrable (rouge selon l'énoncé)
 function creerMatMurOuvrable() {
     return {
@@ -186,6 +193,7 @@ function initTextures(gl) {
     textureTeleporteur = chargerTexture(gl, "../assets/textures/teleporteur.png");
     textureRecepteur   = chargerTexture(gl, "../assets/textures/teleporteur.png");
     textureTresor      = chargerTexture(gl, "../assets/textures/tresor.png");
+    texturePos2D       = chargerTexture(gl,"../assets/textures/bric.png");
 }
 
 // Charge une image et crée une texture WebGL

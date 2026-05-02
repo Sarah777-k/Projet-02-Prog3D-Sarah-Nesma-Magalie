@@ -39,7 +39,7 @@ function construireScene(objgl) {
         type: "plafond",
         visible: true,
       });
-      
+
   //init les objets de niveau por type
   for (let i = 0; i < tabObjetsNiveau.length; i++) {
     let objNiveau = tabObjetsNiveau[i];
@@ -66,6 +66,16 @@ function construireScene(objgl) {
     }
   }
 
+     tabObjets.push({
+       mesh: creeMeshPosition2D(objgl),
+       x : 0,
+       y:  0.05,
+       z : 0,
+       type : "POSITION_JOUEUR",
+      visible: true
+     });
+   
+
 
   //tabPlancher = initplancher(objgl);
   tabObjects = tabObjets.concat(tabPlancher); // ajouter le plafond à la scène
@@ -83,7 +93,7 @@ function construireScene(objgl) {
 function dessinerScene(gl, shaderProgram, scene) {
   
   gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
-  gl.clearColor(0.05, 0.05, 0.1, 1); // fond bleu très sombre (effet nuit)
+  gl.clearColor(0.05, 0.05, 0.1, 1); // fond bleu sombre (effet nuit)
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
   gl.enable(gl.DEPTH_TEST);
 
@@ -113,18 +123,22 @@ function dessinerScene(gl, shaderProgram, scene) {
   for (let i = 0; i < scene.objets.length; i++) {
     let obj = scene.objets[i];
 
+     if (obj.type === "POSITION_JOUEUR" && !estEnVueAerienne()) {
+        continue;
+    }
     // Ne pas dessiner les murs ouverts
     if (obj.visible === false) continue;
 
     //Pour gerer la visivilite en vue aerienne
     if (estEnVueAerienne()) {
+    
       if (obj.type === "plafond") continue;
 
       let estObjetSpecial = (
         obj.type === "FLECHE" ||
         obj.type === "TELEPORTEUR" ||
         obj.type === "RECEPTEUR" ||
-        obj.type === "TRESOR"
+        obj.type === "TRESOR"  
       );
       if (estObjetSpecial && !cheatEstActif()) continue;
     }
@@ -146,7 +160,6 @@ function dessinerScene(gl, shaderProgram, scene) {
       case TYPE_PORTE_ENCLOS:
         mat = creerMatMurSolide();
         break;
-      
       case "soubassement":
         mat = creerMatSoubassement();
         break;
@@ -159,6 +172,9 @@ function dessinerScene(gl, shaderProgram, scene) {
       case "TRESOR":
         mat= creerMatTresor();
         break;
+       case "POSITION_JOUEUR" :
+         mat = creeMatPosition2D();
+         break;
       default:
         mat = creerMatPlancher();
         break;
@@ -166,7 +182,7 @@ function dessinerScene(gl, shaderProgram, scene) {
     appliquerMateriau(gl, shaderProgram, mat);
 
    //gestion de l'animation ouverture mur
-   //----///////////////////////////////ajouter au debut de jeu le mur enclos est ferme ensuite s'ouvre pour que le joueur sorte et enfin de ferme a nouveau   ////////////////
+  
     if (obj.enOuverture === true) {
       obj.progression += 0.01;
 
@@ -178,7 +194,7 @@ function dessinerScene(gl, shaderProgram, scene) {
     }
 
     let yAnimation = obj.y;
-
+    //ANIMATION GRAPHIQUE POUR MUR OUV ET PORTE ENCLOS 
     if ((obj.type === TYPE_MUR_OUV ) && obj.progression > 0) {
       yAnimation = obj.y - obj.progression * HAUTEUR_MUR;
     }
@@ -204,10 +220,31 @@ function dessinerScene(gl, shaderProgram, scene) {
 
         // Revenir au coin local du mesh
         mat4.translate(matModele, [-0.5, 0, -0.5]);
-    } else {
-        // Tous les autres objets
-        mat4.translate(matModele, [obj.x, yAnimation, obj.z]);
-    }
+    } 
+    else
+      if (obj.type === "POSITION_JOUEUR") {
+    if (!estEnVueAerienne()) continue;
+
+    var yIndicateur = HAUTEUR_MUR + 0.05;
+
+    mat4.translate(matModele, [
+        joueur.x - 0.5,
+        yIndicateur,
+        joueur.z - 0.5
+    ]);
+
+    mat4.translate(matModele, [0.5, 0, 0.5]);
+
+    var angle = obtenirAngleDirectionJoueur();
+    mat4.rotateY(matModele, -angle);
+
+    mat4.translate(matModele, [-0.5, 0, -0.5]);
+}
+
+    else {
+          // Tous les autres objets
+          mat4.translate(matModele, [obj.x, yAnimation, obj.z]);
+         }
 
     let matModeleVue = mat4.create();
     mat4.multiply(matVue, matModele, matModeleVue);

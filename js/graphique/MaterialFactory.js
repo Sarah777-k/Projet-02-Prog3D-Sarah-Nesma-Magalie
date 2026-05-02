@@ -193,7 +193,7 @@ function initTextures(gl) {
     textureTeleporteur = chargerTexture(gl, "../assets/textures/teleporteur.png");
     textureRecepteur   = chargerTexture(gl, "../assets/textures/teleporteur.png");
     textureTresor      = chargerTexture(gl, "../assets/textures/tresor.png");
-    texturePos2D       = chargerTexture(gl,"../assets/textures/bric.png");
+    texturePos2D       = chargerTexture(gl,"../assets/textures/tresor.png");
 }
 
 // Charge une image et crée une texture WebGL

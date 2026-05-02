@@ -50,7 +50,7 @@ function creerBuffer(gl, type, donnees) {
 //mesh position joueur
 //=============================================================
 function creeMeshPosition2D(gl) {
-    let y = HAUTEUR_PLAFOND - 0.03;  // juste sous le plafond, bien visible du dessus
+    let y = 0;  // juste sous le plafond, bien visible du dessus
     let r = 0.4;    // longueur de la pointe (vers +X)
     let l = 0.25;   // demi-largeur de la base (vers ±Z)
     let q = 0.15;   // recul de la queue (vers -X)
@@ -102,11 +102,11 @@ function creeMeshPosition2D(gl) {
 
     // Normale vers le bas (face regardant vers le bas = visible du dessus)
     let normales = new Float32Array([
-        0, -1, 0,
-        0, -1, 0,
-        0, -1, 0,
-        0, -1, 0,
-        0, -1, 0
+        0, 1, 0,
+        0, 1, 0,
+        0, 1, 0,
+        0, 1, 0,
+        0, 1, 0
     ]);
 
     return {

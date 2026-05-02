@@ -106,6 +106,7 @@ function gagnerNiveau() {
 */
 function recommencerNiveau() {
     initNiveau(gameState.niveau, false);
+    refermerMursOuverts();
     recommencerScoreNiveau();
     validerScoreNiveau();
 }

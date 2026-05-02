@@ -180,5 +180,29 @@ function demanderOuvertureEnclos() {
     if (mur3D !== null) {
         ouvrirMurGraphiquement(mur3D);
     }
-    
+}
+
+/*
+|-----------------------------------------------------------------------------|
+| refermerMursOuverts:
+|   Ferme tous les murs ouvrables qui sont ouverts
+|-----------------------------------------------------------------------------|
+*/
+function refermerMursOuverts() {
+    for (let i = 0; i < tabMursOuverts.length; i++) {
+        let fermerOK = false;
+
+        let mur = tabMursOuverts[i];
+        let cellule = obtenirCellule(mur.ligne, mur.colonne);
+
+        if (cellule !== null) {
+            fermerOK = cellule.fermer();
+        }
+
+        if (fermerOK) {
+            fermerMurGraphiquement(mur.ligne, mur.colonne);
+        }
+    }
+
+    tabMursOuverts = [];
 }

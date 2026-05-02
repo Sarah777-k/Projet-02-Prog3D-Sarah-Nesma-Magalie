@@ -17,6 +17,7 @@ let joueur = {
     z: 16.5,
     angle: -90
 };
+let tabMursOuverts = [];
 
 
 /* ----- Fonctions -----*/
@@ -69,12 +70,6 @@ function estCelluleBloquante(ligne, colonne) {
 | peutSeDeplacer:
 |   Vérifie si le déplacement est possible
 |-----------------------------------------------------------------------------|
-(x - R)        (x + R)
-    •────────•   ↑
-    │        │   |
-    │   C    │   | Z
-    │        │   ↓
-    •────────•
 */
 function peutSeDeplacer(x, z) {
     let pointsATester = [ //verifier les 4 coins du joueur pour éviter de rester coincé dans les murs ou voir a travers les murs
@@ -246,6 +241,11 @@ function ouvrirMurDevantJoueur() {
         return false;
     }
     
+    tabMursOuverts.push({
+        ligne: celluleDevant.ligne,
+        colonne: celluleDevant.colonne
+    });
+
     let mur3D = trouverMur3D(celluleDevant.ligne, celluleDevant.colonne);
 
     if (mur3D !== null) {

@@ -1,6 +1,6 @@
 /*
     Fichier: cell.js
-    Nom: Sarah Khodjaoui
+    Nom: Magalie Abada
     But: Gestion des cellules
 */
 
@@ -94,6 +94,20 @@ class Cell {
         return false;
     }
 
+
+    /*
+    |-----------------------------------------------------------------------------|
+    | fermer:
+    |   Ferme le mur seulemet si c'est un mur ouvrable
+    |-----------------------------------------------------------------------------|
+    */
+    fermer() {
+        if (this.estMurOuvrable() && this.estOuverte) {
+            this.estOuverte = false;
+            return true;
+        }
+        return false;
+    }
 
     /*
     |-----------------------------------------------------------------------------|

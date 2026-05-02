@@ -31,16 +31,18 @@ document.addEventListener("keydown", function (e) {
         e.preventDefault();
     }
 
-    if (e.key === "ArrowUp") {
-        touches.avancer = true;
-    } else if (e.key === "ArrowDown") {
-        touches.reculer = true;
-    } else if (e.key === "ArrowRight") {
-        touches.tournerDroite = true;
-    } else if (e.key === "ArrowLeft") {
-        touches.tournerGauche = true;
-    } else if (e.key === " ") {
-        demanderOuvertureMur();
+    if (!bolVueAerienne) {
+        if (e.key === "ArrowUp") {
+            touches.avancer = true;
+        } else if (e.key === "ArrowDown") {
+            touches.reculer = true;
+        } else if (e.key === "ArrowRight") {
+            touches.tournerDroite = true;
+        } else if (e.key === "ArrowLeft") {
+            touches.tournerGauche = true;
+        } else if (e.key === " ") {
+            demanderOuvertureMur();
+        }
     }
 
     
@@ -86,6 +88,10 @@ document.addEventListener("keyup", function (e) {
 */
 document.addEventListener("wheel", function (e) {
     e.preventDefault();
+    
+    if (bolVueAerienne) { 
+        return;
+    }
 
     if (e.deltaY < 0) {
         avancer();
@@ -102,6 +108,10 @@ document.addEventListener("wheel", function (e) {
 */
 document.addEventListener("mousedown", function (e) {
     e.preventDefault();
+
+    if (bolVueAerienne) { 
+        return;
+    }
 
     if (e.button === 0) {
         souris.tournerGauche = true;

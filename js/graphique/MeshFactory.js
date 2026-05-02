@@ -375,44 +375,69 @@ function creerMeshPlafond(gl) {
 
 // ============================================================
 function creerMeshFleche(gl) {
-    let yBase = HAUTEUR_PLAFOND - 0.9;  // hauteur de la base de la pyramide
-    let yPointe = yBase + 0.7;           // hauteur de la pointe
-    let d = 0.25;                        // demi-largeur (max 0.5 pour rester dans 1x1)
-
+    let yBas = 0.3;
+    let yHaut = 0.12         // hauteur de la pointe
+   
     // Base carrée centrée en (0.5, yBase, 0.5) — centrée dans la cellule
 
   
     let sommets = new Float32Array([
-        // 4 sommets de la base
-        0.3, yBase - d,  0.5 - d,   // 0
-        0.3, yBase - d , 0.5 + d,   // 1
-        0.3, yBase + d , 0.5 - d,   // 2 
-        0.3, yBase + d, 0.5 + d,  
-   
-        1.0, yBase, 0.5  // pointe horizontale vers +X
-    ]);
+       // rectangle arrière
+        0.10, yBas, 0.35,
+        0.55, yBas, 0.35,
+        0.55, yBas, 0.65,
+        0.10, yBas, 0.65,
+
+        // pointe
+        0.55, yBas, 0.20,
+        0.95, yBas, 0.50,
+        0.55, yBas, 0.80,
+
+        // mêmes sommets en haut
+        0.10, yHaut, 0.35,
+        0.55, yHaut, 0.35,
+        0.55, yHaut, 0.65,
+        0.10, yHaut, 0.65,
+
+        0.55, yHaut, 0.20,
+        0.95, yHaut, 0.50,
+        0.55, yHaut, 0.80
+       ]);
 
     let texCoords = new Float32Array([
-        0,0,  0,1,  1,0,  1,1,
-        0.5, 1.0
+        0,0, 1,0, 1,1, 0,1,
+        0,0, 1,0.5, 0,1,
+        0,0, 1,0, 1,1, 0,1,
+        0,0, 1,0.5, 0,1
     ]);
 
     let indices = new Uint16Array([
-        // Base (2 triangles)
-        0, 2, 3,   0, 3, 1,
-        // 4 faces latérales
-        0, 1, 4,   // face arrière
-        1, 3, 4,   // face droite
-        3, 2, 4,   // face avant
-        2, 0, 4    // face gauche
+      // dessous
+        0,1,2, 0,2,3,
+        4,5,6,
+
+        // dessus
+        7,10,9, 7,9,8,
+        11,12,13,
+
+        // côtés rectangle
+        0,7,8, 0,8,1,
+        1,8,9, 1,9,2,
+        2,9,10, 2,10,3,
+        3,10,7, 3,7,0,
+
+        // côtés pointe
+        4,11,12, 4,12,5,
+        5,12,13, 5,13,6,
+        6,13,11, 6,11,4
     ]);
-     let normales = new Float32Array([
-        0, -1, 0,
-        0, -1, 0,
-        0, -1, 0,
-        0, -1, 0,
-        1,  1, 0
-    ]);
+     
+    let normales = new Float32Array(new Array(sommets.length).fill(0));
+    for (let i = 0; i < normales.length; i += 3) {
+        normales[i] = 0;
+        normales[i + 1] = 1;
+        normales[i + 2] = 0;
+    }
 
     return {
         bufferSommets:   creerBuffer(gl, gl.ARRAY_BUFFER,         sommets),
@@ -428,7 +453,7 @@ function creerMeshFleche(gl) {
 //  Repose sur le plancher (Y=0) — énoncé section 3.7
 //  Max 1x1 — non plat
 //  Visuellement différent du récepteur (couleur gérée dans MaterialFactory)
-///////////// ajouter variabke normal 
+
 
 // ============================================================
 function creerMeshTeleporteur(gl) {
@@ -437,6 +462,7 @@ function creerMeshTeleporteur(gl) {
     let cx = 0.5;   // centre X dans la cellule
     let cz = 0.5;   // centre Z dans la cellule
     let n  = 8;     // nombre de côtés
+    
 
     let sommets   = [];
     let texCoords = [];
@@ -470,11 +496,32 @@ function creerMeshTeleporteur(gl) {
         indices.push(bas1, bas2, haut2);
         indices.push(bas1, haut2, haut1);
     }
+    let normales = [];
+    normales.push(0, -1, 0); // centre bas
+    normales.push(0,  1, 0); // centre haut
+    
+   for (let i = 0; i < n; i++) {
+    let angle = (i / n) * 2 * Math.PI;
+
+    let nx = Math.cos(angle);
+    let nz = Math.sin(angle);
+
+    let x = cx + r * nx;
+    let z = cz + r * nz;
+
+    sommets.push(x, 0, z);
+    texCoords.push(0.5 + 0.5 * nx, 0.5 + 0.5 * nz);
+    normales.push(nx, 0, nz);
+
+    sommets.push(x, h, z);
+    texCoords.push(0.5 + 0.5 * nx, 0.5 + 0.5 * nz);
+    normales.push(nx, 0, nz);
+}
 
     return {
         bufferSommets:   creerBuffer(gl, gl.ARRAY_BUFFER,         new Float32Array(sommets)),
         bufferTexCoords: creerBuffer(gl, gl.ARRAY_BUFFER,         new Float32Array(texCoords)),
-        bufferNormales: creerBuffer(gl, gl.ARRAY_BUFFER, normales),
+        bufferNormales: creerBuffer(gl, gl.ARRAY_BUFFER, new Float32Array (normales)),
         bufferIndices:   creerBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices)),
         nbIndices:       indices.length
     };

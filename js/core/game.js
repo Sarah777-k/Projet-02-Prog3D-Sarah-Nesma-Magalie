@@ -100,7 +100,7 @@ function mettreAJourCamera() {
     setCiblesCameraXYZ(
         [
             joueur.x + dir.x,
-            joueur.y + hauteurYeux,
+            joueur.y + hauteurYeux -0.2,
             joueur.z + dir.z
         ],
         objScene3D.camera

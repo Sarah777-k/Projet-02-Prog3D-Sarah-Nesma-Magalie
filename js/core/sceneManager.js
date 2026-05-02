@@ -32,13 +32,13 @@ function construireScene(objgl) {
     type: "enclos",
   });
     tabObjets.push({
-        mesh: creerMeshPlafond(objgl),
-        x: 0,
-        y: 1.5,
-        z: 0,
-        type: "plafond",
-        visible: true,
-      });
+         mesh: creerMeshPlafond(objgl),
+         x: 0,
+         y: 1.5,
+         z: 0,
+         type: "plafond",
+         visible: true,
+       });
 
   //init les objets de niveau por type
   for (let i = 0; i < tabObjetsNiveau.length; i++) {
@@ -47,7 +47,7 @@ function construireScene(objgl) {
            tabObjets.push({
               mesh : creerMeshFleche(objgl),
               x : objNiveau.colonne,
-              y : 1.5,
+              y : 0.4,
               z : objNiveau.ligne,
               angle: objNiveau.angle,
               type : "FLECHE",
@@ -64,8 +64,18 @@ function construireScene(objgl) {
               visible : true
           });
     }
+    if(objNiveau.type==="TELEPORTEUR"){
+        tabObjets.push({
+          mesh : creerMeshTeleporteur(objgl),
+          x : objNiveau.colonne,
+          y : 0.5,
+          z : objNiveau.ligne, 
+          type : "TELEPORTEUR",
+          visible : true
+        });
+    }
   }
-
+// indicateur postion joueur
      tabObjets.push({
        mesh: creeMeshPosition2D(objgl),
        x : 0,
@@ -138,7 +148,7 @@ function dessinerScene(gl, shaderProgram, scene) {
         obj.type === "FLECHE" ||
         obj.type === "TELEPORTEUR" ||
         obj.type === "RECEPTEUR" ||
-        obj.type === "TRESOR"  
+        obj.type === "TRESOR" 
       );
       if (estObjetSpecial && !cheatEstActif()) continue;
     }
@@ -172,6 +182,9 @@ function dessinerScene(gl, shaderProgram, scene) {
       case "TRESOR":
         mat= creerMatTresor();
         break;
+      case "TELEPORTEUR" :
+         mat = creerMatTeleporteur();
+         break;
        case "POSITION_JOUEUR" :
          mat = creeMatPosition2D();
          break;
@@ -237,7 +250,6 @@ function dessinerScene(gl, shaderProgram, scene) {
         mat4.rotateY(matModele, -angleRad);
     mat4.translate(matModele, [-0.5, 0, -0.5]);
 }
-
     else {
           // Tous les autres objets
           mat4.translate(matModele, [obj.x, yAnimation, obj.z]);

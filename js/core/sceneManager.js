@@ -31,64 +31,67 @@ function construireScene(objgl) {
     z: 14,
     type: "enclos",
   });
-    tabObjets.push({
-         mesh: creerMeshPlafond(objgl),
-         x: 0,
-         y: 1.5,
-         z: 0,
-         type: "plafond",
-         visible: true,
-       });
+  tabObjets.push({
+    mesh: creerMeshPlafond(objgl),
+    x: 0,
+    y: 1.5,
+    z: 0,
+    type: "plafond",
+    visible: true,
+  });
 
   //init les objets de niveau por type
   for (let i = 0; i < tabObjetsNiveau.length; i++) {
     let objNiveau = tabObjetsNiveau[i];
-    if(objNiveau.type ==="FLECHE"){
-           tabObjets.push({
-              mesh : creerMeshFleche(objgl),
-              x : objNiveau.colonne,
-              y : 0.4,
-              z : objNiveau.ligne,
-              angle: objNiveau.angle,
-              type : "FLECHE",
-              visible : true
-          });
-    }
-    if(objNiveau.type==="TRESOR"){
+    if (objNiveau.type === "FLECHE") {
       tabObjets.push({
-              mesh : creerMeshTresor(objgl),
-              x : objNiveau.colonne,
-              y : 0.05,
-              z : objNiveau.ligne,
-              type : "TRESOR",
-              visible : true
-          });
+        mesh: creerMeshFleche(objgl),
+        x: objNiveau.colonne,
+        y: 0.4,
+        z: objNiveau.ligne,
+        angle: objNiveau.angle,
+        type: "FLECHE",
+        visible: true
+      });
     }
-    if(objNiveau.type==="TELEPORTEUR"){
-        tabObjets.push({
-          mesh : creerMeshTeleporteur(objgl),
-          x : objNiveau.colonne,
-          y : 0.5,
-          z : objNiveau.ligne, 
-          type : "TELEPORTEUR",
-          visible : true
-        });
+    if (objNiveau.type === "TRESOR") {
+      tabObjets.push({
+        mesh: creerMeshTresor(objgl),
+        x: objNiveau.colonne,
+        y: 0.05,
+        z: objNiveau.ligne,
+        type: "TRESOR",
+        visible: true
+      });
     }
+    if (objNiveau.type === "TELEPORTEUR") {
+      tabObjets.push({
+        mesh: creerMeshTeleporteur(objgl),
+        x: objNiveau.colonne,
+        y: 0.05,
+        z: objNiveau.ligne,
+        type: "TELEPORTEUR",
+        visible: true,
+        rotation: 0
+      });
+    }
+    console.log("Objet niveau :", objNiveau.type, objNiveau.ligne, objNiveau.colonne);
   }
-// indicateur postion joueur
-     tabObjets.push({
-       mesh: creeMeshPosition2D(objgl),
-       x : 0,
-       y:  0.05,
-       z : 0,
-       type : "POSITION_JOUEUR",
-      visible: true
-     });
-   
+  // indicateur postion joueur
+  tabObjets.push({
+    mesh: creeMeshPosition2D(objgl),
+    x: 0,
+    y: 0.05,
+    z: 0,
+    type: "POSITION_JOUEUR",
+    visible: true
+  });
+
+
 
 
   //tabPlancher = initplancher(objgl);
-  tabObjects = tabObjets.concat(tabPlancher); // ajouter le plafond à la scène
+  tabObjects = tabObjets.concat(tabPlancher);
   tabMurs = initMur(objgl);
   tabS = initSoubassements(objgl);
   tabObjets = tabObjets.concat(tabMurs); // ajouter les murs à la scène
@@ -101,7 +104,7 @@ function construireScene(objgl) {
 //  Appelée à chaque frame par requestAnimationFrame dans main.js
 // ============================================================
 function dessinerScene(gl, shaderProgram, scene) {
-  
+
   gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
   gl.clearColor(0.05, 0.05, 0.1, 1); // fond bleu sombre (effet nuit)
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -133,22 +136,22 @@ function dessinerScene(gl, shaderProgram, scene) {
   for (let i = 0; i < scene.objets.length; i++) {
     let obj = scene.objets[i];
 
-     if (obj.type === "POSITION_JOUEUR" && !estEnVueAerienne()) {
-        continue;
+    if (obj.type === "POSITION_JOUEUR" && !estEnVueAerienne()) {
+      continue;
     }
     // Ne pas dessiner les murs ouverts
     if (obj.visible === false) continue;
 
     //Pour gerer la visivilite en vue aerienne
     if (estEnVueAerienne()) {
-    
+
       if (obj.type === "plafond") continue;
 
       let estObjetSpecial = (
         obj.type === "FLECHE" ||
         obj.type === "TELEPORTEUR" ||
         obj.type === "RECEPTEUR" ||
-        obj.type === "TRESOR" 
+        obj.type === "TRESOR"
       );
       if (estObjetSpecial && !cheatEstActif()) continue;
     }
@@ -177,25 +180,25 @@ function dessinerScene(gl, shaderProgram, scene) {
         mat = creerMatPlafond();
         break;
       case "FLECHE":
-         mat= creerMatFleche();
-         break;
-      case "TRESOR":
-        mat= creerMatTresor();
+        mat = creerMatFleche();
         break;
-      case "TELEPORTEUR" :
-         mat = creerMatTeleporteur();
-         break;
-       case "POSITION_JOUEUR" :
-         mat = creeMatPosition2D();
-         break;
+      case "TRESOR":
+        mat = creerMatTresor();
+        break;
+      case "TELEPORTEUR":
+        mat = creerMatTeleporteur();
+        break;
+      case "POSITION_JOUEUR":
+        mat = creeMatPosition2D();
+        break;
       default:
         mat = creerMatPlancher();
         break;
     }
     appliquerMateriau(gl, shaderProgram, mat);
 
-   //gestion de l'animation ouverture mur
-  
+    //gestion de l'animation ouverture mur
+
     if (obj.enOuverture === true) {
       obj.progression += 0.01;
 
@@ -208,52 +211,62 @@ function dessinerScene(gl, shaderProgram, scene) {
 
     let yAnimation = obj.y;
     //ANIMATION GRAPHIQUE POUR MUR OUV ET PORTE ENCLOS 
-    if ((obj.type === TYPE_MUR_OUV ) && obj.progression > 0) {
+    if ((obj.type === TYPE_MUR_OUV) && obj.progression > 0) {
       yAnimation = obj.y - obj.progression * HAUTEUR_MUR;
     }
     //le soubassement doit aussi disparaitre comme le mur
-    if(obj.type === "soubassement" && obj.progression > 0){
-       yAnimation = obj.y - obj.progression * HAUTEUR_MUR;
+    if (obj.type === "soubassement" && obj.progression > 0) {
+      yAnimation = obj.y - obj.progression * HAUTEUR_MUR;
     }
-   
-    
+
+
     // Matrice modèle : placer l'objet à sa position dans la scène
     let matModele = mat4.create();
     mat4.identity(matModele);
-   // mat4.translate(matModele, [obj.x, yAnimation, obj.z]);
+    // mat4.translate(matModele, [obj.x, yAnimation, obj.z]);
 
     // rotate la fleche d
     if (obj.type === "FLECHE") {
 
-        // Aller au centre de la cellule
-        mat4.translate(matModele, [obj.x + 0.5, obj.y, obj.z + 0.5]);
+      // Aller au centre de la cellule
+      mat4.translate(matModele, [obj.x + 0.5, obj.y, obj.z + 0.5]);
 
-        // Tourner autour de Y
-        mat4.rotateY(matModele, -obj.angle);
+      // Tourner autour de Y
+      mat4.rotateY(matModele, -obj.angle);
 
-        // Revenir au coin local du mesh
-        mat4.translate(matModele, [-0.5, 0, -0.5]);
-    } 
+      // Revenir au coin local du mesh
+      mat4.translate(matModele, [-0.5, 0, -0.5]);
+    }
     else
       if (obj.type === "POSITION_JOUEUR") {
-    if (!estEnVueAerienne()) continue;
+        if (!estEnVueAerienne()) continue;
 
-    var yIndicateur = HAUTEUR_MUR + 0.05;
+        var yIndicateur = HAUTEUR_MUR + 0.05;
 
-    mat4.translate(matModele, [
-       Math.floor(joueur.x) + 0.5,
-            yIndicateur,
-            Math.floor(joueur.z) + 0.5
-    ]);
+        mat4.translate(matModele, [
+          Math.floor(joueur.x) + 0.5,
+          yIndicateur,
+          Math.floor(joueur.z) + 0.5
+        ]);
 
-    var angleRad = obtenirAngleJoueur() * Math.PI / 180;
+        var angleRad = obtenirAngleJoueur() * Math.PI / 180;
         mat4.rotateY(matModele, -angleRad);
-    mat4.translate(matModele, [-0.5, 0, -0.5]);
-}
-    else {
-          // Tous les autres objets
-          mat4.translate(matModele, [obj.x, yAnimation, obj.z]);
-         }
+        mat4.translate(matModele, [-0.5, 0, -0.5]);
+      } else if (obj.type === "TELEPORTEUR") {
+        obj.rotation += 0.02; // vitesse (ajuste)
+        // centre de la cellule
+        mat4.translate(matModele, [obj.x + 0.5, obj.y, obj.z + 0.5]);
+
+        // rotation continue
+        mat4.rotateY(matModele, obj.rotation);
+
+        // revenir à l'origine du mesh
+        mat4.translate(matModele, [-0.5, 0, -0.5]);
+      }
+      else {
+        // Tous les autres objets
+        mat4.translate(matModele, [obj.x, yAnimation, obj.z]);
+      }
 
     let matModeleVue = mat4.create();
     mat4.multiply(matVue, matModele, matModeleVue);

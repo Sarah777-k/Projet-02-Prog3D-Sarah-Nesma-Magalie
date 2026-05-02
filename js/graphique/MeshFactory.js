@@ -457,7 +457,7 @@ function creerMeshFleche(gl) {
 
 // ============================================================
 function creerMeshTeleporteur(gl) {
-    let h  = 0.6;   // hauteur
+    let h  = 0.15;   // hauteur
     let r  = 0.38;  // rayon (reste dans 1x1)
     let cx = 0.5;   // centre X dans la cellule
     let cz = 0.5;   // centre Z dans la cellule

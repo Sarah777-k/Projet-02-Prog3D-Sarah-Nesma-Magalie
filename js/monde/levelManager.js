@@ -79,22 +79,19 @@ function initNiveau(niveau, nouveauPlacementObjets) {
 function gagnerNiveau() {
     if (gameState.etat !== ETAT_EN_COURS) return;
 
+    ajouterPointsTresor(obtenirTempsRestant());
+    validerScoreNiveau();
+
     // Niveau suivant
     if (gameState.niveau >= MAX_NIVEAUX) {
         gameState.etat = ETAT_VICTOIRE;
 
-        ajouterPointsTresor(obtenirTempsRestant());
-        validerScoreNiveau();
-
-        audioManager.jouerFinJeu();
+        audioManager.jouerVictoire();
         return;
     }
     
     gameState.niveau++;
 
-    ajouterPointsTresor(obtenirTempsRestant());
-    validerScoreNiveau();
-    
     initNiveau(gameState.niveau, true);
 }
 
@@ -111,6 +108,17 @@ function recommencerNiveau() {
     validerScoreNiveau();
 }
 
+/*
+|-----------------------------------------------------------------------------|
+| perdrePartie:
+|   Gère la défaite du joueur (le tps est écoulé, le joueur ne peut pas recommencer)
+|-----------------------------------------------------------------------------|
+*/
+function perdrePartie() {
+    const ETAT_GAME_OVER = "GAME_OVER";
+    audioManager.jouerGameOver();
+    ////////////////// Afficher le message game over / ecran à voir avec Nesma
+}
 
 /* ----- Getters pour les objets -----*/
 function obtenirNbOuvreurs(niveau) {

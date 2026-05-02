@@ -250,6 +250,7 @@ function ouvrirMurDevantJoueur() {
 
     if (mur3D !== null) {
         ouvrirMurGraphiquement(mur3D);
+        audioManager.jouerOuvertureMur();
     }
 
     return true;
@@ -292,6 +293,7 @@ function verifierTresorAtteint(celluleJoueur) {
         celluleJoueur.ligne === tresor.ligne &&
         celluleJoueur.colonne === tresor.colonne
     ) {
+        audioManager.jouerTresorTrouve()
         gagnerNiveau();
     }
 }
@@ -316,8 +318,8 @@ function verifierTeleporteurAtteint(celluleJoueur) {
         return;
     }
 
+    audioManager.jouerTeleportation();
+
     joueur.x = recepteur.colonne + 0.5;
     joueur.z = recepteur.ligne + 0.5;
-
-    audioManager.jouerTeleportation();
 }

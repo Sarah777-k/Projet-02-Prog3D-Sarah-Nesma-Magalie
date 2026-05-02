@@ -16,13 +16,13 @@ class AudioManager {
     // Constructeur : charge tous les sons du jeu
     // ========================================================
     constructor() {
-        this.sonDebutNiveau   = new Audio("../assets/audio/levelup.mp3");
-        this.sonTresorTrouve  = new Audio("../assets/audio/levelup.mp3");
-        this.sonTempsEcoule   = new Audio("../assets/audio/levelup.mp3");
-        this.sonOuvertureMur  = new Audio("../assets/audio/levelup.mp3");
-        this.sonTeleportation = new Audio("../assets/audio/levelup.mp3");
-        this.sonGameOver      = new Audio("../assets/audio/levelup.mp3");
-        this.sonFinJeu        = new Audio("../assets/audio/levelup.mp3");
+        this.sonDebutNiveau     = new Audio("../assets/audio/levelup.mp3");
+        this.sonTresorTrouve    = new Audio("../assets/audio/levelup.mp3");
+        this.sonTempsEcoule     = new Audio("../assets/audio/levelup.mp3");
+        this.sonOuvertureMur    = new Audio("../assets/audio/levelup.mp3");
+        this.sonTeleportation   = new Audio("../assets/audio/levelup.mp3");
+        this.sonGameOver        = new Audio("../assets/audio/levelup.mp3");
+        this.sonVictoire        = new Audio("../assets/audio/levelup.mp3");
     }
 
     // ========================================================
@@ -76,7 +76,7 @@ class AudioManager {
     // ========================================================
     // Fin du jeu 
     // ========================================================
-    jouerFinJeu() {
+    jouerVictoire() {
         this.sonFinJeu.currentTime = 0;
         this.sonFinJeu.play();
     }

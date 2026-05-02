@@ -68,10 +68,9 @@ function tempsEcoule() {
     audioManager.jouerTempsEcoule();
 
     if (peutRecommencerNiveau()){
-        console.log("temps ecoule, recommence niveau")
         recommencerNiveau();
     }
     else {
-        console.log("temps ecoule, GAME OVER");     
+        perdrePartie();
     }
 }

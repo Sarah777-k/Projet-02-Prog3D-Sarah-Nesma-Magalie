@@ -166,6 +166,17 @@ function deplacerJoueur(facteur) {
     let nouvelleCellule = obtenirCelluleDepuisPosition(joueur.x, joueur.z);
     verifierSortieEnclos(nouvelleCellule);
     verifierTresorAtteint(nouvelleCellule);
+    verifierTeleporteurAtteint(nouvelleCellule);
+}
+
+/*
+|-----------------------------------------------------------------------------|
+| obtenirAngleJoueur:
+|   Retourne l'angle du joueur en degrés
+|-----------------------------------------------------------------------------|
+*/
+function obtenirAngleJoueur() {
+    return joueur.angle;
 }
 
 /*
@@ -283,4 +294,30 @@ function verifierTresorAtteint(celluleJoueur) {
     ) {
         gagnerNiveau();
     }
+}
+
+/*
+|-----------------------------------------------------------------------------|
+| verifierTeleporteurAtteint:
+|   Déclenche la téléportation si le joueur est sur une cellule de téléporteur
+|-----------------------------------------------------------------------------|
+*/
+function verifierTeleporteurAtteint(celluleJoueur) {
+    let teleporteur =   obtenirTeleporteurSurCellule(
+                            celluleJoueur.ligne, 
+                            celluleJoueur.colonne
+                        );
+    if (teleporteur === null) {
+        return;
+    }
+
+    let recepteur = obtenirRecepteurAleatoire();
+    if (recepteur === null) {
+        return;
+    }
+
+    joueur.x = recepteur.colonne + 0.5;
+    joueur.z = recepteur.ligne + 0.5;
+
+    audioManager.jouerTeleportation();
 }

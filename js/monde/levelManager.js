@@ -48,7 +48,7 @@ const CONFIG_NIVEAUX = [
 |   Initialise les éléments du niveau.
 |-----------------------------------------------------------------------------|
 */
-function initNiveau(niveau, nouveauPlacementObjets = true) {
+function initNiveau(niveau, nouveauPlacementObjets) {
     gameState.etat = ETAT_EN_COURS;
     gameState.porteEnclosFermee = false;
     gameState.ouvreurs = obtenirNbOuvreurs(niveau);
@@ -56,6 +56,7 @@ function initNiveau(niveau, nouveauPlacementObjets = true) {
     if (nouveauPlacementObjets) {
         viderTabObjets();
         placerObjets(niveau);
+        objScene3D.objets = construireScene(objgl);
     }
 
     // debutNiveauMs = 0;
@@ -78,19 +79,23 @@ function initNiveau(niveau, nouveauPlacementObjets = true) {
 function gagnerNiveau() {
     if (gameState.etat !== ETAT_EN_COURS) return;
 
-    // scoreTotal += scoreNiveau;
-    
-
     // Niveau suivant
     if (gameState.niveau >= MAX_NIVEAUX) {
         gameState.etat = ETAT_VICTOIRE;
-        //audioManager.jouerFinJeu();
+
+        ajouterPointsTresor(obtenirTempsRestant());
+        validerScoreNiveau();
+
+        audioManager.jouerFinJeu();
         return;
     }
-
-    gameState.niveau++;
     
-    initNiveau(gameState.niveau);
+    gameState.niveau++;
+
+    ajouterPointsTresor(obtenirTempsRestant());
+    validerScoreNiveau();
+    
+    initNiveau(gameState.niveau, true);
 }
 
 /*
@@ -102,6 +107,7 @@ function gagnerNiveau() {
 function recommencerNiveau() {
     initNiveau(gameState.niveau, false);
     recommencerScoreNiveau();
+    validerScoreNiveau();
 }
 
 

@@ -60,6 +60,7 @@ function initSoubassements(objgl){
   }
   return tabS;
 }
+//revoir ouverutre animation graphique enclos////////////////////////////////////////////////////
 function ouvrirMurGraphiquement(mur3D) {
   mur3D.enOuverture = true;
   mur3D.progression = 0;
@@ -70,8 +71,6 @@ function ouvrirMurGraphiquement(mur3D) {
     obj.ligne === mur3D.ligne &&
     obj.col === mur3D.col
   );
-
-
   if (soubassement) {
     soubassement.enOuverture = true;
     soubassement.progression = 0;

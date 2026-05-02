@@ -190,8 +190,8 @@ function initTextures(gl) {
     textureEnclos      = chargerTexture(gl, "../assets/backrooms/soubassements.png");
     //textureFleche      = chargerTexture(gl, "../assets/textures/fleche.jpg");
     textureFleche      = chargerTexture(gl, "../assets/backrooms/rouge.jpg");
-    textureTeleporteur = chargerTexture(gl, "../assets/textures/teleporteur.png");
-    textureRecepteur   = chargerTexture(gl, "../assets/textures/teleporteur.png");
+    textureTeleporteur = chargerTexture(gl, "../assets/backrooms/hatch.png");
+    textureRecepteur   = chargerTexture(gl, "../assets/backrooms/recepteur.png");
     textureTresor      = chargerTexture(gl, "../assets/textures/tresor.png");
     texturePos2D       = chargerTexture(gl,"../assets/textures/tresor.png");
 }

@@ -72,7 +72,19 @@ function construireScene(objgl) {
         z: objNiveau.ligne,
         type: "TELEPORTEUR",
         visible: true,
-        rotation: 0
+        rotation: 0   //pour faire tourner 
+      });
+    }
+
+    if (objNiveau.type === "RECEPTEUR") {
+      tabObjets.push({
+        mesh: creerMeshTeleporteur(objgl),
+        x: objNiveau.colonne,
+        y: 0.05,
+        z: objNiveau.ligne,
+        type: "RECEPTEUR",
+        visible: true,
+
       });
     }
     console.log("Objet niveau :", objNiveau.type, objNiveau.ligne, objNiveau.colonne);
@@ -87,11 +99,7 @@ function construireScene(objgl) {
     visible: true
   });
 
-
-
-
-  //tabPlancher = initplancher(objgl);
-  tabObjects = tabObjets.concat(tabPlancher);
+ // tabObjects = tabObjets.concat(tabPlancher);
   tabMurs = initMur(objgl);
   tabS = initSoubassements(objgl);
   tabObjets = tabObjets.concat(tabMurs); // ajouter les murs à la scène
@@ -169,7 +177,7 @@ function dessinerScene(gl, shaderProgram, scene) {
       case TYPE_MUR_SOLIDE:
         mat = creerMatMurSolide();
         break;
-      //////ATTENDRE MAGALIE 
+
       case TYPE_PORTE_ENCLOS:
         mat = creerMatMurSolide();
         break;
@@ -187,6 +195,9 @@ function dessinerScene(gl, shaderProgram, scene) {
         break;
       case "TELEPORTEUR":
         mat = creerMatTeleporteur();
+        break;
+      case "RECEPTEUR":
+        mat = creerMatRecepteur();
         break;
       case "POSITION_JOUEUR":
         mat = creeMatPosition2D();
@@ -211,14 +222,9 @@ function dessinerScene(gl, shaderProgram, scene) {
 
     let yAnimation = obj.y;
     //ANIMATION GRAPHIQUE POUR MUR OUV ET PORTE ENCLOS 
-    if ((obj.type === TYPE_MUR_OUV) && obj.progression > 0) {
+    if ((obj.type === TYPE_MUR_OUV || obj.type === TYPE_PORTE_ENCLOS || obj.type === "soubassement") && obj.progression > 0) {
       yAnimation = obj.y - obj.progression * HAUTEUR_MUR;
     }
-    //le soubassement doit aussi disparaitre comme le mur
-    if (obj.type === "soubassement" && obj.progression > 0) {
-      yAnimation = obj.y - obj.progression * HAUTEUR_MUR;
-    }
-
 
     // Matrice modèle : placer l'objet à sa position dans la scène
     let matModele = mat4.create();

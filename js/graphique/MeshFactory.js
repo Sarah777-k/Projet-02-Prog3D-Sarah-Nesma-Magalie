@@ -455,75 +455,77 @@ function creerMeshFleche(gl) {
 //  Visuellement différent du récepteur (couleur gérée dans MaterialFactory)
 
 
-// ============================================================
 function creerMeshTeleporteur(gl) {
-    let h  = 0.15;   // hauteur
-    let r  = 0.38;  // rayon (reste dans 1x1)
-    let cx = 0.5;   // centre X dans la cellule
-    let cz = 0.5;   // centre Z dans la cellule
-    let n  = 8;     // nombre de côtés
-    
+    let h = 0.18;      // hauteur basse
+    let cx = 0.5;
+    let cz = 0.5;
+    let r = 0.48;      // taille presque 1x1
+    let cut = 0.18;    // coupe des coins
 
-    let sommets   = [];
-    let texCoords = [];
-    let indices   = [];
+    let sommets = new Float32Array([
+        // dessus octogonal y = h
+        cut, h, 0,      1-cut, h, 0,
+        1, h, cut,      1, h, 1-cut,
+        1-cut, h, 1,    cut, h, 1,
+        0, h, 1-cut,    0, h, cut,
 
-    // Centre bas (index 0) et centre haut (index 1)
-    sommets.push(cx, 0, cz);   texCoords.push(0.5, 0.5);  // centre bas
-    sommets.push(cx, h, cz);   texCoords.push(0.5, 0.5);  // centre haut
+        // dessous octogonal y = 0
+        cut, 0, 0,      1-cut, 0, 0,
+        1, 0, cut,      1, 0, 1-cut,
+        1-cut, 0, 1,    cut, 0, 1,
+        0, 0, 1-cut,    0, 0, cut
+    ]);
 
-    // Sommets du périmètre bas (indices 2..n+1) et haut (indices n+2..2n+1)
-    for (let i = 0; i < n; i++) {
-        let angle = (i / n) * 2 * Math.PI;
-        let x = cx + r * Math.cos(angle);
-        let z = cz + r * Math.sin(angle);
-        sommets.push(x, 0, z);  texCoords.push(0.5 + 0.5*Math.cos(angle), 0.5 + 0.5*Math.sin(angle));
-        sommets.push(x, h, z);  texCoords.push(0.5 + 0.5*Math.cos(angle), 0.5 + 0.5*Math.sin(angle));
-    }
+    let texCoords = new Float32Array([
+        // dessus
+        cut,0,   1-cut,0,
+        1,cut,   1,1-cut,
+        1-cut,1, cut,1,
+        0,1-cut, 0,cut,
 
-    // Faces : base + côtés + dessus
-    for (let i = 0; i < n; i++) {
-        let bas1  = 2 + i * 2;
-        let haut1 = 3 + i * 2;
-        let bas2  = 2 + ((i + 1) % n) * 2;
-        let haut2 = 3 + ((i + 1) % n) * 2;
+        // dessous / côtés
+        cut,0,   1-cut,0,
+        1,cut,   1,1-cut,
+        1-cut,1, cut,1,
+        0,1-cut, 0,cut
+    ]);
 
-        // Face base (vers le bas)
-        indices.push(0, bas2, bas1);
-        // Face dessus (vers le haut)
-        indices.push(1, haut1, haut2);
-        // 2 triangles côté
-        indices.push(bas1, bas2, haut2);
-        indices.push(bas1, haut2, haut1);
-    }
-    let normales = [];
-    normales.push(0, -1, 0); // centre bas
-    normales.push(0,  1, 0); // centre haut
-    
-   for (let i = 0; i < n; i++) {
-    let angle = (i / n) * 2 * Math.PI;
+    let indices = new Uint16Array([
+        // dessus
+        0,1,2,  0,2,3,  0,3,4,
+        0,4,5,  0,5,6,  0,6,7,
 
-    let nx = Math.cos(angle);
-    let nz = Math.sin(angle);
+        // côtés
+        0,8,9,   0,9,1,
+        1,9,10,  1,10,2,
+        2,10,11, 2,11,3,
+        3,11,12, 3,12,4,
+        4,12,13, 4,13,5,
+        5,13,14, 5,14,6,
+        6,14,15, 6,15,7,
+        7,15,8,  7,8,0,
 
-    let x = cx + r * nx;
-    let z = cz + r * nz;
+        // dessous
+        8,10,9,  8,11,10, 8,12,11,
+        8,13,12, 8,14,13, 8,15,14
+    ]);
 
-    sommets.push(x, 0, z);
-    texCoords.push(0.5 + 0.5 * nx, 0.5 + 0.5 * nz);
-    normales.push(nx, 0, nz);
+    let normales = new Float32Array([
+        // dessus
+        0,1,0, 0,1,0, 0,1,0, 0,1,0,
+        0,1,0, 0,1,0, 0,1,0, 0,1,0,
 
-    sommets.push(x, h, z);
-    texCoords.push(0.5 + 0.5 * nx, 0.5 + 0.5 * nz);
-    normales.push(nx, 0, nz);
-}
+        // dessous / approx côtés
+        0,-1,0, 0,-1,0, 0,-1,0, 0,-1,0,
+        0,-1,0, 0,-1,0, 0,-1,0, 0,-1,0
+    ]);
 
     return {
-        bufferSommets:   creerBuffer(gl, gl.ARRAY_BUFFER,         new Float32Array(sommets)),
-        bufferTexCoords: creerBuffer(gl, gl.ARRAY_BUFFER,         new Float32Array(texCoords)),
-        bufferNormales: creerBuffer(gl, gl.ARRAY_BUFFER, new Float32Array (normales)),
-        bufferIndices:   creerBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices)),
-        nbIndices:       indices.length
+        bufferSommets: creerBuffer(gl, gl.ARRAY_BUFFER, sommets),
+        bufferTexCoords: creerBuffer(gl, gl.ARRAY_BUFFER, texCoords),
+        bufferNormales: creerBuffer(gl, gl.ARRAY_BUFFER, normales),
+        bufferIndices: creerBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, indices),
+        nbIndices: indices.length
     };
 }
 
@@ -531,7 +533,6 @@ function creerMeshTeleporteur(gl) {
 //  TÉLÉ-RÉCEPTEUR  (anneau / tore simplifié = cylindre creux)
 //  Visuellement différent du transporteur — énoncé section 3.8
 //  Repose sur le plancher — max 1x1 — non plat
-///////////// ajouter variabke normal 
 
 // ============================================================
 function creerMeshRecepteur(gl) {
@@ -545,6 +546,7 @@ function creerMeshRecepteur(gl) {
     let sommets   = [];
     let texCoords = [];
     let indices   = [];
+    let normales = [];
     let idx       = 0;
 
     for (let i = 0; i < n; i++) {
@@ -584,12 +586,53 @@ function creerMeshRecepteur(gl) {
         texCoords.push(0,0, 1,0, 1,1, 0,1);
         indices.push(idx,idx+2,idx+1, idx,idx+3,idx+2);
         idx += 4;
+        //
+        
+        //face haut 
+        normales.push(
+            0, 1, 0,
+            0, 1, 0,
+            0, 1, 0,
+            0, 1, 0
+        );
+        //face basse
+        normales.push(
+            0, -1, 0,
+            0, -1, 0,
+            0, -1, 0,
+            0, -1, 0
+        );
+        //face exterieur
+        let nxExt1 = Math.cos(a1);
+        let nzExt1 = Math.sin(a1);
+        let nxExt2 = Math.cos(a2);
+        let nzExt2 = Math.sin(a2);
+
+        normales.push(
+            nxExt1, 0, nzExt1,
+            nxExt2, 0, nzExt2,
+            nxExt2, 0, nzExt2,
+            nxExt1, 0, nzExt1
+        );
+        //face interieur
+        let nxInt1 = -Math.cos(a1);
+        let nzInt1 = -Math.sin(a1);
+        let nxInt2 = -Math.cos(a2);
+        let nzInt2 = -Math.sin(a2);
+
+        normales.push(
+            nxInt1, 0, nzInt1,
+            nxInt2, 0, nzInt2,
+            nxInt2, 0, nzInt2,
+            nxInt1, 0, nzInt1
+        );
+
     }
 
     return {
         bufferSommets:   creerBuffer(gl, gl.ARRAY_BUFFER,         new Float32Array(sommets)),
         bufferTexCoords: creerBuffer(gl, gl.ARRAY_BUFFER,         new Float32Array(texCoords)),
-        bufferNormales: creerBuffer(gl, gl.ARRAY_BUFFER, normales),
+        bufferNormales: creerBuffer(gl, gl.ARRAY_BUFFER, new Float32Array(normales)),
         bufferIndices:   creerBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices)),
         nbIndices:       indices.length
     };

@@ -228,16 +228,13 @@ function dessinerScene(gl, shaderProgram, scene) {
     var yIndicateur = HAUTEUR_MUR + 0.05;
 
     mat4.translate(matModele, [
-        joueur.x - 0.5,
-        yIndicateur,
-        joueur.z - 0.5
+       Math.floor(joueur.x) + 0.5,
+            yIndicateur,
+            Math.floor(joueur.z) + 0.5
     ]);
 
-    mat4.translate(matModele, [0.5, 0, 0.5]);
-
-    var angle = obtenirAngleDirectionJoueur();
-    mat4.rotateY(matModele, -angle);
-
+    var angleRad = obtenirAngleJoueur() * Math.PI / 180;
+        mat4.rotateY(matModele, -angleRad);
     mat4.translate(matModele, [-0.5, 0, -0.5]);
 }
 

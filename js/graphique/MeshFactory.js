@@ -50,23 +50,14 @@ function creerBuffer(gl, type, donnees) {
 //mesh position joueur
 //=============================================================
 function creeMeshPosition2D(gl) {
-    let y = 0;  // juste sous le plafond, bien visible du dessus
+    let y = 0;
     let r = 0.4;    // longueur de la pointe (vers +X)
     let l = 0.25;   // demi-largeur de la base (vers ±Z)
     let q = 0.15;   // recul de la queue (vers -X)
 
     // Flèche centrée en (0.5, y, 0.5)
     // Pointe → +X, queue → -X
-    //
-    //       [pointe]
-    //          /\
-    //         /  \
-    //  [gauche]    [droite]
-    //         \  /
-    //          \/
-    //       [queue]
-    //
-    // 4 sommets pour une flèche en chevron (plus lisible qu'un simple triangle)
+    
 
     let sommets = new Float32Array([
         // pointe (avant, vers +X)

@@ -47,7 +47,7 @@ function construireScene(objgl) {
       tabObjets.push({
         mesh: creerMeshFleche(objgl),
         x: objNiveau.colonne,
-        y: 0.4,
+        y: 1.3,
         z: objNiveau.ligne,
         angle: objNiveau.angle,
         type: "FLECHE",

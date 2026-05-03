@@ -47,11 +47,12 @@ function construireScene(objgl) {
       tabObjets.push({
         mesh: creerMeshFleche(objgl),
         x: objNiveau.colonne,
-        y: 0.4,
+        y: 1.5,
         z: objNiveau.ligne,
         angle: objNiveau.angle,
         type: "FLECHE",
-        visible: true
+        visible: true,
+        rotation : 0
       });
     }
     if (objNiveau.type === "TRESOR") {
@@ -233,15 +234,16 @@ function dessinerScene(gl, shaderProgram, scene) {
 
     // rotate la fleche d
     if (obj.type === "FLECHE") {
+        obj.rotation += 0.02;
+        // Aller au centre de la cellule
+        mat4.translate(matModele, [obj.x + 0.5, obj.y, obj.z + 0.5]);
 
-      // Aller au centre de la cellule
-      mat4.translate(matModele, [obj.x + 0.5, obj.y, obj.z + 0.5]);
-
-      // Tourner autour de Y
-      mat4.rotateY(matModele, -obj.angle);
-
-      // Revenir au coin local du mesh
-      mat4.translate(matModele, [-0.5, 0, -0.5]);
+        // Tourner autour de Y
+        mat4.rotateY(matModele, -obj.angle);
+        // rotation continue
+        mat4.rotateX(matModele, obj.rotation);
+        // Revenir au coin local du mesh
+        mat4.translate(matModele, [-0.5, 0, -0.5]);
     }
     else
       if (obj.type === "POSITION_JOUEUR") {

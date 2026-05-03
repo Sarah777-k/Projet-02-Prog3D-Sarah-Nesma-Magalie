@@ -75,3 +75,48 @@ body {
   color: #d4b942;
   font-weight: bold;
 }
+
+/* ===== filtre ecran ===== */
+.filtre-ecran {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+  background:
+    radial-gradient(ellipse at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.55) 100%),
+    rgba(10, 5, 15, 0.10);
+  animation: filtre-flicker 5s infinite ease-in-out;
+}
+
+.filtre-ecran::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0)    0px,
+    rgba(0, 0, 0, 0)    2px,
+    rgba(0, 0, 0, 0.18) 3px
+  );
+}
+
+.filtre-ecran::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-size: 200px 200px;
+  opacity: 0.06;
+  animation: filtre-noise 0.18s steps(3) infinite;
+
+}
+
+@keyframes filtre-flicker {
+  0%, 100% { opacity: 1;    }
+  45%      { opacity: 0.94; }
+  50%      { opacity: 1;    }
+  55%      { opacity: 0.96; }
+}
+
+

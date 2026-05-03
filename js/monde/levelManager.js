@@ -66,9 +66,10 @@ function initNiveau(niveau, nouveauPlacementObjets) {
 
     demanderOuvertureEnclos();
     initPositionJoueur();
-    
+
     audioManager.jouerDebutNiveau();
     audioManager.demarrerAmbiance();
+    
 }
 
 /*
@@ -83,8 +84,8 @@ function gagnerNiveau() {
     ajouterPointsTresor(obtenirTempsRestant());
     validerScoreNiveau();
 
-    // audioManager.arreterPas();
-    // audioManager.arreterAmbiance();
+    audioManager.arreterPas();
+    audioManager.arreterAmbiance();
 
     // Niveau suivant
     if (gameState.niveau >= MAX_NIVEAUX) {

@@ -18,13 +18,16 @@ class AudioManager {
     constructor() {
 
         // sons generiques
-        this.sonDebutNiveau     = new Audio("../assets/audio/levelup.mp3");
-        this.sonTresorTrouve    = new Audio("../assets/audio/levelup.mp3");
-        this.sonTempsEcoule     = new Audio("../assets/audio/levelup.mp3");
-        this.sonOuvertureMur    = new Audio("../assets/audio/wallOpening.mp3");
-        this.sonTeleportation   = new Audio("../assets/audio/levelup.mp3");
-        this.sonGameOver        = new Audio("../assets/audio/levelup.mp3");
-        this.sonVictoire        = new Audio("../assets/audio/levelup.mp3");
+        this.sonDebutNiveau         = new Audio("../assets/audio/startSound.mp3");
+        this.sonDebutNiveau.volume  = 0.3;
+        this.sonTresorTrouve        = new Audio("../assets/audio/tresorTrouve.mp3");
+        this.sonTempsEcoule         = new Audio("../assets/audio/tempsEcoule.mp3");
+        this.sonTempsEcoule.volume     = 0.3;
+        this.sonOuvertureMur        = new Audio("../assets/audio/wallOpening.mp3");
+        this.sonTeleportation       = new Audio("../assets/audio/teleport.mp3");
+        this.sonGameOver            = new Audio("../assets/audio/levelup.mp3");
+        this.sonVictoire            = new Audio("../assets/audio/victory.mp3");
+        this.sonVictoire.volume     = 0.3;
 
         // musique
         this.musique = new Audio("../assets/audio/musicBackrooms.mp3");

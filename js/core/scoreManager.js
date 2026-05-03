@@ -48,7 +48,7 @@ function obtenirScore() {
 |============================================================|
 */
 function ajouterPointsTresor(secondesRestantes){
-    score += POINTS_TRESOR * secondesRestantes;
+    score += Math.round(POINTS_TRESOR * secondesRestantes);
 }
 
 /*

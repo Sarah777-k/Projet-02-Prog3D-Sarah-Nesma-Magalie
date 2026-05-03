@@ -146,8 +146,13 @@ document.addEventListener("contextmenu", function (e) {
 */
 function gererInputJoueur() {
 
-    if (estEnVueAerienne()) return; ///// vérifier si on est en vue aérienne pour bloquer les deplacements
-    
+    if (estEnVueAerienne()) {
+        // audioManager.arreterPas();
+        return; ///// vérifier si on est en vue aérienne pour bloquer les deplacements
+    }
+    let xAvant = joueur.x;
+    let zAvant = joueur.z;
+
     if (touches.avancer) {
         avancer();
     }
@@ -162,5 +167,12 @@ function gererInputJoueur() {
 
     if (touches.tournerGauche || souris.tournerGauche) {
         tournerGauche();
+    }
+
+    
+    if (joueur.x !== xAvant || joueur.z !== zAvant) {
+        audioManager.demarrerPas();  
+    } else {
+        audioManager.arreterPas();   
     }
 }

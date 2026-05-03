@@ -2,23 +2,6 @@
     Fichier: game.js
     Nom: Nesma Medjber & Magalie Abada
     But: Gère le déroulement global du jeu
-
-    Responsabilités:
-    - Initialisation du jeu (chargement du dédale, joueur, niveau)
-    - Boucle principale du jeu (update / rendu)
-    - Gestion des états du jeu (en cours, game over, victoire)
-    - Gestion des transitions (début niveau, fin niveau, restart)
-    - Synchronisation entre gameplay et interface/audio
-    
-    Ne contient PAS:
-    - Le rendu 3D (renderer.js)
-    - La logique des entités (joueur, flèches, etc.)
-    - La structure du monde (maze.js)
-    
-    Remarque:
-    Ce fichier agit comme contrôleur central du jeu.
-
-    
 */
 
 let objScene3D = {};
@@ -39,7 +22,7 @@ function demarrer() {
     let objCanvas = document.getElementById("monCanvas");
     objgl = initWebGL(objCanvas);
     objProgShaders = initShaders(objgl);
-    initTextures(objgl); // charge les textures depuis assets/
+    initTextures(objgl); // charge les textures depuis assets
 
     initDédale();
     initialiserJeu();
@@ -81,10 +64,11 @@ function boucle() {
     
     requestAnimationFrame(boucle);
 }
-///////////////vu inclnie camera
+
+/// Vue caméra inclinée
 function mettreAJourCamera() {
 
-    //Si on est en vue aérienne, ne met pas à jour la pos de la caméra
+    // Si on est en vue aérienne, ne met pas à jour la pos de la caméra
     if (estEnVueAerienne()) return;  
 
     let dir = obtenirDirectionVecteur();

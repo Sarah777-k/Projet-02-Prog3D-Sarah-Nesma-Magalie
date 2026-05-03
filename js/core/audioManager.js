@@ -25,7 +25,8 @@ class AudioManager {
         this.sonTempsEcoule.volume     = 0.3;
         this.sonOuvertureMur        = new Audio("../assets/audio/wallOpening.mp3");
         this.sonTeleportation       = new Audio("../assets/audio/teleport.mp3");
-        this.sonGameOver            = new Audio("../assets/audio/levelup.mp3");
+        this.sonGameOver            = new Audio("../assets/audio/gameOver.mp3");
+        this.sonGameOver.volume     = 0.4;
         this.sonVictoire            = new Audio("../assets/audio/victory.mp3");
         this.sonVictoire.volume     = 0.3;
 

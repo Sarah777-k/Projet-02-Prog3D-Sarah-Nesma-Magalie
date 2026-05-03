@@ -68,6 +68,7 @@ function initNiveau(niveau, nouveauPlacementObjets) {
     initPositionJoueur();
     
     audioManager.jouerDebutNiveau();
+    audioManager.demarrerAmbiance();
 }
 
 /*
@@ -82,6 +83,9 @@ function gagnerNiveau() {
     ajouterPointsTresor(obtenirTempsRestant());
     validerScoreNiveau();
 
+    // audioManager.arreterPas();
+    // audioManager.arreterAmbiance();
+
     // Niveau suivant
     if (gameState.niveau >= MAX_NIVEAUX) {
         gameState.etat = ETAT_VICTOIRE;
@@ -91,7 +95,6 @@ function gagnerNiveau() {
     }
     
     gameState.niveau++;
-
     initNiveau(gameState.niveau, true);
 }
 
@@ -106,6 +109,7 @@ function recommencerNiveau() {
     refermerMursOuverts();
     recommencerScoreNiveau();
     validerScoreNiveau();
+    //audioManager.arreterAmbiance();
 }
 
 /*
@@ -116,6 +120,7 @@ function recommencerNiveau() {
 */
 function perdrePartie() {
     const ETAT_GAME_OVER = "GAME_OVER";
+    audioManager.arreterAmbiance();
     audioManager.jouerGameOver();
     ////////////////// Afficher le message game over / ecran à voir avec Nesma
 }

@@ -31,7 +31,7 @@ document.addEventListener("keydown", function (e) {
         e.preventDefault();
     }
 
-    if (!bolVueAerienne) {
+    if (!bolVueAerienne && gameState.etat == ETAT_EN_COURS) {
         if (e.key === "ArrowUp") {
             touches.avancer = true;
         } else if (e.key === "ArrowDown") {
@@ -89,7 +89,7 @@ document.addEventListener("keyup", function (e) {
 document.addEventListener("wheel", function (e) {
     e.preventDefault();
     
-    if (bolVueAerienne) { 
+    if (bolVueAerienne || gameState.etat !== ETAT_EN_COURS) { 
         return;
     }
 
@@ -109,7 +109,7 @@ document.addEventListener("wheel", function (e) {
 document.addEventListener("mousedown", function (e) {
     e.preventDefault();
 
-    if (bolVueAerienne) { 
+    if (bolVueAerienne || gameState.etat !== ETAT_EN_COURS) { 
         return;
     }
 

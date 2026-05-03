@@ -212,7 +212,7 @@ function dessinerScene(gl, shaderProgram, scene) {
     //gestion de l'animation ouverture mur
 
     if (obj.enOuverture === true) {
-      obj.progression += 0.01;
+      obj.progression += 0.006;
 
       if (obj.progression >= 1) {
         obj.progression = 1;

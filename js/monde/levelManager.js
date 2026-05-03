@@ -84,13 +84,13 @@ function gagnerNiveau() {
     // Niveau suivant
     if (gameState.niveau >= MAX_NIVEAUX) {
         gameState.etat = ETAT_VICTOIRE;
-
         audioManager.jouerVictoire();
         return;
     }
     
     gameState.niveau++;
     initNiveau(gameState.niveau, true);
+    refermerMursOuverts();
 }
 
 /*

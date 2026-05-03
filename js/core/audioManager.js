@@ -2,13 +2,7 @@
     Fichier: audioManager.js
     Nom: Nesma Medjber
     But: Sons et musique du jeu
-*/ 
-
-
-
-// Exemple d'appel:
-// audioManager.jouerDebutNiveau();
-// audioManager.jouerTresorTrouve();
+*/
 
 class AudioManager {
 
@@ -22,7 +16,7 @@ class AudioManager {
         this.sonDebutNiveau.volume  = 0.3;
         this.sonTresorTrouve        = new Audio("../assets/audio/tresorTrouve.mp3");
         this.sonTempsEcoule         = new Audio("../assets/audio/tempsEcoule.mp3");
-        this.sonTempsEcoule.volume     = 0.3;
+        this.sonTempsEcoule.volume  = 0.3;
         this.sonOuvertureMur        = new Audio("../assets/audio/wallOpening.mp3");
         this.sonTeleportation       = new Audio("../assets/audio/teleport.mp3");
         this.sonGameOver            = new Audio("../assets/audio/gameOver.mp3");
@@ -36,7 +30,7 @@ class AudioManager {
         this.musique.volume = 0.3;
 
         // son ambiant
-        this.sonAmbiant = new Audio("../assets/audio/sonAbiant.mp3");
+        this.sonAmbiant = new Audio("../assets/audio/sonAmbiant.mp3");
         this.sonAmbiant.loop = true;
         this.sonAmbiant.volume = 0.3;
 

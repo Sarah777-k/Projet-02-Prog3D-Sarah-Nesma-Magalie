@@ -83,6 +83,8 @@ function fermerMurGraphiquement(ligne, col) {
   let murExistant = tabMurs.find((m) => m.ligne === ligne && m.col === col);
   if (murExistant) {
     murExistant.visible = true; // rendre le mur visible
+    murExistant.enOuverture = false;  // quand on refait le meme niveau le mur revient
+    murExistant.progression = 0;
   } else {
     // Ajouter un nouveau mur au tableau
     let objMur = {

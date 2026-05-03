@@ -1,7 +1,9 @@
 /*
     Fichier: sceneManager.js
     Nom: Sarah Khodjaoui
-    But: Construction et rendu de la scène 3D
+    But: 
+    creation des object de scene (fleche, pllancher, plafond,teleporteur, recepteur)
+    Construction et rendu de la scène 3D
 */
 
 // Liste globale des murs (utilisée pour ouverture de murs par Personne 2)

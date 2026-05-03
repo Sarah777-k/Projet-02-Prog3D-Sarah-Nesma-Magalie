@@ -25,14 +25,29 @@ function initMur(objgl) {
           visible: true, // false quand ouvert par Personne 2
           progression: 0, // pour animation d'ouverture, de 0 (fermée) à 1 (ouverte)
           enOuverture: false, // true si en train de s'ouvrir, pour gérer l'animation
-          //enFermeture: false // true si en train de se fermer, pour gérer l'animation
-          rotation: Math.floor(Math.random() * 4) 
+         // rotation: Math.floor(Math.random() * 4) 
         };
         tabMurs.push(objMur);
       }
+      if(typeCellule == TYPE_PORTE_ENCLOS){
+        let objPorte = {
+          mesh : creerMeshMur(objgl),
+          x : j,
+          y : 0,
+          z : i,
+          ligne : i,
+          col : j,
+          type :typeCellule,
+          visible : false,
+          progression : 0,
+          enOuverture : false
+        };
+        tabMurs.push(objPorte);
+      }
+       
+
     }
   }
-
   return tabMurs;
 }
 //les soubassements des mur effet realistique 
@@ -75,16 +90,34 @@ function ouvrirMurGraphiquement(mur3D) {
     soubassement.enOuverture = true;
     soubassement.progression = 0;
   }
-
+   let porte = objScene3D.objets.find(obj =>
+    obj.type === TYPE_PORTE_ENCLOS &&
+    obj.ligne === mur3D.ligne &&
+    obj.col === mur3D.col
+  );
+  if (porte) {
+    porte.enOuverture = true;
+    porte.progression = 0;
+  }
 }
 
 function fermerMurGraphiquement(ligne, col) {
   // Vérifier si le mur existe déjà (peut être déjà fermé)
   let murExistant = tabMurs.find((m) => m.ligne === ligne && m.col === col);
   if (murExistant) {
-    murExistant.visible = true; // rendre le mur visible
+    murExistant.visible = true
     murExistant.enOuverture = false;  // quand on refait le meme niveau le mur revient
     murExistant.progression = 0;
+      let soubassement = objScene3D.objets.find(obj =>
+      obj.type === "soubassement" &&
+      obj.ligne === murExistant.ligne &&
+      obj.col === murExistant.col
+    );
+    if (soubassement) {
+      soubassement.enOuverture = false;   //refaire le soubassement avec 
+      soubassement.progression = 0;
+      soubassement.visible = true;
+    }
   } else {
     // Ajouter un nouveau mur au tableau
     let objMur = {

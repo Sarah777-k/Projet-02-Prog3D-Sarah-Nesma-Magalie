@@ -156,6 +156,8 @@ function demanderOuvertureEnclos() {
     let mur3D = trouverMur3D(cellulePorte.ligne, cellulePorte.colonne);
 
     if (mur3D !== null) {
+        mur3D.visible = true;       // important
+        mur3D.progression = 0;
         ouvrirMurGraphiquement(mur3D);
     }
 }

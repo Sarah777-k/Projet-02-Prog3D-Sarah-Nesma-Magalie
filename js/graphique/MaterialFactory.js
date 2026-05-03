@@ -183,17 +183,14 @@ function initTextures(gl) {
     textureMurOuvrable = chargerTexture(gl, "../assets/backrooms/backWall.png");
     textureMurSolide   = chargerTexture(gl, "../assets/backrooms/mur_solide.png");
     textureSoubassement = chargerTexture(gl, "../assets/backrooms/soubassements.png");
-    //texturePlancher    = chargerTexture(gl, "../assets/textures/plancher.png");
     texturePlancher    = chargerTexture(gl, "../assets/backrooms/backrooms-carpet-diffuse.png");
-    //texturePlafond     = chargerTexture(gl, "../assets/textures/plafond.png");
     texturePlafond     = chargerTexture(gl, "../assets/backrooms/backrooms-ceiling-tile-diffuse.png");
     textureEnclos      = chargerTexture(gl, "../assets/backrooms/soubassements.png");
-    //textureFleche      = chargerTexture(gl, "../assets/textures/fleche.jpg");
     textureFleche      = chargerTexture(gl, "../assets/backrooms/rouge.jpg");
     textureTeleporteur = chargerTexture(gl, "../assets/backrooms/hatch.png");
     textureRecepteur   = chargerTexture(gl, "../assets/backrooms/recepteur.png");
-    textureTresor      = chargerTexture(gl, "../assets/textures/tresor.png");
-    texturePos2D       = chargerTexture(gl,"../assets/textures/tresor.png");
+    textureTresor      = chargerTexture(gl, "../assets/backrooms/try.png");
+    texturePos2D       = chargerTexture(gl,"../assets/textures/position.png");
 }
 
 // Charge une image et crée une texture WebGL

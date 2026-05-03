@@ -1,6 +1,6 @@
 /*
     Fichier: inputManager.js
-    Nom: Magalie Abada
+    Nom: Magalie Abada & Nesma Medjber
     But: Gestion des événements du clavier
 */
 
@@ -45,26 +45,29 @@ document.addEventListener("keydown", function (e) {
         }
     }
 
-    
-    //activer la vue aérienne
+    /* 
+        Gestion vue aérienne
+    */
+    // Activer la vue aérienne
     if (e.key === "PageUp") {
         e.preventDefault();
         activerVueAerienne();
         return;
     }
-    //désactiver la vue aérienne
+
+    // Désactiver la vue aérienne
     if (e.key === "PageDown") {
         e.preventDefault();
         desactiverVueAerienne();
         return;
     }
-    //activer cheat
+
+    // Activer ou désactiver cheat
     if (e.ctrlKey && e.shiftKey && e.code === "Space") {
         e.preventDefault();
         basculerCheatVueAerienne();
         return;
     }
-    
 });
 
 document.addEventListener("keyup", function (e) {
@@ -146,9 +149,9 @@ document.addEventListener("contextmenu", function (e) {
 */
 function gererInputJoueur() {
 
-    if (estEnVueAerienne()) {
+    if (estEnVueAerienne() || gameState.etat !== ETAT_EN_COURS) {
         // audioManager.arreterPas();
-        return; ///// vérifier si on est en vue aérienne pour bloquer les deplacements
+        return;
     }
     let xAvant = joueur.x;
     let zAvant = joueur.z;

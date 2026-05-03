@@ -90,7 +90,6 @@ function construireScene(objgl) {
         visible: true,
       });
     }
-    console.log("Objet niveau :", objNiveau.type, objNiveau.ligne, objNiveau.colonne);
   }
   // indicateur postion joueur
   tabObjets.push({

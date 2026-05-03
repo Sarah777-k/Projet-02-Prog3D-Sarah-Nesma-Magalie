@@ -1,6 +1,6 @@
 /*
     Fichier: game.js
-    Nom: Nesma Medjber & Magalie Abada
+    Nom: Magalie Abada & Nesma Medjber
     But: Gère le déroulement global du jeu
 */
 
@@ -56,6 +56,7 @@ function initialiserJeu() {
 // Boucle de rendu (appelée ~60x par seconde)
 function boucle() {
     gererInputJoueur();
+    
     mettreAJourCamera();
     mettreAJourTemps();
     mettreAJourPenaliteVueAerienne();
@@ -101,12 +102,10 @@ function demanderOuvertureMur() {
     }
 
     if (gameState.ouvreurs <= 0) {
-        console.log("Aucun ouvreur disponible.");
         return;
     }
 
     if (!peutOuvrirMur()) {
-        console.log("Score insuffisant pour ouvrir un mur.");
         return;
     }
 
@@ -115,9 +114,6 @@ function demanderOuvertureMur() {
     if (murOuvert) {
         gameState.ouvreurs--;
         retirerPointsOuvertureMur();
-
-        console.log("Ouvreurs restants :", gameState.ouvreurs);
-        console.log("Score :", obtenirScore());
     }
 }
 

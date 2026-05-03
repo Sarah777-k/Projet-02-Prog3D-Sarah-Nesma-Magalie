@@ -27,7 +27,6 @@ function activerVueAerienne() {
     if (bolVueAerienne) return;
     if (gameState.etat !== ETAT_EN_COURS) return;
     if (!peutVueAerienne()) {
-        console.log("Score insuffisant pour la vue aerienne");
         return;
     }
 
@@ -41,7 +40,6 @@ function activerVueAerienne() {
     bolVueAerienne = true;
 
     dernierTempsPenaliteMs = performance.now();
-    console.log("Vue aerienne activee");
 }
 
 /*
@@ -57,8 +55,6 @@ function desactiverVueAerienne() {
     cameraNormaleSauvegardee = null;
     bolVueAerienne = false;
     bolCheat = false;
-
-    console.log("Vue aérienne DÉSACTIVÉE");
 }
 
 /*
@@ -72,7 +68,6 @@ function basculerCheatVueAerienne() {
         return;
     }
     bolCheat = !bolCheat;
-    console.log(bolCheat ? "Cheat ON" : "Cheat OFF");
 }
 
 /*
@@ -91,7 +86,6 @@ function mettreAJourPenaliteVueAerienne() {
         dernierTempsPenaliteMs = maintenant;
 
         if (!peutVueAerienne()) {
-            console.log("Score trop bas, sortie forcée de la vue aérienne.");
             desactiverVueAerienne();
         }
     }

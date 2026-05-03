@@ -3,4 +3,4 @@
     But: Point d'entrée du jeu
 */
 
-window.addEventListener("load", demarrer);
+window.addEventListener("load", afficherEcranStart);

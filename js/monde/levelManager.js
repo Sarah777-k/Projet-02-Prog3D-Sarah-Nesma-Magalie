@@ -8,16 +8,16 @@
 /* ----- Variables -----*/
 const MAX_NIVEAUX = 10;
 
-const ETAT_ATTENTE = "ATTENTE";
-const ETAT_EN_COURS = "EN_COURS";
-const ETAT_VICTOIRE = "VICTOIRE";
-const ETAT_GAME_OVER = "GAME_OVER";
+const ETAT_ATTENTE      = "ATTENTE";
+const ETAT_EN_COURS     = "EN_COURS";
+const ETAT_VICTOIRE     = "VICTOIRE";
+const ETAT_GAME_OVER    = "GAME_OVER";
 
 
-const IDX_OUVREURS = 0;
-const IDX_FLECHES = 1;
-const IDX_TELEPORTEURS = 2;
-const IDX_RECEPTEURS = 3;
+const IDX_OUVREURS      = 0;
+const IDX_FLECHES       = 1;
+const IDX_TELEPORTEURS  = 2;
+const IDX_RECEPTEURS    = 3;
 
 const CONFIG_NIVEAUX = [
     null,
@@ -53,17 +53,13 @@ function initNiveau(niveau, nouveauPlacementObjets) {
         objScene3D.objets = construireScene(objgl);
     }
 
-    // debutNiveauMs = 0;
-    // tempsEcouleMs = 0;
-    // scoreNiveau = 0;
-    initialiserTemps(); ///// ajout nesma
+    initialiserTemps();
 
     demanderOuvertureEnclos();
     initPositionJoueur();
 
     audioManager.jouerDebutNiveau();
     audioManager.demarrerAmbiance();
-    
 }
 
 /*
@@ -81,16 +77,23 @@ function gagnerNiveau() {
     audioManager.arreterPas();
     audioManager.arreterAmbiance();
 
-    // Niveau suivant
+    // Si le joueur a terminé tous les niveaux, il gagne la partie
     if (gameState.niveau >= MAX_NIVEAUX) {
         gameState.etat = ETAT_VICTOIRE;
+        afficherEcranVictoire();
         audioManager.jouerVictoire();
         return;
     }
     
+    // Niveau suivant
     gameState.niveau++;
+
     initNiveau(gameState.niveau, true);
     refermerMursOuverts();
+
+    setTimeout(function() {
+        initNiveau(gameState.niveau, true);
+    }, DUREE_ECRAN_NIVEAU_MS);
 }
 
 /*
@@ -114,10 +117,10 @@ function recommencerNiveau() {
 |-----------------------------------------------------------------------------|
 */
 function perdrePartie() {
-    const ETAT_GAME_OVER = "GAME_OVER";
+    gameState.etat = ETAT_GAME_OVER;
     audioManager.arreterAmbiance();
     audioManager.jouerGameOver();
-    ////////////////// Afficher le message game over / ecran à voir avec Nesma
+    afficherEcranGameOver();
 }
 
 /* ----- Getters pour les objets -----*/

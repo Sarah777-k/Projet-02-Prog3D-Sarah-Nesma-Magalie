@@ -43,6 +43,7 @@ function construireScene(objgl) {
   //init les objets de niveau por type
   for (let i = 0; i < tabObjetsNiveau.length; i++) {
     let objNiveau = tabObjetsNiveau[i];
+
     if (objNiveau.type === "FLECHE") {
       tabObjets.push({
         mesh: creerMeshFleche(objgl),
@@ -55,6 +56,7 @@ function construireScene(objgl) {
         rotation : 0
       });
     }
+
     if (objNiveau.type === "TRESOR") {
       tabObjets.push({
         mesh: creerMeshTresor(objgl),
@@ -65,6 +67,7 @@ function construireScene(objgl) {
         visible: true
       });
     }
+
     if (objNiveau.type === "TELEPORTEUR") {
       tabObjets.push({
         mesh: creerMeshTeleporteur(objgl),
@@ -85,7 +88,6 @@ function construireScene(objgl) {
         z: objNiveau.ligne,
         type: "RECEPTEUR",
         visible: true,
-
       });
     }
     console.log("Objet niveau :", objNiveau.type, objNiveau.ligne, objNiveau.colonne);
@@ -100,7 +102,7 @@ function construireScene(objgl) {
     visible: true
   });
 
- // tabObjects = tabObjets.concat(tabPlancher);
+  // tabObjects = tabObjets.concat(tabPlancher);
   tabMurs = initMur(objgl);
   tabS = initSoubassements(objgl);
   tabObjets = tabObjets.concat(tabMurs); // ajouter les murs à la scène
@@ -121,13 +123,30 @@ function dessinerScene(gl, shaderProgram, scene) {
 
   // --- Matrice de projection (perspective) ---
   let matProjection = mat4.create();
-  mat4.perspective(
-    60, // angle de vue (degrés)
-    gl.drawingBufferWidth / gl.drawingBufferHeight, // ratio largeur/hauteur
-    0.1, // near
-    100, // far
-    matProjection,
-  );
+
+  if (estEnVueAerienne()) {
+    // Projection orthographique : vue 2D de dessus, sans perspective (minimap)
+    let aspect = gl.drawingBufferWidth / gl.drawingBufferHeight;
+    let halfHeight = DEMI_TAILLE_VUE_AERIENNE;
+    let halfWidth = halfHeight * aspect;
+
+    mat4.ortho(
+      -halfWidth, halfWidth,    // left, right
+      -halfHeight, halfHeight,  // bottom, top
+      0.1, 100,                 // near, far
+      matProjection
+    );
+  } else {
+    // Projection perspective : vue normale 1ère personne
+    mat4.perspective(
+      60, // angle de vue (degrés)
+      gl.drawingBufferWidth / gl.drawingBufferHeight, // ratio largeur/hauteur
+      0.1, // near
+      100, // far
+      matProjection,
+    );
+  }
+
   gl.uniformMatrix4fv(shaderProgram.matProjection, false, matProjection);
 
   // --- Matrice de vue (caméra = joueur) ---

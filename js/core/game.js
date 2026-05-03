@@ -19,11 +19,13 @@ let gameState = {
 };
 
 function demarrer() {
+    audioManager.arreterMusiqueAccueil();
+
     let objCanvas = document.getElementById("monCanvas");
     objgl = initWebGL(objCanvas);
     objProgShaders = initShaders(objgl);
-    initTextures(objgl); // charge les textures depuis assets
 
+    initTextures(objgl); // charge les textures depuis assets
     initDédale();
     initialiserJeu();
 
@@ -59,7 +61,6 @@ function boucle() {
     mettreAJourPenaliteVueAerienne();
     mettreAJourHUD();
     
-
     dessinerScene(objgl, objProgShaders, objScene3D);
     
     requestAnimationFrame(boucle);
@@ -67,19 +68,16 @@ function boucle() {
 
 /// Vue caméra inclinée
 function mettreAJourCamera() {
-
-    // Si on est en vue aérienne, ne met pas à jour la pos de la caméra
+    // Si on est en vue aérienne, ne met pas à jour la position de la caméra
     if (estEnVueAerienne()) return;  
 
     let dir = obtenirDirectionVecteur();
     let hauteurYeux = 1.2;
 
-
     setPositionsCameraXYZ(
         [joueur.x, joueur.y + hauteurYeux, joueur.z],
         objScene3D.camera
     );
-
 
     setCiblesCameraXYZ(
         [

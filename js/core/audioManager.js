@@ -98,8 +98,8 @@ class AudioManager {
     // Fin du jeu 
     // ========================================================
     jouerVictoire() {
-        this.sonFinJeu.currentTime = 0;
-        this.sonFinJeu.play();
+        this.sonVictoire.currentTime = 0;
+        this.sonVictoire.play();
     }
 
     // ========================================================

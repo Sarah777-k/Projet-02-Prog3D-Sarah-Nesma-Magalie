@@ -108,6 +108,7 @@ function recommencerNiveau() {
     recommencerScoreNiveau();
     validerScoreNiveau();
     audioManager.arreterAmbiance();
+    desactiverVueAerienne();
 }
 
 /*

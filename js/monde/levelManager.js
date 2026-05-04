@@ -91,6 +91,7 @@ function gagnerNiveau() {
     initNiveau(gameState.niveau, true);
     refermerMursOuverts();
 
+    afficherEcranNiveau(gameState.niveau);
     setTimeout(function() {
         initNiveau(gameState.niveau, true);
     }, DUREE_ECRAN_NIVEAU_MS);

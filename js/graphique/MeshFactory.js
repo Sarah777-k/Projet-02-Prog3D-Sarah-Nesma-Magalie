@@ -113,8 +113,6 @@ function creeMeshPosition2D(gl) {
 //  MUR  (parallélépipède 1 x HAUTEUR_MUR x 1)
 //  Origine locale : coin bas-gauche-devant à (0, 0, 0)
 //  À positionner à (col, 0, ligne) dans la scène
-//
-//  L'énoncé dit : ne pas texturer la base (face Y=0)
 //  On crée donc 5 faces seulement (pas le dessous)
 // ============================================================
 function creerMeshMur(gl) {
@@ -180,6 +178,9 @@ function creerMeshMur(gl) {
     };
 }
 
+//====================================================
+// decoration du mur en bas
+//====================================================
 function creerMeshSoubassement(gl) {
     let h = HAUTEUR_SOUBASSEMENT;
     let e = 0.015; // petit décalage pour éviter le z-fighting
@@ -367,8 +368,7 @@ function creerMeshPlafond(gl) {
 // ============================================================
 //  FLÈCHE  (pyramide à base carrée — non plate, a une pointe)
 //  Suspendue dans les airs (Y de base = HAUTEUR_PLAFOND - 0.9)
-//  Max 1x1 en emprise au sol — énoncé section 3.6
-//
+//  Max 1x1 en emprise au sol 
 //  Axe naturel de la flèche : pointe vers +X (angle 0)
 //  Personne 2 fait tourner le mesh selon la direction du trésor
 ///////////// ajouter variabke normal 
@@ -450,7 +450,7 @@ function creerMeshFleche(gl) {
 
 // ============================================================
 //  TÉLÉ-TRANSPORTEUR  (cylindre simplifié = prisme octogonal)
-//  Repose sur le plancher (Y=0) — énoncé section 3.7
+//  Repose sur le plancher (Y=0) 
 //  Max 1x1 — non plat
 //  Visuellement différent du récepteur (couleur gérée dans MaterialFactory)
 
@@ -531,8 +531,10 @@ function creerMeshTeleporteur(gl) {
 
 // ============================================================
 //  TÉLÉ-RÉCEPTEUR  (anneau / tore simplifié = cylindre creux)
-//  Visuellement différent du transporteur — énoncé section 3.8
+//  Visuellement différent du transporteur
 //  Repose sur le plancher — max 1x1 — non plat
+
+// mais j'utilise la meme mesh que teleporteur mais texture differente 
 
 // ============================================================
 function creerMeshRecepteur(gl) {
@@ -640,8 +642,7 @@ function creerMeshRecepteur(gl) {
 
 // ============================================================
 //  TRÉSOR  (boîte légèrement trapézoïdale — coffre)
-//  Repose sur le plancher — max 1x1 — non plat — énoncé 3.9
-///////////// ajouter variabke normal 
+//  Repose sur le plancher — max 1x1 — non plat 
 
 // ============================================================
 function creerMeshTresor(gl) {
@@ -688,11 +689,10 @@ function creerMeshTresor(gl) {
         x0-d, y2, z0-d,  x1+d, y2, z0-d,  x1+d, y2, z1+d,  x0-d, y2, z1+d
     ];
     let sommets = new Float32Array(tabSommets);
-
+    //aligner avec l'image coffret 
    let tabTex = [
     // Avant
     0.04,0.45,  0.45,0.55,  0.45,0.95,  0.05,0.95,
-
     // Arrière
     0.55,0.55,  0.95,0.55,  0.95,0.95,  0.55,0.95,
 
@@ -709,7 +709,7 @@ function creerMeshTresor(gl) {
     0.55,0.15,  1.00,0.15,  1.00,0.50,  0.55,0.50,
 
     // Couvercle avant
-    0.04,0.18,  0.48,0.18,  0.48,0.45,  0.04,0.45,
+    0.55,0.55,  0.95,0.55,  0.95,0.95,  0.55,0.95,
 
     // Couvercle arrière
     0.55,0.55,  0.95,0.55,  0.95,0.95,  0.55,0.95,
@@ -721,7 +721,7 @@ function creerMeshTresor(gl) {
     0.30,0.05,  0.50,0.05,  0.50,0.45,  0.30,0.45,
 
     // Dessus couvercle
-    0.55,0.15,  1.00,0.15,  1.00,0.50,  0.55,0.50
+    0.04,0.18,  0.48,0.18,  0.48,0.45,  0.04,0.45,
 ];
 
 let texCoords = new Float32Array(tabTex);
@@ -769,44 +769,11 @@ let texCoords = new Float32Array(tabTex);
     };
 }
 
-// ============================================================
-//  INDICATEUR JOUEUR (vue aérienne)
-//  Petit triangle plat dessiné à Y=HAUTEUR_PLAFOND
-//  visible seulement en vue aérienne — énoncé section 5
-///////////// ajouter variabke normal 
-// ============================================================
-function creerMeshIndicateurJoueur(gl) {
-    let y  = HAUTEUR_PLAFOND - 0.05;  // juste sous le plafond, bien visible du dessus
-    let r  = 0.3;
-
-    // Triangle isocèle pointant vers +X (direction naturelle)
-    // Personne 2 (ou Personne 3) fait tourner selon la vraie direction du joueur
-    let sommets = new Float32Array([
-        0.5 + r,    y, 0.5,         // pointe (avant)
-        0.5 - r*0.6, y, 0.5 - r*0.6, // coin gauche
-        0.5 - r*0.6, y, 0.5 + r*0.6  // coin droit
-    ]);
-    let texCoords = new Float32Array([0.5,1, 0,0, 1,0]);
-    let indices   = new Uint16Array([0, 1, 2]);
-
-    return {
-        bufferSommets:   creerBuffer(gl, gl.ARRAY_BUFFER,         sommets),
-        bufferTexCoords: creerBuffer(gl, gl.ARRAY_BUFFER,         texCoords),
-        bufferNormales: creerBuffer(gl, gl.ARRAY_BUFFER, normales),
-        bufferIndices:   creerBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, indices),
-        nbIndices:       indices.length
-    };
-}
 
 // ============================================================
 //  Dessiner un mesh
 //  Applique la matrice de transformation et envoie tout à WebGL
 //
-//  Paramètres :
-//    gl            : contexte WebGL
-//    shaderProgram : programme de shader actif
-//    mesh          : objet retourné par une fonction creerMesh*()
-//    matrice       : mat4 (glMatrix) = Model matrix de l'objet
 // ============================================================
 function dessinerMesh(gl, shaderProgram, mesh, matModeleVue) {
     gl.uniformMatrix4fv(shaderProgram.matModeleVue, false, matModeleVue);

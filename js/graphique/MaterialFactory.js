@@ -41,6 +41,7 @@ let textureTresor         = null;
 // ============================================================
 //  Création des matériaux
 //  Chaque fonction retourne { couleur: [R,G,B,A], texture: obj|null }
+//couleur si la texture ne marche pas
 // ============================================================
 
 
@@ -92,7 +93,7 @@ function creerMatEnclos() {
 // Plafond
 function creerMatPlafond() {
     return {
-        couleur:  [0.15, 0.15, 0.25, 1.0], // bleu très sombre (effet ciel de nuit)
+        couleur:  [0.15, 0.15, 0.25, 1.0], 
         texture:  texturePlafond
     };
 }
@@ -113,10 +114,10 @@ function creerMatTeleporteur() {
     };
 }
 
-// Télé-récepteur (violet — visuellement différent du transporteur, requis par l'énoncé)
+//recepteur
 function creerMatRecepteur() {
     return {
-        couleur:  [0.6, 0.1, 0.8, 1.0],   // violet
+        couleur:  [0.6, 0.1, 0.8, 1.0],   
         texture:  textureRecepteur
     };
 }
@@ -124,27 +125,15 @@ function creerMatRecepteur() {
 // Trésor (doré)
 function creerMatTresor() {
     return {
-        couleur:  [1.0, 1.0, 1.0, 1.0],  // or
+        couleur:  [1.0, 1.0, 1.0, 1.0],  
         texture:  textureTresor
     };
 }
 
-// Indicateur de position joueur (vue aérienne seulement) — blanc/cyan
-function creerMatIndicateurJoueur() {
-    return {
-        couleur:  [0.0, 1.0, 0.9, 1.0],   // cyan
-        texture:  null
-    };
-}
 
 // ============================================================
 //  Appliquer un matériau au shader
 //  À appeler juste avant de dessiner chaque objet.
-//
-//  Paramètres :
-//    gl            : contexte WebGL
-//    shaderProgram : le programme de shader actif
-//    materiau      : objet retourné par une fonction creerMat*()
 // ============================================================
 function appliquerMateriau(gl, shaderProgram, materiau) {
 

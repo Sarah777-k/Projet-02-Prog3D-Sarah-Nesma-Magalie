@@ -3,8 +3,6 @@
     Nom: Sarah Khodjaoui & Magalie Abada
     But: Gestion des murs
 // */
-// let objet3DMur = null; // objet global pour le mur, initialisé dans initMur()
-// let tabMurs = []; // tableau global des murs, rempli dans construireScene() et utilisé pour collisions/ouverture
 
 // // ============================================================
 function initMur(objgl) {

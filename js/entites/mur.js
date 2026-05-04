@@ -23,7 +23,7 @@ function initMur(objgl) {
           visible: true, // false quand ouvert par Personne 2
           progression: 0, // pour animation d'ouverture, de 0 (fermée) à 1 (ouverte)
           enOuverture: false, // true si en train de s'ouvrir, pour gérer l'animation
-         // rotation: Math.floor(Math.random() * 4) 
+        
         };
         tabMurs.push(objMur);
       }
@@ -73,12 +73,11 @@ function initSoubassements(objgl){
   }
   return tabS;
 }
-//revoir ouverutre animation graphique enclos////////////////////////////////////////////////////
 function ouvrirMurGraphiquement(mur3D) {
   mur3D.enOuverture = true;
   mur3D.progression = 0;
   // Le mur sera rendu invisible à la fin de l'animation dans dessinerScene()
-  //ajouter la meme logique pour soubassement
+  //ajouter la meme logique pour soubassement et porte enclos
   let soubassement = objScene3D.objets.find(obj =>
     obj.type === "soubassement" &&
     obj.ligne === mur3D.ligne &&

@@ -234,12 +234,6 @@ function ouvrirMurDevantJoueur() {
     if (cellule === null) {
         return false;
     }
-
-    let murOuvert = cellule.ouvrir();
-
-    if (!murOuvert) {
-        return false;
-    }
     
     tabMursOuverts.push({
         ligne: celluleDevant.ligne,

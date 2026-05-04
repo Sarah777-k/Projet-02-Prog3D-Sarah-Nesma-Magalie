@@ -244,7 +244,13 @@ function dessinerScene(gl, shaderProgram, scene) {
     let yAnimation = obj.y;
     //ANIMATION GRAPHIQUE POUR MUR OUV ET PORTE ENCLOS 
     if ((obj.type === TYPE_MUR_OUV || obj.type === TYPE_PORTE_ENCLOS || obj.type === "soubassement") && obj.progression > 0) {
-      yAnimation = obj.y - obj.progression * HAUTEUR_MUR;
+      if (obj.progression >= 1) {
+        let celluleDevant = obtenirCelluleDevantJoueur();
+        let cellule = obtenirCellule(celluleDevant.ligne, celluleDevant.colonne);
+        cellule.ouvrir();
+      } else {
+        yAnimation = obj.y - obj.progression * HAUTEUR_MUR;
+      }
     }
 
     // Matrice modèle : placer l'objet à sa position dans la scène

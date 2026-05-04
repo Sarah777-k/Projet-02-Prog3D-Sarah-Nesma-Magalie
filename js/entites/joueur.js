@@ -227,12 +227,13 @@ function trouverMur3D(ligne, colonne) {
 |-----------------------------------------------------------------------------|
 */
 function ouvrirMurDevantJoueur() {
+    let murOuvert = false;
     let celluleDevant = obtenirCelluleDevantJoueur();
 
     let cellule = obtenirCellule(celluleDevant.ligne, celluleDevant.colonne);
 
     if (cellule === null) {
-        return false;
+        return murOuvert;
     }
     
     tabMursOuverts.push({
@@ -243,11 +244,11 @@ function ouvrirMurDevantJoueur() {
     let mur3D = trouverMur3D(celluleDevant.ligne, celluleDevant.colonne);
 
     if (mur3D !== null) {
-        ouvrirMurGraphiquement(mur3D);
+        murOuvert = ouvrirMurGraphiquement(mur3D);
         audioManager.jouerOuvertureMur();
     }
 
-    return true;
+    return murOuvert;
 }
 
 /*

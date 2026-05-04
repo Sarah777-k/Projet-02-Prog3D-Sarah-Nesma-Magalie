@@ -24,15 +24,6 @@ const TYPE_ENCLOS       = 3;   // enclos (jaune)
 const TYPE_PORTE_ENCLOS = 4;
 
 // ----- La matrice du dédale ---------------------------------
-// Respecte le plan de l'énoncé à la lettre.
-// Ligne 0 = nord (haut de l'image), ligne 30 = sud (bas).
-// Colonne 0 = ouest (gauche), colonne 30 = est (droite).
-//
-// Enclos : lignes 14-18, colonnes 13-17
-//   Centre jaune  : [15-17][14-16]
-//   Bordure verte : reste de la zone 14-18 / 13-17
-//   Sortie nord   : [13][15] = couloir (le joueur démarre ici
-//                              et regarde vers le nord = ligne 12)
 
 const grilleDédale = [
 
@@ -106,36 +97,4 @@ function obtenirCellule(ligne, colonne) {
 
 function obtenirTypeCellule(ligne, colonne) {
     return obtenirCellule(ligne, colonne).type;
-}
-
-//pour voir si c'est un mur ouvrable ou pas comme image prof
-function dessinerDédale() {
-    let objCanvas = document.getElementById('monCanvas');
-    let ctx = objCanvas.getContext('2d');
-    ctx.fillStyle = 'black';
-    ctx.fillRect(0, 0, objCanvas.width, objCanvas.height); // Efface le canvas avant de dessiner
-
-    for (let i = 0; i < TAILLE_DEDALE; i++) {
-        for (let j = 0; j < TAILLE_DEDALE; j++) {
-            let typeCellule = obtenirTypeCellule(i, j);
-            switch (typeCellule) {
-                case TYPE_COULOIR:
-                    ctx.fillStyle = 'black';
-                    break;
-                case TYPE_MUR_OUV:
-                    ctx.fillStyle = 'red';
-                   
-                    break;
-                case TYPE_MUR_SOLIDE:
-                     ctx.fillStyle = 'lightgreen';
-                    
-                    break;
-                case TYPE_ENCLOS:
-                        ctx.fillStyle = 'yellow';
-                    break;
-            }
-            ctx.fillRect(j * TAILLE_CASE, i * TAILLE_CASE, TAILLE_CASE - 1, TAILLE_CASE - 1);
-            
-        }
-    }
 }

@@ -230,7 +230,6 @@ function dessinerScene(gl, shaderProgram, scene) {
     appliquerMateriau(gl, shaderProgram, mat);
 
     //gestion de l'animation ouverture mur
-
     if (obj.enOuverture === true) {
       obj.progression += 0.006;
 
@@ -257,7 +256,6 @@ function dessinerScene(gl, shaderProgram, scene) {
     // Matrice modèle : placer l'objet à sa position dans la scène
     let matModele = mat4.create();
     mat4.identity(matModele);
-    // mat4.translate(matModele, [obj.x, yAnimation, obj.z]);
 
     // rotate la fleche d
     if (obj.type === "FLECHE") {

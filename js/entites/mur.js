@@ -96,6 +96,7 @@ function ouvrirMurGraphiquement(mur3D) {
     porte.enOuverture = true;
     porte.progression = 0;
   }
+  return true;
 }
 
 function fermerMurGraphiquement(ligne, col) {

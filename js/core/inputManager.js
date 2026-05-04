@@ -150,7 +150,7 @@ document.addEventListener("contextmenu", function (e) {
 function gererInputJoueur() {
 
     if (estEnVueAerienne() || gameState.etat !== ETAT_EN_COURS) {
-        // audioManager.arreterPas();
+        audioManager.arreterPas();
         return;
     }
     let xAvant = joueur.x;

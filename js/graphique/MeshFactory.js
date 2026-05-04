@@ -689,11 +689,42 @@ function creerMeshTresor(gl) {
     ];
     let sommets = new Float32Array(tabSommets);
 
-    // UV simples (0,0 partout — la couleur dorée suffit)
-    let tabTex = [];
-    for (let t = 0; t < tabSommets.length / 3; t++) { tabTex.push(0, 0); }
-    let texCoords = new Float32Array(tabTex);
+   let tabTex = [
+    // Avant
+    0.04,0.45,  0.45,0.55,  0.45,0.95,  0.05,0.95,
 
+    // Arrière
+    0.55,0.55,  0.95,0.55,  0.95,0.95,  0.55,0.95,
+
+    // Gauche
+    0.05,0.05,  0.25,0.05,  0.25,0.45,  0.05,0.45,
+
+    // Droite
+    0.30,0.05,  0.50,0.05,  0.50,0.45,  0.30,0.45,
+
+    // Dessous
+    0.00,0.00,  1.00,0.00,  1.00,0.15,  0.00,0.15,
+
+    // Dessus corps
+    0.55,0.15,  1.00,0.15,  1.00,0.50,  0.55,0.50,
+
+    // Couvercle avant
+    0.04,0.18,  0.48,0.18,  0.48,0.45,  0.04,0.45,
+
+    // Couvercle arrière
+    0.55,0.55,  0.95,0.55,  0.95,0.95,  0.55,0.95,
+
+    // Couvercle gauche
+    0.05,0.05,  0.25,0.05,  0.25,0.45,  0.05,0.45,
+
+    // Couvercle droite
+    0.30,0.05,  0.50,0.05,  0.50,0.45,  0.30,0.45,
+
+    // Dessus couvercle
+    0.55,0.15,  1.00,0.15,  1.00,0.50,  0.55,0.50
+];
+
+let texCoords = new Float32Array(tabTex);
     // Générer indices pour 11 faces × 2 triangles = 22 triangles
     let indices = [];
     for (let f = 0; f < 11; f++) {

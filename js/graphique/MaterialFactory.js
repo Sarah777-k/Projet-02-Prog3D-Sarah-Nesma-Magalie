@@ -124,7 +124,7 @@ function creerMatRecepteur() {
 // Trésor (doré)
 function creerMatTresor() {
     return {
-        couleur:  [1.0, 0.84, 0.0, 1.0],  // or
+        couleur:  [1.0, 1.0, 1.0, 1.0],  // or
         texture:  textureTresor
     };
 }
@@ -189,7 +189,7 @@ function initTextures(gl) {
     textureFleche      = chargerTexture(gl, "../assets/backrooms/rouge.jpg");
     textureTeleporteur = chargerTexture(gl, "../assets/backrooms/hatch.png");
     textureRecepteur   = chargerTexture(gl, "../assets/backrooms/recepteur.png");
-    textureTresor      = chargerTexture(gl, "../assets/backrooms/try.png");
+    textureTresor      = chargerTexture(gl, "../assets/backrooms/coffret.png");
     texturePos2D       = chargerTexture(gl,"../assets/textures/position.png");
 }
 

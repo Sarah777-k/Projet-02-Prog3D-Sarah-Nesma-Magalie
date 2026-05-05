@@ -87,7 +87,7 @@ class Cell {
     |-----------------------------------------------------------------------------|
     */
     ouvrir() {
-        if (this.estMurOuvrable() && !this.estOuverte) {
+        if ((this.estMurOuvrable() || this.estPorteEnclos()) && !this.estOuverte) {
             this.estOuverte = true;
             return true;
         }

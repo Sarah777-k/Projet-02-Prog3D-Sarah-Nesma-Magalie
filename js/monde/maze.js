@@ -4,15 +4,15 @@
     But: Gestion du plateau / labyrinthe
 */
 
-// ============================================================
-//  Dédale 31x31 conforme au plan de l'énoncé (TP2 Thesaurus)
+// ====================================================
+//  Dédale 31x31 conforme au plan
 //
 //  Types de cellules :
 //    0 = couloir (noir)
 //    1 = mur ouvrable (rouge)
 //    2 = mur non ouvrable (vert foncé — bordure)
 //    3 = enclos (vert clair + jaune au centre)
-// ============================================================
+// ====================================================
 
 // ----- Constantes locales -----------------------------------
 const TAILLE_DEDALE     = 31;

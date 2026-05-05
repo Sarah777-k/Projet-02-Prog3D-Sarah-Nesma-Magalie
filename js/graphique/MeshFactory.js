@@ -12,26 +12,10 @@
     * - Les entités (mur, flèche, téléporteur, trésor, etc.)
 */
 
-
-//  Un "mesh" ici = un objet { bufferSommets, bufferIndices,
-//                              bufferTexCoords, nbIndices }
-//
-//  Toutes les dimensions respectent l'énoncé :
-//    - cellule    = 1x1
-//    - mur        = 1 x HAUTEUR_MUR x 1
-//    - plancher   = 31 x 31
-//    - plafond    = 31 x 31
-//    - objets 3D  = max 1x1 en emprise au sol
-//
-//  Usage :
-//    let mesh = creerMeshMur(TYPE_MUR_OUV);
-//    dessinerMesh(gl, shaderProgram, mesh, matrice);
-// ============================================================
-
 // ----- Constantes de géométrie ------------------------------
-const HAUTEUR_SOUBASSEMENT =0.1
-let HAUTEUR_MUR    = 2.5;   // hauteur des murs (atteint le plafond)
-let HAUTEUR_Y_CAM  = 1.0;   // hauteur des yeux du joueur (Y de la caméra)
+const HAUTEUR_SOUBASSEMENT = 0.1
+let HAUTEUR_MUR     = 2.5;   // hauteur des murs (atteint le plafond)
+let HAUTEUR_Y_CAM   = 1.0;   // hauteur des yeux du joueur (Y de la caméra)
 let HAUTEUR_PLAFOND = HAUTEUR_MUR-1.5; // le plafond est à la même hauteur que le sommet des murs
    // redéfini ici pour MeshFactory (même valeur que maze.js)
 
@@ -101,9 +85,9 @@ function creeMeshPosition2D(gl) {
     ]);
 
     return {
-        bufferSommets:   creerBuffer(gl, gl.ARRAY_BUFFER,         sommets),
-        bufferTexCoords: creerBuffer(gl, gl.ARRAY_BUFFER,         texCoords),
-        bufferNormales:  creerBuffer(gl, gl.ARRAY_BUFFER,         normales),
+        bufferSommets:   creerBuffer(gl, gl.ARRAY_BUFFER, sommets),
+        bufferTexCoords: creerBuffer(gl, gl.ARRAY_BUFFER, texCoords),
+        bufferNormales:  creerBuffer(gl, gl.ARRAY_BUFFER, normales),
         bufferIndices:   creerBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, indices),
         nbIndices:       indices.length
     };
@@ -170,8 +154,8 @@ function creerMeshMur(gl) {
     0, 1, 0,   0, 1, 0,   0, 1, 0,   0, 1, 0
 ]);
     return {
-        bufferSommets:  creerBuffer(gl, gl.ARRAY_BUFFER,         sommets),
-        bufferTexCoords:creerBuffer(gl, gl.ARRAY_BUFFER,         texCoords),
+        bufferSommets:  creerBuffer(gl, gl.ARRAY_BUFFER, sommets),
+        bufferTexCoords:creerBuffer(gl, gl.ARRAY_BUFFER, texCoords),
         bufferNormales: creerBuffer(gl, gl.ARRAY_BUFFER, normales),
         bufferIndices:  creerBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, indices),
         nbIndices:      indices.length
@@ -262,10 +246,10 @@ function creerMeshPlancher(gl) {
     let repetes = taille;         // répétition de la texture (1 tuile = 1 cellule)
 
     let sommets   = new Float32Array([
-        0,     0, 0,
-        taille, 0, 0,
-        taille, 0, taille,
-        0,     0, taille
+        0,      0,  0,
+        taille, 0,  0,
+        taille, 0,  taille,
+        0,      0,  taille
     ]);
     let texCoords = new Float32Array([
         0,      0,
@@ -282,9 +266,9 @@ function creerMeshPlancher(gl) {
     0, 1, 0
     ]);
     return {
-        bufferSommets:   creerBuffer(gl, gl.ARRAY_BUFFER,         sommets),
-        bufferTexCoords: creerBuffer(gl, gl.ARRAY_BUFFER,         texCoords),
-        bufferNormales: creerBuffer(gl, gl.ARRAY_BUFFER, normales),
+        bufferSommets:   creerBuffer(gl, gl.ARRAY_BUFFER, sommets),
+        bufferTexCoords: creerBuffer(gl, gl.ARRAY_BUFFER, texCoords),
+        bufferNormales:  creerBuffer(gl, gl.ARRAY_BUFFER, normales),
         bufferIndices:   creerBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, indices),
         nbIndices:       indices.length
     };
@@ -336,19 +320,19 @@ function creerMeshPlafond(gl) {
     let repetes = taille;
 
     let sommets = new Float32Array([
-        0,     y, 0,
-        taille, y, 0,
-        taille, y, taille,
-        0,     y, taille
+        0,      y,  0,
+        taille, y,  0,
+        taille, y,  taille,
+        0,      y,  taille
     ]);
     let texCoords = new Float32Array([
-        0,      0,
-        repetes, 0,
-        repetes, repetes,
-        0,      repetes
+        0,        0,
+        repetes,  0,
+        repetes,  repetes,
+        0,        repetes
     ]);
     // Ordre inversé pour que la face regarde vers le bas
-    let indices = new Uint16Array([0, 2, 1,   0, 3, 2]);
+    let indices = new Uint16Array([0, 2, 1, 0, 3, 2]);
      let normales = new Float32Array([
         0, -1, 0,
         0, -1, 0,
@@ -357,9 +341,9 @@ function creerMeshPlafond(gl) {
     ]);
 
     return {
-        bufferSommets:   creerBuffer(gl, gl.ARRAY_BUFFER,         sommets),
-        bufferTexCoords: creerBuffer(gl, gl.ARRAY_BUFFER,         texCoords),
-        bufferNormales: creerBuffer(gl, gl.ARRAY_BUFFER, normales),
+        bufferSommets:   creerBuffer(gl, gl.ARRAY_BUFFER, sommets),
+        bufferTexCoords: creerBuffer(gl, gl.ARRAY_BUFFER, texCoords),
+        bufferNormales:  creerBuffer(gl, gl.ARRAY_BUFFER, normales),
         bufferIndices:   creerBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, indices),
         nbIndices:       indices.length
     };
@@ -371,16 +355,12 @@ function creerMeshPlafond(gl) {
 //  Max 1x1 en emprise au sol 
 //  Axe naturel de la flèche : pointe vers +X (angle 0)
 //  Personne 2 fait tourner le mesh selon la direction du trésor
-///////////// ajouter variabke normal 
-
 // ============================================================
 function creerMeshFleche(gl) {
     let yBas = 0.3;
     let yHaut = 0.12         // hauteur de la pointe
    
     // Base carrée centrée en (0.5, yBase, 0.5) — centrée dans la cellule
-
-  
     let sommets = new Float32Array([
        // rectangle arrière
         0.10, yBas, 0.35,
@@ -440,9 +420,9 @@ function creerMeshFleche(gl) {
     }
 
     return {
-        bufferSommets:   creerBuffer(gl, gl.ARRAY_BUFFER,         sommets),
-        bufferTexCoords: creerBuffer(gl, gl.ARRAY_BUFFER,         texCoords),
-        bufferNormales: creerBuffer(gl, gl.ARRAY_BUFFER, normales),
+        bufferSommets:   creerBuffer(gl, gl.ARRAY_BUFFER, sommets),
+        bufferTexCoords: creerBuffer(gl, gl.ARRAY_BUFFER, texCoords),
+        bufferNormales:  creerBuffer(gl, gl.ARRAY_BUFFER, normales),
         bufferIndices:   creerBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, indices),
         nbIndices:       indices.length
     };
@@ -456,10 +436,10 @@ function creerMeshFleche(gl) {
 
 
 function creerMeshTeleporteur(gl) {
-    let h = 0.18;      // hauteur basse
-    let cx = 0.5;
-    let cz = 0.5;
-    let r = 0.48;      // taille presque 1x1
+    let h   = 0.18;      // hauteur basse
+    let cx  = 0.5;
+    let cz  = 0.5;
+    let r   = 0.48;      // taille presque 1x1
     let cut = 0.18;    // coupe des coins
 
     let sommets = new Float32Array([
@@ -521,10 +501,10 @@ function creerMeshTeleporteur(gl) {
     ]);
 
     return {
-        bufferSommets: creerBuffer(gl, gl.ARRAY_BUFFER, sommets),
+        bufferSommets:   creerBuffer(gl, gl.ARRAY_BUFFER, sommets),
         bufferTexCoords: creerBuffer(gl, gl.ARRAY_BUFFER, texCoords),
-        bufferNormales: creerBuffer(gl, gl.ARRAY_BUFFER, normales),
-        bufferIndices: creerBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, indices),
+        bufferNormales:  creerBuffer(gl, gl.ARRAY_BUFFER, normales),
+        bufferIndices:   creerBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, indices),
         nbIndices: indices.length
     };
 }
@@ -533,7 +513,6 @@ function creerMeshTeleporteur(gl) {
 //  TÉLÉ-RÉCEPTEUR  (anneau / tore simplifié = cylindre creux)
 //  Visuellement différent du transporteur
 //  Repose sur le plancher — max 1x1 — non plat
-
 // mais j'utilise la meme mesh que teleporteur mais texture differente 
 
 // ============================================================
@@ -548,11 +527,11 @@ function creerMeshRecepteur(gl) {
     let sommets   = [];
     let texCoords = [];
     let indices   = [];
-    let normales = [];
+    let normales  = [];
     let idx       = 0;
 
     for (let i = 0; i < n; i++) {
-        let a1 = (i / n)       * 2 * Math.PI;
+        let a1 = (i / n) * 2 * Math.PI;
         let a2 = ((i+1) % n) / n * 2 * Math.PI;
 
         // 4 sommets du segment de l'anneau
@@ -632,9 +611,9 @@ function creerMeshRecepteur(gl) {
     }
 
     return {
-        bufferSommets:   creerBuffer(gl, gl.ARRAY_BUFFER,         new Float32Array(sommets)),
-        bufferTexCoords: creerBuffer(gl, gl.ARRAY_BUFFER,         new Float32Array(texCoords)),
-        bufferNormales: creerBuffer(gl, gl.ARRAY_BUFFER, new Float32Array(normales)),
+        bufferSommets:   creerBuffer(gl, gl.ARRAY_BUFFER, new Float32Array(sommets)),
+        bufferTexCoords: creerBuffer(gl, gl.ARRAY_BUFFER, new Float32Array(texCoords)),
+        bufferNormales:  creerBuffer(gl, gl.ARRAY_BUFFER, new Float32Array(normales)),
         bufferIndices:   creerBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices)),
         nbIndices:       indices.length
     };
@@ -643,7 +622,6 @@ function creerMeshRecepteur(gl) {
 // ============================================================
 //  TRÉSOR  (boîte légèrement trapézoïdale — coffre)
 //  Repose sur le plancher — max 1x1 — non plat 
-
 // ============================================================
 function creerMeshTresor(gl) {
     let larg = 0.7;  // largeur (X)
@@ -761,9 +739,9 @@ let texCoords = new Float32Array(tabTex);
     ]);
 
     return {
-        bufferSommets:   creerBuffer(gl, gl.ARRAY_BUFFER,         sommets),
-        bufferTexCoords: creerBuffer(gl, gl.ARRAY_BUFFER,         texCoords),
-        bufferNormales: creerBuffer(gl, gl.ARRAY_BUFFER, normales),
+        bufferSommets:   creerBuffer(gl, gl.ARRAY_BUFFER, sommets),
+        bufferTexCoords: creerBuffer(gl, gl.ARRAY_BUFFER, texCoords),
+        bufferNormales:  creerBuffer(gl, gl.ARRAY_BUFFER, normales),
         bufferIndices:   creerBuffer(gl, gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices)),
         nbIndices:       indices.length
     };
@@ -773,7 +751,6 @@ let texCoords = new Float32Array(tabTex);
 // ============================================================
 //  Dessiner un mesh
 //  Applique la matrice de transformation et envoie tout à WebGL
-//
 // ============================================================
 function dessinerMesh(gl, shaderProgram, mesh, matModeleVue) {
     gl.uniformMatrix4fv(shaderProgram.matModeleVue, false, matModeleVue);

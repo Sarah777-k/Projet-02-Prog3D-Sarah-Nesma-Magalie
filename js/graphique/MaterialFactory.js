@@ -13,21 +13,7 @@
     * - Les entités (mur, flèche, trésor, etc.)
 */
 
-// ============================================================
-//  MaterialFactory.js  —  Personne 1 : Moteur 3D / Environnement
-//  Gestion des couleurs et textures de chaque type d'objet.
-//
-//  Un "matériau" ici = un objet { couleur, texture }
-//  couleur  : tableau [R, G, B, A]  valeurs entre 0.0 et 1.0
-//  texture  : objet WebGL texture (null si aucune texture)
-//
-//  Usage :
-//    let mat = creerMatMurOuvrable();
-//    appliquerMateriau(gl, shaderProgram, mat);
-// ============================================================
-
-// ----- letiables globales des textures ----------------------
-// Remplir ces letiables dans initTextures() au chargement du jeu
+// ----- Variables globales des textures ----------------------
 let textureMurOuvrable    = null;
 let textureMurSolide      = null;
 let texturePlancher       = null;
@@ -38,12 +24,12 @@ let textureTeleporteur    = null;
 let textureRecepteur      = null;
 let textureTresor         = null;
 
+
 // ============================================================
 //  Création des matériaux
 //  Chaque fonction retourne { couleur: [R,G,B,A], texture: obj|null }
-//couleur si la texture ne marche pas
+//      couleur si la texture ne marche pas
 // ============================================================
-
 
 //position 2D
 function creeMatPosition2D(){
@@ -168,18 +154,17 @@ function appliquerMateriau(gl, shaderProgram, materiau) {
 //  Les fichiers image doivent être dans assets/textures/
 // ============================================================
 function initTextures(gl) {
-    //textureMurOuvrable = chargerTexture(gl, "../assets/textures/mur_ouvert.png");
-    textureMurOuvrable = chargerTexture(gl, "../assets/backrooms/backWall.png");
-    textureMurSolide   = chargerTexture(gl, "../assets/backrooms/mur_solide.png");
+    textureMurOuvrable  = chargerTexture(gl, "../assets/backrooms/backWall.png");
+    textureMurSolide    = chargerTexture(gl, "../assets/backrooms/mur_solide.png");
     textureSoubassement = chargerTexture(gl, "../assets/backrooms/soubassements.png");
-    texturePlancher    = chargerTexture(gl, "../assets/backrooms/backrooms-carpet-diffuse.png");
-    texturePlafond     = chargerTexture(gl, "../assets/backrooms/backrooms-ceiling-tile-diffuse.png");
-    textureEnclos      = chargerTexture(gl, "../assets/backrooms/soubassements.png");
-    textureFleche      = chargerTexture(gl, "../assets/backrooms/rouge.jpg");
-    textureTeleporteur = chargerTexture(gl, "../assets/backrooms/hatch.png");
-    textureRecepteur   = chargerTexture(gl, "../assets/backrooms/recepteur.png");
-    textureTresor      = chargerTexture(gl, "../assets/backrooms/coffret.png");
-    texturePos2D       = chargerTexture(gl,"../assets/textures/position.png");
+    texturePlancher     = chargerTexture(gl, "../assets/backrooms/backrooms-carpet-diffuse.png");
+    texturePlafond      = chargerTexture(gl, "../assets/backrooms/backrooms-ceiling-tile-diffuse.png");
+    textureEnclos       = chargerTexture(gl, "../assets/backrooms/soubassements.png");
+    textureFleche       = chargerTexture(gl, "../assets/backrooms/rouge.jpg");
+    textureTeleporteur  = chargerTexture(gl, "../assets/backrooms/hatch.png");
+    textureRecepteur    = chargerTexture(gl, "../assets/backrooms/recepteur.png");
+    textureTresor       = chargerTexture(gl, "../assets/backrooms/coffret.png");
+    texturePos2D        = chargerTexture(gl,"../assets/textures/position.png");
 }
 
 // Charge une image et crée une texture WebGL

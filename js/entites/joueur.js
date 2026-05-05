@@ -243,6 +243,10 @@ function ouvrirMurDevantJoueur() {
 
     let mur3D = trouverMur3D(celluleDevant.ligne, celluleDevant.colonne);
 
+    if (mur3D.type !== TYPE_MUR_OUV) {
+        return murOuvert;
+    }
+
     if (mur3D.enOuverture == true) {
         return murOuvert;
     }

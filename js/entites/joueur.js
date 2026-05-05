@@ -6,8 +6,8 @@
 
 
 /* ----- Constantes ----- */
-const VITESSE_DEPLACEMENT = 0.1;
-const VITESSE_ROTATION = 1.9;
+const VITESSE_DEPLACEMENT = 0.06;
+const VITESSE_ROTATION = 2.0;
 const RAYON_JOUEUR = 0.2; // pour les collisions, légèrement plus petit que 0.5 pour éviter de rester coincé
 
 /* ----- Variables -----*/

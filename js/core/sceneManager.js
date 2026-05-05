@@ -243,6 +243,9 @@ function dessinerScene(gl, shaderProgram, scene) {
     let yAnimation = obj.y;
     //ANIMATION GRAPHIQUE POUR MUR OUV ET PORTE ENCLOS 
     if ((obj.type === TYPE_MUR_OUV || obj.type === TYPE_PORTE_ENCLOS || obj.type === "soubassement") && obj.progression > 0) {
+      if (obj.type === TYPE_PORTE_ENCLOS) {
+        obj.progression = 1;
+      }
       if (obj.progression >= 1) {
         let cellule = obtenirCellule(obj.ligne, obj.col);
         if (cellule !== null) {

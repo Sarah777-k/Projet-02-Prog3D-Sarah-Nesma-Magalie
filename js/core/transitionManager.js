@@ -143,7 +143,8 @@ function afficherEcranVictoire() {
 */
 function recommencerDepuisNiveau1() {
     gameState.niveau = 1;
+    refermerMursOuverts();
     initialiserScore();
-    initNiveau(1, true);
+    initNiveau(gameState.niveau, true);
     validerScoreNiveau();
 }

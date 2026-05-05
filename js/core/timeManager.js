@@ -30,7 +30,7 @@ function initialiserTemps(){
 |   Remet le temps restant à la durée complète du niveau.
 |=====================================================================|
 */
-function mettreAJourTemps(){
+function mettreAJourTemps() {
     if (gameState.etat !== ETAT_EN_COURS) {
         dernierTempsMs = performance.now();
         return;
@@ -65,9 +65,9 @@ function obtenirTempsRestant() {
 */
 function tempsEcoule() {
     gameState.etat = ETAT_ATTENTE;
-    audioManager.jouerTempsEcoule();
 
-    if (peutRecommencerNiveau()){
+    if (peutRecommencerNiveau()) {
+        audioManager.jouerTempsEcoule();
         recommencerNiveau();
     }
     else {

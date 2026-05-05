@@ -243,6 +243,7 @@ function dessinerScene(gl, shaderProgram, scene) {
     let yAnimation = obj.y;
     //ANIMATION GRAPHIQUE POUR MUR OUV ET PORTE ENCLOS 
     if ((obj.type === TYPE_MUR_OUV || obj.type === TYPE_PORTE_ENCLOS || obj.type === "soubassement") && obj.progression > 0) {
+      // Retrait de l'animation de la porte de l'enclos pour éviter les problèmes de synchronisation avec le jeu
       if (obj.type === TYPE_PORTE_ENCLOS) {
         obj.progression = 1;
       }
